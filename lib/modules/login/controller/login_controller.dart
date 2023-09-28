@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:recommendation_system/Routes/routes.dart';
+import 'package:recommendation_system/Routes/app_routes.dart';
 
 class LoginController extends GetxController {
   var currentIndex = 0.obs;

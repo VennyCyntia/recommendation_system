@@ -1,8 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recommendation_system/App/theme_config.dart';
-import 'package:recommendation_system/Modules/Home/Pages/restaurant_container.dart';
+import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/modules/home/components/menu_component.dart';
+import 'package:recommendation_system/modules/home/components/restaurant_component.dart';
 
 class HomeContainer extends StatelessWidget {
   const HomeContainer({super.key});
@@ -16,19 +16,24 @@ class HomeContainer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.all(10.0),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)),
-                  hintText: 'Find Your Restaurant',
-                  prefixIcon: Icon(Icons.search_rounded),
-                ),
+              Wrap(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10.0),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'Find Your Restaurant',
+                      prefixIcon: Icon(Icons.search_rounded),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 8.0),
-              const Text('Recommended For You'),
+              Text('Recommended For You', style: ThemeConfig().textHeader3Bold(color: ThemeConfig.justBlack)),
               const SizedBox(height: 8.0),
-              Expanded(
+              SizedBox(
+                height: Get.size.height * .22,
                 child: ListView.builder(
                   reverse: false,
                   padding: EdgeInsets.zero,
@@ -36,40 +41,18 @@ class HomeContainer extends StatelessWidget {
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return Wrap(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Container(
-                            decoration: const BoxDecoration(color: Colors.grey),
-                            child: Image.network('https://cdn1-production-images-kly.akamaized.net/EjwV7j3Y4JrlqUFuavke4NtRWtM=/1200x675/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3108566/original/079979700_1587487794-Sajiku_1.jpg', height: 100),
-                          ),
-                        ),
-                      ],
-                    );
+                    return MenuComponent(index: index);
                   },
                 ),
               ),
               const SizedBox(height: 8.0),
-              const Text('Restaurant'),
+              Text('Restaurant', style: ThemeConfig().textHeader3Bold(color: ThemeConfig.justBlack)),
               Expanded(
                 child: ListView.builder(
+                  shrinkWrap: true,
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => Get.to(RestaurantContainer(index: index)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(color: Colors.grey),
-                              child: Image.network('https://media-cdn.tripadvisor.com/media/photo-s/09/5c/5c/74/domino-s-pizza-plumstead.jpg', width: double.infinity),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+                    return RestaurantComponent(index: index);
                   },
                 ),
               ),

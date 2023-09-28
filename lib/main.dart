@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/Modules/Login/Binding/login_binding.dart';
-import 'package:recommendation_system/Routes/routes.dart';
+import 'package:recommendation_system/Routes/app_routes.dart';
 
 void main() {
   runApp(const Login());
