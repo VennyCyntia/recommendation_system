@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/home/components/menu_component.dart';
-import 'package:recommendation_system/modules/home/components/restaurant_component.dart';
+import 'package:recommendation_system/modules/karyawan/home/components/menu_component.dart';
+import 'package:recommendation_system/modules/karyawan/home/components/restaurant_component.dart';
 
 class HomeContainer extends StatelessWidget {
   const HomeContainer({super.key});

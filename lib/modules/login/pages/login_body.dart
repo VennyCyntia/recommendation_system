@@ -35,8 +35,52 @@ class LoginBody extends StatelessWidget {
                   ),
                   elevation: 0
               ),
-              onPressed: () => Get.offAndToNamed(AppRoutes.main),
-              child: Text('Login',
+              onPressed: () => Get.toNamed(AppRoutes.main),
+              child: Text('Login Karyawan',
+                style: ThemeConfig().textHeader3(
+                  color: ThemeConfig.justWhite,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12.0),
+          SizedBox(
+            height: ThemeConfig().defaultFormHeight,
+            width: Get.size.width * 1,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: ThemeConfig.justGrey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        ThemeConfig().extraSpacing
+                    ),
+                  ),
+                  elevation: 0
+              ),
+              onPressed: () => Get.toNamed(AppRoutes.restaurant),
+              child: Text('Login Restaurant',
+                style: ThemeConfig().textHeader3(
+                  color: ThemeConfig.justWhite,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12.0),
+          SizedBox(
+            height: ThemeConfig().defaultFormHeight,
+            width: Get.size.width * 1,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: ThemeConfig.justGrey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        ThemeConfig().extraSpacing
+                    ),
+                  ),
+                  elevation: 0
+              ),
+              onPressed: () => Get.toNamed(AppRoutes.admin),
+              child: Text('Login Admin',
                 style: ThemeConfig().textHeader3(
                   color: ThemeConfig.justWhite,
                 ),

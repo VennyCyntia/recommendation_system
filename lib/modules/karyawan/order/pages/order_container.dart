@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/order/pages/order_tabs_container.dart';
+import 'package:recommendation_system/modules/karyawan/order/pages/order_tabs_container.dart';
 
 class OrderContainer extends StatelessWidget {
   const OrderContainer({super.key});

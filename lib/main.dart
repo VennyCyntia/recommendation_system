@@ -10,7 +10,6 @@ void main() {
 class Login extends StatelessWidget {
   const Login({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
