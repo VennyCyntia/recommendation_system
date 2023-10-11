@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/home/components/menu_component.dart';
 import 'package:recommendation_system/modules/karyawan/home/components/restaurant_component.dart';
+import 'package:recommendation_system/modules/karyawan/home/controller/home_controller.dart';
 
-class HomeContainer extends StatelessWidget {
+class HomeContainer extends GetView<HomeController> {
   const HomeContainer({super.key});
 
   @override
@@ -50,7 +51,7 @@ class HomeContainer extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: controller.lsRestaurantMenu.length,
                   itemBuilder: (context, index) {
                     return RestaurantComponent(index: index);
                   },

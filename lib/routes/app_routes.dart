@@ -3,6 +3,7 @@ import 'package:recommendation_system/Modules/Login/Binding/login_binding.dart';
 import 'package:recommendation_system/modules/admin/binding/admin_binding.dart';
 import 'package:recommendation_system/modules/admin/pages/admin_container.dart';
 import 'package:recommendation_system/modules/karyawan/cart/pages/cart_container.dart';
+import 'package:recommendation_system/modules/karyawan/home/binding/home_binding.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/home_container.dart';
 import 'package:recommendation_system/modules/karyawan/main_container.dart';
 import 'package:recommendation_system/modules/karyawan/order/binding/order_binding.dart';
@@ -10,11 +11,10 @@ import 'package:recommendation_system/modules/karyawan/order/pages/order_contain
 import 'package:recommendation_system/modules/karyawan/profile/pages/profile_container.dart';
 import 'package:recommendation_system/modules/login/pages/login_header.dart';
 import 'package:recommendation_system/modules/restaurant/binding/restaurant_binding.dart';
-import 'package:recommendation_system/modules/restaurant/restaurant_main_container.dart';
 import 'package:recommendation_system/modules/restaurant/pages/menu_restaurant_container.dart';
 import 'package:recommendation_system/modules/restaurant/pages/order_restaurant_container.dart';
 import 'package:recommendation_system/modules/restaurant/pages/profile_restaurant_container.dart';
-import 'package:recommendation_system/modules/restaurant/pages/restaurant_container.dart';
+import 'package:recommendation_system/modules/restaurant/restaurant_main_container.dart';
 
 class AppRoutes{
   static String main = '/main';
@@ -32,6 +32,7 @@ class AppRoutes{
 
 class AppPages {
   static final List<GetPage> pages =  [
+    //KARYAWAN
     GetPage(
         name: AppRoutes.login,
         page: () => const LoginHeader(),
@@ -55,7 +56,7 @@ class AppPages {
     GetPage(
         name: AppRoutes.home,
         page: () => const HomeContainer(),
-        binding: LoginBinding(),
+        bindings: [LoginBinding(), HomeBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
@@ -73,17 +74,12 @@ class AppPages {
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
+
+    //RESTAURANT
     GetPage(
         name: AppRoutes.restaurant,
         page: () => const RestaurantMainContainer(),
         binding: RestaurantBinding(),
-        transition: Transition.native,
-        transitionDuration: const Duration(milliseconds: 500)
-    ),
-    GetPage(
-        name: AppRoutes.admin,
-        page: () => const AdminContainer(),
-        binding: AdminBinding(),
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
@@ -104,6 +100,14 @@ class AppPages {
     GetPage(
         name: AppRoutes.profileRestaurant,
         page: () => const ProfileRestaurantContainer(),
+        binding: AdminBinding(),
+        transition: Transition.native,
+        transitionDuration: const Duration(milliseconds: 500)
+    ),
+    //ADMIN
+    GetPage(
+        name: AppRoutes.admin,
+        page: () => const AdminContainer(),
         binding: AdminBinding(),
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)

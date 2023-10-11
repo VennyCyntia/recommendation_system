@@ -33,92 +33,103 @@ class ListRestaurant extends GetView<CartContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Restaurant Name', style: ThemeConfig().textHeader3(color: ThemeConfig.justBlack)),
-            IconButton(onPressed: (){}, icon: const Icon(Icons.close))
-          ],
-        ),
-        SizedBox(height: ThemeConfig().extraSpacing),
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 1,
-          itemBuilder: (context, index){
-            return Row(
-              children: [
-                Checkbox(value: isBlank, onChanged: (bool? value){}),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(right: ThemeConfig().defaultSpacing),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400, width: 1.5),
-                            color: Colors.white),
-                        child: Image.network('https://imgx.sonora.id/crop/0x0:0x0/360x240/photo/2022/10/22/istockphoto-1345298910-170667aj-20221022110522.jpg', height: Get.size.height * .125)
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Food Name'),
-                        SizedBox(height: ThemeConfig().extra2Spacing),
-                        Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: ThemeConfig.justGrey,
-                            borderRadius: BorderRadius.all(Radius.circular(10.0))
-                          ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.remove),
-                                onPressed: () { },
-                              ),
-                              Text('1'),
-                              IconButton(
-                                icon: const Icon(Icons.add),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            );
-          }),
-        SizedBox(height: ThemeConfig().extra2Spacing),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: 1,
+      itemBuilder: (context, index){
+        return Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total:', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
-                Text('50.000', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                Text('Restaurant Name', style: ThemeConfig().textHeader3(color: ThemeConfig.justBlack)),
+                IconButton(onPressed: (){}, icon: const Icon(Icons.close))
               ],
             ),
-            SizedBox(
-              height: 30,
-              child: ElevatedButton(
-                  onPressed: () => Get.to(() => CheckoutContainer()),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: ThemeConfig.justGrey,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)))
+            SizedBox(height: ThemeConfig().extraSpacing),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Checkbox(value: isBlank, onChanged: (bool? value){}),
+                Container(
+                    margin: EdgeInsets.only(right: ThemeConfig().defaultSpacing),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade400, width: 1.5),
+                        color: Colors.white),
+                    child: SizedBox.fromSize(size: Size.fromRadius(50),child: Image.network('https://imgx.sonora.id/crop/0x0:0x0/360x240/photo/2022/10/22/istockphoto-1345298910-170667aj-20221022110522.jpg', fit: BoxFit.cover))
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Food Name'),
+                      SizedBox(height: ThemeConfig().extra2Spacing),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                                padding: const EdgeInsets.all(3.0),
+                                decoration: const BoxDecoration(
+                                    color: ThemeConfig.baseGrey,
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8.0), bottomLeft: Radius.circular(8.0))
+                                ),
+                                child: const Icon(Icons.remove,
+                                    color: ThemeConfig.justWhite)),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            color: Colors.grey,
+                            child: Text('1',
+                                style: ThemeConfig().textHeader3Bold(
+                                    color: ThemeConfig.justWhite)),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                                padding: const EdgeInsets.all(3.0),
+                                decoration: const BoxDecoration(
+                                    color: ThemeConfig.baseGrey,
+                                    borderRadius: BorderRadius.only(topRight: Radius.circular(8.0), bottomRight: Radius.circular(8.0))
+                                ),
+                                child: const Icon(Icons.add,
+                                    color: ThemeConfig.justWhite)),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                  child: Text('Checkout', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack))),
+                ),
+              ],
             ),
+            SizedBox(height: ThemeConfig().extra2Spacing),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text('Total:', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                    Text('50.000', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                  child: ElevatedButton(
+                      onPressed: () => Get.to(() => CheckoutContainer()),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: ThemeConfig.justGrey,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)))
+                      ),
+                      child: Text('Checkout', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack))),
+                ),
+              ],
+            ),
+            SizedBox(height: ThemeConfig().extraSpacing),
+            const Divider(height: 1)
           ],
-        ),
-        SizedBox(height: ThemeConfig().extraSpacing),
-        const Divider(height: 1)
-      ],
-    );
+        );
+      });
   }
 }

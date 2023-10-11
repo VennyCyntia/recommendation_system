@@ -35,15 +35,15 @@ class ProfileContainer extends StatelessWidget {
                           child: Icon(Icons.account_circle_sharp),
                         ),
                         SizedBox(height: ThemeConfig().defaultSpacing),
-                        const Center(child: Text('Restaurant Name'))
+                        const Center(child: Text('Name'))
                       ],
                     ),
                   ),
                 ],
               ),
-              const FormFieldComponent(),
-              const FormFieldComponent(),
-              const FormFieldComponent(),
+              FormFieldComponent(title: 'Nama'),
+              FormFieldComponent(title: 'Email'),
+              FormFieldComponent(title: 'Preferensi'),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(
@@ -62,9 +62,10 @@ class ProfileContainer extends StatelessWidget {
                   child: ElevatedButton(
                       onPressed: (){},
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: ThemeConfig().defaultSpacing),
-                          backgroundColor: ThemeConfig.justGrey
-                      ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: ThemeConfig().defaultSpacing),
+                          backgroundColor: ThemeConfig.justGrey,
+                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)))),
                       child: Text('Logout', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack))),
                 ),
               ),
