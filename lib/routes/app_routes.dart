@@ -42,7 +42,7 @@ class AppPages {
     GetPage(
         name: AppRoutes.main,
         page: () => const MainContainer(),
-        binding: LoginBinding(),
+        bindings: [LoginBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
@@ -56,7 +56,7 @@ class AppPages {
     GetPage(
         name: AppRoutes.home,
         page: () => const HomeContainer(),
-        bindings: [LoginBinding(), HomeBinding()],
+        bindings: [HomeBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),

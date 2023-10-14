@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/karyawan/home/components/menu_component.dart';
 import 'package:recommendation_system/modules/karyawan/home/components/restaurant_component.dart';
-import 'package:recommendation_system/modules/karyawan/home/controller/home_controller.dart';
+import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
 
-class HomeContainer extends GetView<HomeController> {
+class HomeContainer extends GetView<RestaurantController> {
   const HomeContainer({super.key});
 
   @override
@@ -42,7 +41,8 @@ class HomeContainer extends GetView<HomeController> {
                   itemCount: 5,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return MenuComponent(index: index);
+                    return Column();
+                      // MenuComponent(index: index);
                   },
                 ),
               ),
