@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/modules/restaurant/controller/restaurant_menu_controller.dart';
 import 'package:recommendation_system/modules/restaurant/pages/component/add_menu_component.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/edit_menu_component.dart';
 
-class MenuRestaurantContainer extends StatelessWidget {
+class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
   const MenuRestaurantContainer({super.key});
 
   @override
@@ -20,17 +20,15 @@ class MenuRestaurantContainer extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: (){},
-                    child: Column(
+              child: Obx(() => ListView.builder(
+                  itemCount: controller.lsMenu.length,
+                  itemBuilder: (context, index) {
+                    return Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Item name',style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                            Text(controller.lsMenu[index].title!, style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
                             Row(
                               children: [
                                 ElevatedButton(
@@ -44,7 +42,7 @@ class MenuRestaurantContainer extends StatelessWidget {
                                 ),
                                 SizedBox(width: ThemeConfig().defaultSpacing),
                                 ElevatedButton(
-                                  onPressed: () => Get.to(() => const EditMenuComponent()),
+                                  onPressed: () => controller.onShowEditData(index: index, id: controller.lsMenu[index].id!),
                                   style: ElevatedButton.styleFrom(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: ThemeConfig().defaultSpacing),
@@ -58,27 +56,21 @@ class MenuRestaurantContainer extends StatelessWidget {
                         ),
                         const Divider(color: ThemeConfig.justGrey),
                       ],
-                    ),
-                  );
-                },),
+                    );
+                  })),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Align(
                 alignment: Alignment.topRight,
-                child: FloatingActionButton(
-                    onPressed: (){},
-                    elevation: 0,
-                    shape: const CircleBorder(),
-                    child: SpeedDial(
-                      icon: Icons.add,
-                      children: [
-                        SpeedDialChild(
-                          label: 'Add Menu',
-                          onTap: () => Get.to(() => const AddMenuComponent()),
-                        ),
-                      ],
-                    )
+                child: SpeedDial(
+                  icon: Icons.add,
+                  children: [
+                    SpeedDialChild(
+                      label: 'Add Menu',
+                      onTap: () => Get.to(() => const AddMenuComponent()),
+                    ),
+                  ],
                 ),
               ),
             ),

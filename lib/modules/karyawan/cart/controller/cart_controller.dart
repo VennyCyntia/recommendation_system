@@ -1,28 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:recommendation_system/app/models/view_karyawan.dart';
 import 'package:recommendation_system/app/config/dialog_config.dart';
-import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/app/models/m_menu.dart';
 import 'package:recommendation_system/modules/karyawan/cart/pages/cart_checkout_container.dart';
-import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
-import 'package:recommendation_system/modules/karyawan/home/pages/menu_container.dart';
 
 class CartController extends GetxController {
-  var restaurantController = Get.find<RestaurantController>();
-
   var lsItemCart = List<ItemCartRestaurant>.empty(growable: true).obs;
   var lsCheckOutItem = ItemCartRestaurant();
   var lsCheckBox = List<bool>.empty(growable: true).obs;
 
   @override
   void onInit() {
+    // lsItemCart.refresh();
+    print('ls '+lsItemCart.length.toString());
     super.onInit();
-  }
-
-  onToMenuContainer(int index, int indexItem, String restaurantName){
-    int indexRestaurant = restaurantController.lsRestaurantMenu.indexWhere((item) => item.restaurantName == restaurantName);
-
-    Get.to(() => MenuContainer(index: index, indexCategory: indexItem, indexRestaurant: indexRestaurant));
   }
 
   onCheckOutCart({required int indexRestaurant}) {
@@ -50,7 +41,7 @@ class CartController extends GetxController {
       Get.to(() => CheckoutContainer());
     } else {
       DialogConfig().showSnackBarInformation(
-          title: 'Error', message: 'No item selected', color: ThemeConfig.justRed);
+          title: 'Error', message: 'No item selected', color: Colors.red);
     }
   }
 }

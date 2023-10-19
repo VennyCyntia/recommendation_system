@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/cart/controller/cart_controller.dart';
-import 'package:recommendation_system/modules/karyawan/cart/pages/cart_checkout_container.dart';
-import 'package:recommendation_system/modules/karyawan/home/controller/home_controller.dart';
+import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
 
 class CartContainer extends GetView<CartController> {
   const CartContainer({super.key});
@@ -70,6 +69,8 @@ class ListRestaurant extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
+    var restaurantController = Get.find<RestaurantController>();
+
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -101,20 +102,14 @@ class ListRestaurant extends GetView<CartController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(controller.lsItemCart[index].menu![indexItem].title!)),
-                            Text('${controller.lsItemCart[index].menu![indexItem].orderQty}x',style: ThemeConfig().textHeader4(color: ThemeConfig.baseGrey)),
-                          ],
-                        ),
+                        Text(controller.lsItemCart[index].menu![indexItem].title!),
                         SizedBox(height: ThemeConfig().extra2Spacing),
                         GestureDetector(
-                          onTap: () => controller.onToMenuContainer(index, indexItem, controller.lsItemCart[index].restaurantName!),
+                          onTap: () => restaurantController.onToMenuContainer(index, indexItem, controller.lsItemCart[index].restaurantName!),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(controller.lsItemCart[index].menu![indexItem].totalprice.toString(),style: ThemeConfig().textHeader4(color: ThemeConfig.baseGrey)),
+                              Text('${controller.lsItemCart[index].menu![indexItem].orderQty}x',style: ThemeConfig().textHeader4(color: ThemeConfig.baseGrey)),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                 decoration: BoxDecoration(

@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/routes/app_routes.dart';
 
 class RestaurantController extends GetxController{
   var currentIndex = 0.obs;
 
-  void selectedItems(int index){
-    switch (index){
+  void selectedItems(int index) {
+    switch (index) {
       case 0:
         currentIndex.value = index;
         break;
@@ -18,12 +19,11 @@ class RestaurantController extends GetxController{
     }
   }
 
-  void onToOrderContainer(){
+  void onToOrderContainer() {
     Get.toNamed(AppRoutes.orderRestaurant);
   }
 
-  void onToProfileContainer(){
+  void onToProfileContainer() {
     Get.toNamed(AppRoutes.profileRestaurant);
   }
-
 }

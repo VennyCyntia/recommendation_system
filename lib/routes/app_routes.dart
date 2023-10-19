@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:recommendation_system/Modules/Login/Binding/login_binding.dart';
 import 'package:recommendation_system/modules/admin/binding/admin_binding.dart';
 import 'package:recommendation_system/modules/admin/pages/admin_container.dart';
+import 'package:recommendation_system/modules/karyawan/cart/binding/cart_binding.dart';
 import 'package:recommendation_system/modules/karyawan/cart/pages/cart_container.dart';
 import 'package:recommendation_system/modules/karyawan/home/binding/home_binding.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/home_container.dart';
@@ -36,27 +37,28 @@ class AppPages {
     GetPage(
         name: AppRoutes.login,
         page: () => const LoginHeader(),
+        binding: LoginBinding(),
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
     GetPage(
         name: AppRoutes.main,
         page: () => const MainContainer(),
-        bindings: [LoginBinding()],
+        bindings: [LoginBinding(), CartBinding(), HomeBinding() ],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
     GetPage(
         name: AppRoutes.cart,
         page: () => const CartContainer(),
-        binding: LoginBinding(),
+        // binding: LoginBinding(),
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
     GetPage(
         name: AppRoutes.home,
         page: () => const HomeContainer(),
-        bindings: [HomeBinding()],
+        bindings: [LoginBinding(), HomeBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),

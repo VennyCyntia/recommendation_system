@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/admin/pages/karyawan_container.dart';
 import 'package:recommendation_system/modules/admin/pages/tenant_container.dart';
+import 'package:recommendation_system/modules/admin/pages/karyawan_container.dart';
 import 'package:recommendation_system/modules/admin/controller/admin_tabs_controller.dart';
 
 class AdminContainer extends StatelessWidget {

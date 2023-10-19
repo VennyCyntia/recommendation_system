@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/modules/admin/controller/admin_employee_controller.dart';
 import 'package:recommendation_system/modules/admin/pages/component/add_karyawan_component.dart';
 import 'package:recommendation_system/modules/admin/pages/component/edit_karyawan_component.dart';
 
-class KaryawanContainer extends StatelessWidget {
+class KaryawanContainer extends GetView<AdminEmployeeController> {
   const KaryawanContainer({super.key});
 
   @override
@@ -13,8 +14,8 @@ class KaryawanContainer extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            itemCount: 2,
+          child: Obx(() => ListView.builder(
+            itemCount: controller.lsEmployee.value.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: (){},
@@ -23,11 +24,11 @@ class KaryawanContainer extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Employee name',style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                        Text(controller.lsEmployee[index].employeename!,style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
                         Row(
                           children: [
                             ElevatedButton(
-                              onPressed: (){},
+                              onPressed: () => controller.onDeleteData(id: index),
                               style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: ThemeConfig().defaultSpacing),
@@ -37,7 +38,7 @@ class KaryawanContainer extends StatelessWidget {
                             ),
                             SizedBox(width: ThemeConfig().defaultSpacing),
                             ElevatedButton(
-                              onPressed: () => Get.to(() => EditKaryawanComponent()),
+                              onPressed: () => controller.onShowEditMenu(id: controller.lsEmployee[index].id!,index: index),
                               style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: ThemeConfig().defaultSpacing),
@@ -53,7 +54,7 @@ class KaryawanContainer extends StatelessWidget {
                   ],
                 ),
               );
-            },),
+            },)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
