@@ -14,10 +14,7 @@ class RestaurantPage extends GetView<RestaurantController> {
       child: Scaffold(
         body: Column(
           children: [
-            Container(
-              constraints: BoxConstraints(
-                maxHeight: Get.size.height * .4,
-              ),
+            Expanded(
               child: Stack(
                 children: [
                   Positioned(
@@ -38,21 +35,21 @@ class RestaurantPage extends GetView<RestaurantController> {
                     right: 30,
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: ThemeConfig().biggerSpacing,
-                          vertical: ThemeConfig().defaultSpacing),
+                        horizontal: ThemeConfig().biggerSpacing,
+                        vertical: ThemeConfig().biggerSpacing),
                       decoration: BoxDecoration(
-                          color: ThemeConfig.justWhite,
+                          color: ThemeConfig.justBlack,
                           borderRadius: const BorderRadius.all(Radius.circular(15)),
                           boxShadow: [ThemeConfig().onSetDefaultShadow()]),
                       child: Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(controller.lsRestaurantMenu[indexRestaurant!].restaurantName!,
+                              Text(controller.lsRestaurantMenu[indexRestaurant!].restaurantName!.toUpperCase(),
                                   style: ThemeConfig().text1ExtraBold(
-                                      color: ThemeConfig.justBlack)),
+                                      color: ThemeConfig.justGrey)),
                             ],
                           ),
                         ],
@@ -65,12 +62,12 @@ class RestaurantPage extends GetView<RestaurantController> {
             Padding(
               padding: EdgeInsets.all(ThemeConfig().biggerSpacing),
               child: TextFormField(
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.all(10.0),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(10.0),
                   border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)),
+                      borderSide: const BorderSide(color: Colors.grey),borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing))),
                   hintText: 'Find Your Food',
-                  prefixIcon: Icon(Icons.search_rounded),
+                  prefixIcon: const Icon(Icons.search_rounded),
                 ),
               ),
             ),
@@ -126,7 +123,7 @@ class RestaurantPage extends GetView<RestaurantController> {
                                             child: Column(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Image.network(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].pic!, ),
+                                                ClipRRect(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),child: Image.network(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].pic!, )),
                                                 Wrap(
                                                   children: [
                                                     Text(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].title!),

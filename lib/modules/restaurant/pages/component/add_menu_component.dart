@@ -1,10 +1,7 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:multiselect/multiselect.dart';
+import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/restaurant/controller/restaurant_controller.dart';
 import 'package:recommendation_system/modules/restaurant/controller/restaurant_menu_controller.dart';
 import 'package:recommendation_system/modules/restaurant/pages/component/text_field_input_component.dart';
 
@@ -26,7 +23,7 @@ class AddMenuComponent extends GetView<RestaurantMenuController> {
               Align(
                 alignment: Alignment.topRight,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () => controller.onInitialAddForm(),
                   style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                           horizontal: ThemeConfig().defaultSpacing),
@@ -42,14 +39,14 @@ class AddMenuComponent extends GetView<RestaurantMenuController> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(
-                      vertical: ThemeConfig().defaultSpacing),
-                  itemCount: controller.lsFormMenu.length,
-                  itemBuilder: (context, index) {
-                    return Form(
-                      key: controller.formKey,
-                      child: Container(
+                child: Form(
+                  key: controller.formKey,
+                  child: Obx(() => ListView.builder(
+                    padding: EdgeInsets.symmetric(
+                        vertical: ThemeConfig().defaultSpacing),
+                    itemCount: controller.lsFormMenu.length,
+                    itemBuilder: (context, index) {
+                      return Container(
                         padding: EdgeInsets.all(ThemeConfig().biggerSpacing),
                         margin: EdgeInsets.only(top: ThemeConfig().biggerSpacing),
                         decoration: BoxDecoration(
@@ -62,7 +59,7 @@ class AddMenuComponent extends GetView<RestaurantMenuController> {
                             Align(
                                 alignment: Alignment.topRight,
                                 child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => controller.onDeleteForm(index: index),
                                     icon: const Icon(Icons.delete))),
                             TextFieldInputComponent(
                                 title: 'Title',
@@ -146,9 +143,9 @@ class AddMenuComponent extends GetView<RestaurantMenuController> {
                             ),
                           ],
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  )),
                 ),
               ),
               Row(

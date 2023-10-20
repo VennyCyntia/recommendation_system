@@ -9,6 +9,5 @@ class AdminBinding extends Bindings {
     Get.put(AdminTabsController());
     Get.lazyPut(() => AdminRestaurantController());
     Get.lazyPut(() => AdminEmployeeController());
-    // Get.put(AdminRestaurantController());
   }
 }

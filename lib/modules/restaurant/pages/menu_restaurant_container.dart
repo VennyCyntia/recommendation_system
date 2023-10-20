@@ -32,7 +32,7 @@ class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
                             Row(
                               children: [
                                 ElevatedButton(
-                                  onPressed: (){},
+                                  onPressed: () => controller.onDeleteData(id: controller.lsMenu[index].id!),
                                   style: ElevatedButton.styleFrom(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: ThemeConfig().defaultSpacing),

@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/restaurant_page.dart';
+import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
 
 class RestaurantComponent extends GetView<RestaurantController> {
   int? index;
@@ -10,7 +10,6 @@ class RestaurantComponent extends GetView<RestaurantController> {
 
   @override
   Widget build(BuildContext context) {
-
 
     return Wrap(
       children: [
@@ -25,11 +24,11 @@ class RestaurantComponent extends GetView<RestaurantController> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade400, width: 1.5),
                         color: Colors.white,
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(ThemeConfig().minSpacing), topLeft:  Radius.circular(ThemeConfig().minSpacing))
+                        borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().biggerSpacing))
                     ),
                     child: Column(
                       children: [
-                        Image.network(controller.lsRestaurantMenu[index!].pic!),
+                        ClipRRect(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),child: Image.network(controller.lsRestaurantMenu[index!].pic!)),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(controller.lsRestaurantMenu[index!].restaurantName!, style: ThemeConfig().textHeader3Bold(color: ThemeConfig.justBlack)),

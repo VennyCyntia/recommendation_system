@@ -1,7 +1,6 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/restaurant/controller/restaurant_menu_controller.dart';
 import 'package:recommendation_system/modules/restaurant/pages/component/text_field_input_component.dart';
@@ -14,7 +13,7 @@ class EditMenuComponent extends GetView<RestaurantMenuController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => controller.onClearData(),
+      onWillPop: () async => controller.onClearData(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -81,7 +80,7 @@ class EditMenuComponent extends GetView<RestaurantMenuController> {
                             },
                             items: controller.listCategory),
                         SizedBox(height: ThemeConfig().defaultSpacing),
-                        EditFieldDropDown(type: 'edit' ,index: index),
+                        FieldDropDown(type: 'edit' ,index: index),
                         SizedBox(height: ThemeConfig().defaultSpacing),
                         TextFieldInputComponent(
                           title: 'Price',
@@ -128,7 +127,7 @@ class EditMenuComponent extends GetView<RestaurantMenuController> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => controller.onUpdateData(id: id, index: index),
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 horizontal: ThemeConfig().defaultSpacing),
@@ -149,68 +148,5 @@ class EditMenuComponent extends GetView<RestaurantMenuController> {
         ),
       ),
     );
-  }
-}
-
-class EditFieldDropDown extends GetView<RestaurantMenuController> {
-  int? index;
-  String type;
-
-  EditFieldDropDown({super.key, this.index, required this.type});
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: ThemeConfig().defaultSpacing,
-            mainAxisSpacing: 1.0,
-            childAspectRatio: 2.5 / 1),
-        itemCount: 4,
-        itemBuilder: (context, indexLength) {
-          return Column(
-            children: [
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Deskripsi ' + indexLength.toString(),
-                      style: ThemeConfig().textHeader4Thin(color: Colors.black),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: '*',
-                            style:
-                            ThemeConfig().textHeader5(color: Colors.red)),
-                      ],
-                    ),
-                  )),
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                    validator: (String? value) {
-                      if (value == '') {
-                        return 'Mohon mengisi semua kolom dengan benar';
-                      }
-                      return null;
-                    },
-                    padding: EdgeInsets.symmetric(
-                        vertical: ThemeConfig().defaultSpacing),
-                    decoration: InputDecoration(
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: ThemeConfig().defaultSpacing)),
-                    value: controller.selectedValue[indexLength],
-                    onChanged: (String? newValue) {
-                      // String value = newValue!;
-                      // controller.onAddDesc(index!, newValue!, indexLength);
-                    },
-                    items: controller.lsDescription[indexLength]),
-              ),
-            ],
-          );
-        });
   }
 }

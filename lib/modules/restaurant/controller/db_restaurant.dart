@@ -95,19 +95,11 @@ class RestaurantDatabase {
   }
 
   Future<void> updateMenuByID(
-      {required int id,
-        required String pic,
-        required String title,
-        required String subtitle,
-        required String category,
-        required String description,
-        required String price}) async {
+      {required ViewMenu menu}) async {
     Database? db = await instance.database;
     await db!.rawUpdate(
-        '''UPDATE ''' +
-            _tableMenu +
-            ''' SET $_columnPic = ?, $_columnTitle = ?, $_columnSubtitle = ?, $_columnCategory = ?, $_columnDescription = ?, $_columnPrice = ? WHERE $_columnId = ?''',
-        [pic, title, subtitle, category, description, price, id]);
+        '''UPDATE $_tableMenu SET $_columnTitle = ?, $_columnSubtitle = ?, $_columnCategory = ?, $_columnDescription = ?, $_columnPrice = ?, $_columnPic = ? WHERE $_columnId = ?''',
+        [menu.title, menu.subtitle, menu.category, menu.description, menu.price, menu.pic, menu.id]);
   }
 
   Future<int> deleteMenuByID({required int id}) async {

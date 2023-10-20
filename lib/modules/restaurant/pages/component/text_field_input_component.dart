@@ -206,9 +206,15 @@ class FieldDropDown extends GetView<RestaurantMenuController> {
                         ),
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: ThemeConfig().defaultSpacing)),
-                    value: type == 'edit' ? controller.selectedDescription[indexLength] : controller.lsDescription[indexLength]![0].value,
+                    value: type == 'edit'
+                        ? controller.editSelectedDesc[indexLength]
+                        : controller.lsDescription[index]![0].value,
                     onChanged: (String? newValue) {
-                      controller.onAddDesc(index!, newValue!, indexLength);
+                      type == 'edit'
+                          ? controller.editSelectedDesc[indexLength] =
+                      newValue!
+                          : controller.selectedDesc[index!][indexLength] =
+                      newValue!;
                     },
                     items: controller.lsDescription[indexLength]),
               ),
@@ -217,4 +223,5 @@ class FieldDropDown extends GetView<RestaurantMenuController> {
         });
   }
 }
+
 
