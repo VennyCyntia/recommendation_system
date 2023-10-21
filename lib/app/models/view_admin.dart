@@ -20,29 +20,40 @@ class ViewRestaurant {
 }
 
 class ViewEmployee {
-  int? id;
-  String? employeename;
+  int? user_id;
+  String? username;
   String? email;
-  String? notelepon;
+  String? no_telp;
   String? password;
   String? role;
 
-  ViewEmployee({this.id, this.employeename, this.email, this.notelepon, this.password, this.role});
+  ViewEmployee({this.user_id, this.username, this.email, this.no_telp, this.password, this.role});
 
   ViewEmployee.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    employeename = json['employeename'];
+    user_id = json['user_id'];
+    username = json['username'];
     email = json['email'];
-    notelepon = json['notelepon'];
+    no_telp = json['no_telp'];
     password = json['password'];
     role = json['role'];
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'user_id': user_id,
+      'username': username,
+      'email': email,
+      'no_telp': no_telp,
+      'password': password,
+      'role': role,
+    };
+  }
+
   ViewEmployee.fromMap(Map<String, dynamic> map) {
-    id = map['id'];
-    employeename = map['employeename'];
+    user_id = map['user_id'];
+    username = map['username'];
     email = map['email'];
-    notelepon = map['notelepon'];
+    no_telp = map['no_telp'];
     password = map['password'];
     role = map['role'];
   }

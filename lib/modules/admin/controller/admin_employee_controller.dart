@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:recommendation_system/app/config/api_config.dart';
+import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/models/view_admin.dart';
-import 'package:recommendation_system/modules/admin/controller/db_restaurant.dart';
 import 'package:recommendation_system/modules/admin/pages/component/edit_karyawan_component.dart';
+import 'package:recommendation_system/modules/restaurant/pages/component/edit_menu_component.dart';
 
 class AdminEmployeeController extends GetxController {
   var formKey = GlobalKey<FormState>();
@@ -32,47 +35,32 @@ class AdminEmployeeController extends GetxController {
 
       for(int i=0; i<lsFormEmployee.length; i++){
         tempEmployee.add(ViewEmployee(
-          employeename: lsFormEmployee[i][0].text,
+          username: lsFormEmployee[i][0].text,
           email: lsFormEmployee[i][1].text,
-          notelepon: lsFormEmployee[i][2].text,
+          no_telp: lsFormEmployee[i][2].text,
           password: lsFormEmployee[i][3].text,
           role: lsFormEmployee[i][4].text,
         ));
       }
 
-      await RestaurantDatabase.instance.insertEmployee(tempEmployee);
+      List<Map<String, dynamic>> employeeList = tempEmployee.map((tempEmployee) => tempEmployee.toJson()).toList();
+      await onSendData(body: employeeList);
       await onGetAllData();
       onClearData();
     }
   }
 
-  Future<void> onShowEditMenu({required int index, required int id}) async {
-    ViewEmployee employee = await RestaurantDatabase.instance.selectEmployeeByID(id: id);
-
-    editFieldEmployee.clear();
-    editFieldEmployee.add(TextEditingController(text: employee.employeename));
-    editFieldEmployee.add(TextEditingController(text: employee.email));
-    editFieldEmployee.add(TextEditingController(text: employee.notelepon));
-    editFieldEmployee.add(TextEditingController(text: employee.password));
-    editFieldEmployee.add(TextEditingController(text: employee.role));
-
-    Get.to(() => EditKaryawanComponent(id: id, index: index));
-  }
-
-  Future<void> onUpdateData({required int id, required int index}) async {
-    var employeename = editFieldEmployee[0].text;
-    var email = editFieldEmployee[1].text;
-    var notelepon = editFieldEmployee[2].text;
-    var password = editFieldEmployee[3].text;
-    var role = editFieldEmployee[4].text;
-    int result = await RestaurantDatabase.instance.updateEmployeeByID(
-        id: id,
-        employeename: employeename,
-        email: email,
-        notelepon: notelepon,
-        password: password,
-        role: role,
+  Future<void> onUpdateData({required int id}) async {
+    ViewEmployee tempEmployee = ViewEmployee(
+      username: editFieldEmployee[0].text,
+      email: editFieldEmployee[1].text,
+      no_telp: editFieldEmployee[2].text,
+      password: editFieldEmployee[3].text,
+      role: editFieldEmployee[4].text,
     );
+
+    String url = '${GlobalUrl.baseUrl}user/update/$id';
+    var result = await APIConfig().sendDataToApi(url: url, method: 'POST', body: [tempEmployee]);
 
     await onGetAllData().then((value) =>
         Future.delayed(const Duration(milliseconds: 100), () => Get.back()));
@@ -80,14 +68,32 @@ class AdminEmployeeController extends GetxController {
 
   Future<void> onGetAllData() async {
     lsEmployee.clear();
-    var employee = await RestaurantDatabase.instance.selectAllEmployee();
-    for (var item in employee) {
+    String url = '${GlobalUrl.baseUrl}user';
+    var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
+    List<dynamic> jsonList = json.decode(result);
+
+    for (var item in jsonList) {
       lsEmployee.add(ViewEmployee.fromJson(item));
     }
   }
 
+  Future<void> onShowEditMenu({required int id}) async {
+    String url = '${GlobalUrl.baseUrl}user/$id';
+    var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
+    var data = json.decode(result);
+    editFieldEmployee.add(TextEditingController(text: data['username']));
+    editFieldEmployee.add(TextEditingController(text: data['email']));
+    editFieldEmployee.add(TextEditingController(text: data['no_telp']));
+    editFieldEmployee.add(TextEditingController(text: data['password']));
+    editFieldEmployee.add(TextEditingController(text: data['role']));
+
+    Get.to(() => EditKaryawanComponent(id: id));
+  }
+
+
   Future<void> onDeleteData({required int id}) async {
-    await RestaurantDatabase.instance.deleteRestaurantByID(id: id);
+    String url = '${GlobalUrl.baseUrl}user/delete/$id';
+    var result = await APIConfig().sendDataToApi(url: url, method: 'POST', body: []);
     onGetAllData();
   }
 
@@ -99,5 +105,18 @@ class AdminEmployeeController extends GetxController {
     lsFormEmployee.clear();
     onInitialAddForm();
     Get.back();
+  }
+
+  //senddata
+  Future<void> onSendData({required List body}) async {
+    String result = 'error';
+    String url = '${GlobalUrl.baseUrl}user/create';
+    result = await APIConfig().sendDataToApi(url: url, body: body, method: 'POST');
+    print('result '+result.toString());
+    if(result.toString().contains('success')){
+      print('berhasil ges');
+    }else{
+      print('gagal, coba lagi yuk');
+    }
   }
 }

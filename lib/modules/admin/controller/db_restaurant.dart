@@ -17,7 +17,7 @@ class RestaurantDatabase {
   static const _columnRestaurantDescription = 'description';
 
   //COLUMN EMPLOYEE
-  static const _columnEmployeeName = 'employeename';
+  static const _columnEmployeeName = 'username';
   static const _columnEmail = 'email';
   static const _columnNoTelepon = 'notelepon';
   static const _columnPassword = 'password';
@@ -131,9 +131,9 @@ class RestaurantDatabase {
               '$_columnEmployeeName, $_columnEmail, $_columnNoTelepon, $_columnPassword, $_columnRole) '
               'VALUES (?, ?, ?, ?, ?)',
           [
-            employee[i].employeename,
+            employee[i].username,
             employee[i].email,
-            employee[i].notelepon,
+            employee[i].no_telp,
             employee[i].password,
             employee[i].role,
           ]);
@@ -162,7 +162,7 @@ class RestaurantDatabase {
 
   Future<int> updateEmployeeByID(
       {required int id,
-        required String employeename,
+        required String username,
         required String email,
         required String notelepon,
         required String password,
@@ -171,7 +171,7 @@ class RestaurantDatabase {
     Database? db = await instance.database;
     result = await db!.rawUpdate(
         '''UPDATE $_tableEmployee SET $_columnEmployeeName = ?, $_columnEmail = ?, $_columnNoTelepon = ?, $_columnPassword = ?, $_columnRole = ? WHERE $_columnId = ?''',
-        [employeename, email, notelepon, password, role, id]);
+        [username, email, notelepon, password, role, id]);
     return result;
   }
 

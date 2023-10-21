@@ -24,11 +24,11 @@ class KaryawanContainer extends GetView<AdminEmployeeController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(controller.lsEmployee[index].employeename!,style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                        Text(controller.lsEmployee[index].username!,style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
                         Row(
                           children: [
                             ElevatedButton(
-                              onPressed: () => controller.onDeleteData(id: index),
+                              onPressed: () => controller.onDeleteData(id: controller.lsEmployee[index].user_id!),
                               style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: ThemeConfig().defaultSpacing),
@@ -38,7 +38,7 @@ class KaryawanContainer extends GetView<AdminEmployeeController> {
                             ),
                             SizedBox(width: ThemeConfig().defaultSpacing),
                             ElevatedButton(
-                              onPressed: () => controller.onShowEditMenu(id: controller.lsEmployee[index].id!,index: index),
+                              onPressed: () => controller.onShowEditMenu(id: controller.lsEmployee[index].user_id!),
                               style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: ThemeConfig().defaultSpacing),

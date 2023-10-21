@@ -6,9 +6,7 @@ import 'package:recommendation_system/modules/restaurant/pages/component/text_fi
 
 class EditKaryawanComponent extends GetView<AdminEmployeeController> {
   int id;
-  int index;
-
-  EditKaryawanComponent({super.key, required this.id, required this.index});
+  EditKaryawanComponent({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +74,7 @@ class EditKaryawanComponent extends GetView<AdminEmployeeController> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      onPressed: () => controller.onUpdateData(id: id, index: index),
+                      onPressed: () => controller.onUpdateData(id: id),
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               horizontal: ThemeConfig().defaultSpacing),
