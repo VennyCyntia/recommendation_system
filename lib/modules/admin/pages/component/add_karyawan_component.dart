@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/admin/controller/admin_employee_controller.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/text_field_input_component.dart';
+import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
 
 class AddKaryawanComponent extends GetView<AdminEmployeeController> {
   const AddKaryawanComponent({super.key});

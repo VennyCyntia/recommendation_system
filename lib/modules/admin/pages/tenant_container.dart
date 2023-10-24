@@ -21,11 +21,11 @@ class TenantContainer extends GetView<AdminRestaurantController>{
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(controller.lsRestaurant[index].restaurantname!,style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                      Text(controller.lsRestaurant[index].restaurant_name!,style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
                       Row(
                         children: [
                           ElevatedButton(
-                            onPressed: () => controller.onDeleteData(id: controller.lsRestaurant[index].id!),
+                            onPressed: () => controller.onDeleteData(id: controller.lsRestaurant[index].restaurant_id!),
                             style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: ThemeConfig().defaultSpacing),
@@ -35,7 +35,7 @@ class TenantContainer extends GetView<AdminRestaurantController>{
                           ),
                           SizedBox(width: ThemeConfig().defaultSpacing),
                           ElevatedButton(
-                            onPressed: () => controller.onShowEditData(index: index, id: controller.lsRestaurant[index].id!),
+                            onPressed: () => controller.onShowEditRestaurant(id: controller.lsRestaurant[index].restaurant_id!),
                             style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: ThemeConfig().defaultSpacing),

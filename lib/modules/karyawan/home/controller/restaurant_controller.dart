@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:recommendation_system/app/config/session_manager.dart';
 import 'package:recommendation_system/app/models/view_karyawan.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/menu_container.dart';
 import 'package:recommendation_system/modules/karyawan/cart/controller/cart_controller.dart';
@@ -7,11 +8,32 @@ class RestaurantController extends GetxController {
   var cartController = Get.find<CartController>();
   var lsRestaurantMenu = List<ViewRestaurant>.empty(growable: true).obs;
 
+  // var id = ''.obs;
+  // var username = ''.obs;
+  // var email = ''.obs;
+  // var no_telp = ''.obs;
+
+  var isLoading = false.obs;
+
   @override
-  void onInit() {
+  void onInit() async {
+    isLoading.value = true;
+    // await onGetUserInformation();
     onSetUpMenu(menu: menu);
     super.onInit();
   }
+
+  // Future<void> onGetUserInformation() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   id.value = UserSession().onGetId().toString();
+  //   username.value = await UserSession().onGetUsername();
+  //   email.value = await UserSession().onGetEmail();
+  //   no_telp.value = await UserSession().onGetNoTelepon();
+  //
+  //   print('username '+username.value);
+  //   print('email '+email.value);
+  //   print('no_telp '+no_telp.value);
+  // }
 
   void onSetUpMenu({required List<Map<String, Object>> menu}){
     lsRestaurantMenu.clear();

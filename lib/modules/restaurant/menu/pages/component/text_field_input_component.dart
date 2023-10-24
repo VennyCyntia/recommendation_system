@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/restaurant/controller/restaurant_menu_controller.dart';
+import 'package:recommendation_system/modules/restaurant/menu/controller/menu_controller.dart';
 
 class TextFieldInputComponent extends StatelessWidget {
   final String title;
@@ -69,10 +69,10 @@ class FormInputTextMandatory extends StatelessWidget {
   final TextInputType textInputType;
   final TextEditingController txtcontroller;
 
-  // final double? pTop;
-  // final double? pBottom;
-  // final double? pLeft;
-  // final double? pRight;
+  final double? pTop;
+  final double? pBottom;
+  final double? pLeft;
+  final double? pRight;
   final bool mandatory;
 
   const FormInputTextMandatory({
@@ -88,17 +88,20 @@ class FormInputTextMandatory extends StatelessWidget {
     this.maxLength,
     this.inputFormat,
     required this.borderColors,
-    // this.pTop,
-    // this.pBottom,
-    // this.pLeft,
-    // this.pRight,
+    this.pTop,
+    this.pBottom,
+    this.pLeft,
+    this.pRight,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: ThemeConfig().defaultSpacing,
+        top: pTop ?? 0,
+        bottom: pBottom ?? 0,
+        left: pLeft ?? 0,
+        right: pLeft ?? 0,
       ),
       child: Column(
         children: [
@@ -132,20 +135,19 @@ class FormInputTextMandatory extends StatelessWidget {
               }
             },
             decoration: InputDecoration(
-              // hintText: title,
                 hintStyle:
                 TextStyle(fontSize: 16.0, color: Colors.grey.shade400),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 contentPadding: const EdgeInsets.all(8.0),
-                // focusedBorder: OutlineInputBorder(
-                //   borderSide: BorderSide(color: borderColors, width: 2),
-                //   borderRadius: BorderRadius.circular(8.0),
-                // ),
-                // enabledBorder: OutlineInputBorder(
-                //   borderRadius: BorderRadius.circular(10.0),
-                // ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: borderColors, width: 2),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 filled: true,
                 fillColor: ThemeConfig.justWhite),
             style: const TextStyle(fontSize: 15),

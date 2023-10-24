@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recommendation_system/app/config/session_manager.dart';
 import 'package:recommendation_system/routes/app_routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RestaurantController extends GetxController{
   var currentIndex = 0.obs;
@@ -26,4 +28,5 @@ class RestaurantController extends GetxController{
   void onToProfileContainer() {
     Get.toNamed(AppRoutes.profileRestaurant);
   }
+
 }

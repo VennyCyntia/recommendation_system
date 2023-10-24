@@ -76,8 +76,8 @@ class RestaurantDatabase {
               '$_columnRestaurantName, $_columnRestaurantDescription) '
               'VALUES (?, ?)',
           [
-            restaurant[i].restaurantname,
-            restaurant[i].description,
+            restaurant[i].restaurant_name,
+            restaurant[i].restaurant_description,
           ]);
     }
   }

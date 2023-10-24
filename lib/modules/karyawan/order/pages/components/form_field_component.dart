@@ -3,7 +3,9 @@ import 'package:recommendation_system/app/config/theme_config.dart';
 
 class FormFieldComponent extends StatelessWidget {
   String? title;
-  FormFieldComponent({super.key, this.title});
+  TextEditingController? txtController;
+
+  FormFieldComponent({super.key, this.title, this.txtController});
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +44,6 @@ class FormFieldComponent extends StatelessWidget {
                 ),
               ),
             ),
-            // validator: (String? value){
-            //   return value == null || value.isEmpty ?
-            //   Get.find<SignInController>().languageManager.validateLoginUsername.value : null;
-            // },
           ),
         ],
       ),

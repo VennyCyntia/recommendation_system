@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/restaurant/controller/restaurant_tabs_controller.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/order_done_component.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/order_process_component.dart';
+import 'package:recommendation_system/modules/restaurant/menu/controller/tabs_controller.dart';
+import 'package:recommendation_system/modules/restaurant/order/pages/component/order_done_component.dart';
+import 'package:recommendation_system/modules/restaurant/order/pages/component/order_process_component.dart';
 
 class OrderRestaurantContainer extends StatelessWidget {
   const OrderRestaurantContainer({super.key});
@@ -34,8 +34,8 @@ class OrderRestaurantContainer extends StatelessWidget {
                 ),
                 child: TabBar(
                     unselectedLabelColor: ThemeConfig.lightGrey,
-                    controller: Get.find<RestaurantTabsController>().controller,
-                    tabs: Get.find<RestaurantTabsController>().tabsOrder,
+                    controller: Get.find<TabsController>().controller,
+                    tabs: Get.find<TabsController>().tabsOrder,
                     indicator: const UnderlineTabIndicator(borderSide: BorderSide(color: Colors.black)),
                     indicatorPadding: const EdgeInsets.all(8.0),
                     dividerColor: Colors.black,
@@ -46,7 +46,7 @@ class OrderRestaurantContainer extends StatelessWidget {
             ),
             Expanded(
               child: TabBarView(
-                controller: Get.find<RestaurantTabsController>().controller,
+                controller: Get.find<TabsController>().controller,
                 children: const [
                   OrderProcessComponent(),
                   OrderDoneComponent(),

@@ -11,8 +11,6 @@ class CartController extends GetxController {
 
   @override
   void onInit() {
-    // lsItemCart.refresh();
-    print('ls '+lsItemCart.length.toString());
     super.onInit();
   }
 

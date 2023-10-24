@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recommendation_system/app/config/api_config.dart';
+import 'package:recommendation_system/app/config/global_url.dart';
+import 'package:recommendation_system/app/config/session_manager.dart';
 import 'package:recommendation_system/app/models/view_restaurant.dart';
-import 'package:recommendation_system/modules/restaurant/controller/db_restaurant.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/edit_menu_component.dart';
+import 'package:recommendation_system/modules/restaurant/menu/pages/component/edit_menu_component.dart';
 
 class RestaurantMenuController extends GetxController {
   var formKey = GlobalKey<FormState>();
@@ -49,15 +53,29 @@ class RestaurantMenuController extends GetxController {
     ],
   }.obs;
 
+  var id = 0.obs;
+  TextEditingController username = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController no_telp = TextEditingController();
+
   var isLoading = false.obs;
 
   @override
   void onInit() async {
     isLoading.value = true;
     onInitialAddForm();
+    await onGetUserInformation();
     onGetAllData();
     isLoading.value = false;
     super.onInit();
+  }
+
+  Future<void> onGetUserInformation() async {
+    id.value = await UserSession().onGetId();
+    print('id restaurant ' + id.toString());
+    username.text = await UserSession().onGetUsername();
+    email.text = await UserSession().onGetEmail();
+    no_telp.text = await UserSession().onGetNoTelepon();
   }
 
   Future<void> onGetImage({required int index}) async {
@@ -93,79 +111,93 @@ class RestaurantMenuController extends GetxController {
           if (j == 0) {
             combinedDesc.add(selectedDesc[i][j]);
           } else {
-            combinedDesc[i] = combinedDesc[i] + ', ' + selectedDesc[i][j];
+            combinedDesc[i] = '${combinedDesc[i]}, ${selectedDesc[i][j]}';
           }
         }
       }
 
       for (int i = 0; i < lsFormMenu.length; i++) {
         tempMenu.add(ViewMenu(
-          title: lsFormMenu[i][0].text,
-          subtitle: lsFormMenu[i][1].text,
-          category: selectedCategory[i],
-          description: combinedDesc[i],
-          price: int.parse(lsFormMenu[i][2].text),
-          pic: lsPic[i],
-        ));
+            menu_name: lsFormMenu[i][0].text,
+            menu_subtitle: lsFormMenu[i][1].text,
+            menu_category: selectedCategory[i],
+            menu_description: combinedDesc[i],
+            menu_price: int.parse(lsFormMenu[i][2].text),
+            menu_image: lsPic[i],
+            restaurant_id: id.value));
       }
 
-      await RestaurantDatabase.instance.insertMenu(tempMenu);
+      List<Map<String, dynamic>> menuList =
+          tempMenu.map((tempMenu) => tempMenu.toJson()).toList();
+      await onSendData(body: menuList);
       await onGetAllData();
       onClearData();
     }
   }
 
-  Future<void> onShowEditData({required int index, required int id}) async {
-    ViewMenu menu = await RestaurantDatabase.instance.selectMenuByID(id: id);
-    List<String> valuesList = menu.description!.split(', ');
+  Future<void> onShowEditMenu({required int index, required int id}) async {
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.getMenuById}$id';
+    var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
+    if (result.toLowerCase().contains('failed') ||
+        result.toLowerCase().contains('gagal') ||
+        result.toLowerCase().contains('error')) {
+    } else {
+      var data = json.decode(result);
+      List<String> valuesList = data['menu_description'].split(', ');
 
-    if (menu.id != null) {
       editFieldMenu.clear();
       lsPic.clear();
       selectedCategory.clear();
       editSelectedDesc.clear();
 
-      editFieldMenu.add(TextEditingController(text: menu.title));
-      editFieldMenu.add(TextEditingController(text: menu.subtitle));
-      editFieldMenu.add(TextEditingController(text: menu.price.toString()));
-      lsPic.add(menu.pic);
-      selectedCategory.add(menu.category!);
-      for(int i=0; i<valuesList.length; i++){
+      editFieldMenu.add(TextEditingController(text: data['menu_name']));
+      editFieldMenu.add(TextEditingController(text: data['menu_subtitle']));
+      editFieldMenu
+          .add(TextEditingController(text: data['menu_price'].toString()));
+      selectedCategory.add(data['menu_category']!);
+      for (int i = 0; i < valuesList.length; i++) {
         editSelectedDesc.add(valuesList[i]);
       }
+      lsPic.add(File(data['menu_image']));
+      print('lspic ' + lsPic[0].toString());
 
-      Get.to(() => EditMenuComponent(id: id, index: index));
+      Get.to(() => EditMenuComponent(index: index, id: id));
     }
   }
 
-  Future<void> onUpdateData({required int id, required int index}) async {
+  Future<void> onUpdateData({required int id}) async {
     String combinedDesc = '';
 
     for (int i = 0; i < editSelectedDesc.length; i++) {
       if (i == 0) {
         combinedDesc = editSelectedDesc[i];
       } else {
-        combinedDesc = combinedDesc + ', ' + editSelectedDesc[i];
+        combinedDesc = '$combinedDesc, ${editSelectedDesc[i]}';
       }
     }
 
-    ViewMenu tempData = ViewMenu(
-        id: id,
-        title: editFieldMenu[0].text,
-        subtitle: editFieldMenu[1].text,
-        category: selectedCategory[0],
-        description: combinedDesc,
-        price: int.parse(editFieldMenu[2].text),
-        pic: lsPic[0]
-    );
+    Map tempMenu = {
+      'menu_name': editFieldMenu[0].text,
+      'menu_subtitle': editFieldMenu[1].text,
+      'menu_category': selectedCategory[0],
+      'menu_description': combinedDesc,
+      'menu_price': int.parse(editFieldMenu[2].text),
+      'menu_image': '/data',
+    };
+    log(jsonEncode(tempMenu));
 
-    await RestaurantDatabase.instance.updateMenuByID(menu: tempData);
+    String url = GlobalUrl.baseUrl + GlobalUrl.updateMenu + id.toString();
+    var result = await APIConfig()
+        .onSendOrGetSource(url: url, methodType: 'POST', body: tempMenu);
+
     await onGetAllData().then((value) =>
         Future.delayed(const Duration(milliseconds: 100), () => Get.back()));
   }
 
   Future<void> onDeleteData({required int id}) async {
-    await RestaurantDatabase.instance.deleteMenuByID(id: id);
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.deleteMenu}$id';
+    var result =
+        await APIConfig().sendDataToApi(url: url, method: 'POST', body: []);
     onGetAllData();
   }
 
@@ -178,9 +210,32 @@ class RestaurantMenuController extends GetxController {
 
   Future<void> onGetAllData() async {
     lsMenu.clear();
-    var menu = await RestaurantDatabase.instance.selectAllMenu();
-    for (var item in menu) {
-      lsMenu.add(ViewMenu.fromJson(item));
+
+    String url =
+        GlobalUrl.baseUrl + GlobalUrl.getMenuByRestaurant + id.toString();
+    var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
+    if (!result.toLowerCase().contains('failed') &&
+        !result.toLowerCase().contains('gagal') &&
+        !result.toLowerCase().contains('error') &&
+        !result.toLowerCase().contains('false')) {
+      List<dynamic> jsonList = json.decode(result);
+      for (var item in jsonList) {
+        lsMenu.add(ViewMenu.fromJson(item));
+      }
+    } else {}
+  }
+
+  //senddata
+  Future<void> onSendData({required List body}) async {
+    String result = 'error';
+    String url = GlobalUrl.baseUrl + GlobalUrl.createMenu;
+    result =
+        await APIConfig().sendDataToApi(url: url, body: body, method: 'POST');
+    print('result ' + result.toString());
+    if (result.toString().contains('success')) {
+      print('berhasil ges');
+    } else {
+      print('gagal, coba lagi yuk');
     }
   }
 

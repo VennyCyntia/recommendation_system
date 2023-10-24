@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/restaurant/controller/restaurant_menu_controller.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/text_field_input_component.dart';
+import 'package:recommendation_system/modules/restaurant/menu/controller/menu_controller.dart';
+import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
 
 class AddMenuComponent extends GetView<RestaurantMenuController> {
   const AddMenuComponent({super.key});

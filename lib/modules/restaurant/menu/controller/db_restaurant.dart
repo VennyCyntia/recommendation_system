@@ -59,18 +59,18 @@ class RestaurantDatabase {
     Database? db = await instance.database;
 
     for (int i = 0; i < menu.length; i++) {
-      await db!.rawInsert(
-          'INSERT INTO $_tableMenu ('
-              '$_columnTitle, $_columnSubtitle, $_columnCategory, $_columnDescription, $_columnPrice, $_columnPic) '
-              'VALUES (?, ?, ?, ?, ?, ?)',
-          [
-            menu[i].title,
-            menu[i].subtitle,
-            menu[i].category,
-            menu[i].description,
-            menu[i].price,
-            menu[i].pic,
-          ]);
+      // await db!.rawInsert(
+      //     'INSERT INTO $_tableMenu ('
+      //         '$_columnTitle, $_columnSubtitle, $_columnCategory, $_columnDescription, $_columnPrice, $_columnPic) '
+      //         'VALUES (?, ?, ?, ?, ?, ?)',
+          // [
+          //   menu[i].title,
+          //   menu[i].subtitle,
+          //   menu[i].category,
+          //   menu[i].description,
+          //   menu[i].price,
+          //   menu[i].pic,
+          // ]);
     }
   }
 
@@ -97,9 +97,9 @@ class RestaurantDatabase {
   Future<void> updateMenuByID(
       {required ViewMenu menu}) async {
     Database? db = await instance.database;
-    await db!.rawUpdate(
-        '''UPDATE $_tableMenu SET $_columnTitle = ?, $_columnSubtitle = ?, $_columnCategory = ?, $_columnDescription = ?, $_columnPrice = ?, $_columnPic = ? WHERE $_columnId = ?''',
-        [menu.title, menu.subtitle, menu.category, menu.description, menu.price, menu.pic, menu.id]);
+    // await db!.rawUpdate(
+    //     '''UPDATE $_tableMenu SET $_columnTitle = ?, $_columnSubtitle = ?, $_columnCategory = ?, $_columnDescription = ?, $_columnPrice = ?, $_columnPic = ? WHERE $_columnId = ?''',
+    //     [menu.title, menu.subtitle, menu.category, menu.description, menu.price, menu.pic, menu.id]);
   }
 
   Future<int> deleteMenuByID({required int id}) async {

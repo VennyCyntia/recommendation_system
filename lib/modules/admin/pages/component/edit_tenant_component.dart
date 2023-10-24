@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/admin/controller/admin_restaurant_controller.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/text_field_input_component.dart';
+import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
 
 class EditTenantComponent extends GetView<AdminRestaurantController> {
   int id;
@@ -50,7 +50,7 @@ class EditTenantComponent extends GetView<AdminRestaurantController> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      onPressed: () => controller.onUpdateData(id: id, index: index),
+                      onPressed: () => controller.onUpdateData(id: id),
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               horizontal: ThemeConfig().defaultSpacing),

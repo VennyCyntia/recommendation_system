@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/order/pages/components/form_field_component.dart';
+import 'package:recommendation_system/modules/karyawan/profile/controller/profile_controller.dart';
+import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
 
-class ProfileContainer extends StatelessWidget {
+class ProfileContainer extends GetView<ProfileController> {
   const ProfileContainer({super.key});
 
   @override
@@ -35,15 +37,56 @@ class ProfileContainer extends StatelessWidget {
                           child: Icon(Icons.account_circle_sharp),
                         ),
                         SizedBox(height: ThemeConfig().defaultSpacing),
-                        const Center(child: Text('Name'))
+                        Center(child: Text(controller.username.text.toUpperCase(),
+                            style: ThemeConfig().textHeader4Bold(
+                                color: ThemeConfig.justBlack)))
                       ],
                     ),
                   ),
                 ],
               ),
-              FormFieldComponent(title: 'Nama'),
-              FormFieldComponent(title: 'Email'),
-              FormFieldComponent(title: 'Preferensi'),
+              FormInputTextMandatory(
+                title: 'Nama',
+                txtcontroller: controller.username,
+                textInputType: TextInputType.text,
+                txtLine: 2,
+                txtEnable: true,
+                txtReadonly: false,
+                mandatory: false,
+                borderColors: Colors.black,
+                pLeft: ThemeConfig().defaultSpacing,
+                pTop: ThemeConfig().extraSpacing,
+                pRight: ThemeConfig().defaultSpacing,
+                pBottom: ThemeConfig().defaultSpacing,
+              ),
+              FormInputTextMandatory(
+                title: 'Email',
+                txtcontroller: controller.email,
+                textInputType: TextInputType.text,
+                txtLine: 2,
+                txtEnable: true,
+                txtReadonly: false,
+                mandatory: false,
+                borderColors: Colors.black,
+                pLeft: ThemeConfig().defaultSpacing,
+                pTop: ThemeConfig().extraSpacing,
+                pRight: ThemeConfig().defaultSpacing,
+                pBottom: ThemeConfig().defaultSpacing,
+              ),
+              FormInputTextMandatory(
+                title: 'Preferensi',
+                txtcontroller: controller.username,
+                textInputType: TextInputType.text,
+                txtLine: 2,
+                txtEnable: true,
+                txtReadonly: false,
+                mandatory: false,
+                borderColors: Colors.black,
+                pLeft: ThemeConfig().defaultSpacing,
+                pTop: ThemeConfig().extraSpacing,
+                pRight: ThemeConfig().defaultSpacing,
+                pBottom: ThemeConfig().defaultSpacing,
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(

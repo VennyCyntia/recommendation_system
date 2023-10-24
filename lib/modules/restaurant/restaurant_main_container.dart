@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:recommendation_system/modules/restaurant/controller/restaurant_controller.dart';
-import 'package:recommendation_system/modules/restaurant/pages/menu_restaurant_container.dart';
+import 'package:recommendation_system/modules/restaurant/menu/controller/main_controller.dart';
+import 'package:recommendation_system/modules/restaurant/menu/pages/menu_restaurant_container.dart';
 
 class RestaurantMainContainer extends GetView<RestaurantController> {
   const RestaurantMainContainer({super.key});

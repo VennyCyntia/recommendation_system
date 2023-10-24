@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RestaurantTabsController extends GetxController with GetSingleTickerProviderStateMixin{
+class TabsController extends GetxController with GetSingleTickerProviderStateMixin{
   TabController? controller;
 
   final List<Tab> tabsOrder = <Tab>[

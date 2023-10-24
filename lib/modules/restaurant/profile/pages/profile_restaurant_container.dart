@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/order/pages/components/form_field_component.dart';
+import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
+import 'package:recommendation_system/modules/restaurant/profile/controller/profile_controller.dart';
 
-class ProfileRestaurantContainer extends StatelessWidget {
+class ProfileRestaurantContainer extends GetView<ProfileController> {
   const ProfileRestaurantContainer({super.key});
 
   @override
@@ -34,14 +36,43 @@ class ProfileRestaurantContainer extends StatelessWidget {
                           child: Icon(Icons.account_circle_sharp),
                         ),
                         SizedBox(height: ThemeConfig().defaultSpacing),
-                        const Center(child: Text(' Restaurant Name'))
+                        Center(
+                            child: Text(controller.username.text.toUpperCase(),
+                                style: ThemeConfig().textHeader4Bold(
+                                    color: ThemeConfig.justBlack)))
                       ],
                     ),
                   ),
                 ],
               ),
-              FormFieldComponent(title: 'Nama'),
-              FormFieldComponent(title: 'Email'),
+              FormInputTextMandatory(
+                title: 'Nama',
+                txtcontroller: controller.username,
+                textInputType: TextInputType.text,
+                txtLine: 2,
+                txtEnable: true,
+                txtReadonly: false,
+                mandatory: false,
+                borderColors: Colors.black,
+                pLeft: ThemeConfig().defaultSpacing,
+                pTop: ThemeConfig().extraSpacing,
+                pRight: ThemeConfig().defaultSpacing,
+                pBottom: ThemeConfig().defaultSpacing,
+              ),
+              FormInputTextMandatory(
+                title: 'Email',
+                txtcontroller: controller.email,
+                textInputType: TextInputType.text,
+                txtLine: 2,
+                txtEnable: true,
+                txtReadonly: false,
+                mandatory: false,
+                borderColors: Colors.black,
+                pLeft: ThemeConfig().defaultSpacing,
+                pTop: ThemeConfig().defaultSpacing,
+                pRight: ThemeConfig().defaultSpacing,
+                pBottom: ThemeConfig().defaultSpacing,
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(
@@ -65,7 +96,9 @@ class ProfileRestaurantContainer extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: ThemeConfig().defaultSpacing),
                           backgroundColor: ThemeConfig.justGrey,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)))),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)))),
                       child: Text('Logout',
                           style: ThemeConfig()
                               .textHeader4(color: ThemeConfig.justBlack))),

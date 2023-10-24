@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recommendation_system/Modules/Login/Controller/login_controller.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/home_container.dart';
+import 'package:recommendation_system/modules/login/controller/login_controller.dart';
 
 class MainContainer extends GetView<LoginController> {
   const MainContainer({super.key});

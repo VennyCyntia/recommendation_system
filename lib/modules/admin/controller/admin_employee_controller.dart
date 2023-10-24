@@ -5,7 +5,6 @@ import 'package:recommendation_system/app/config/api_config.dart';
 import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/models/view_admin.dart';
 import 'package:recommendation_system/modules/admin/pages/component/edit_karyawan_component.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/edit_menu_component.dart';
 
 class AdminEmployeeController extends GetxController {
   var formKey = GlobalKey<FormState>();
@@ -59,7 +58,7 @@ class AdminEmployeeController extends GetxController {
       role: editFieldEmployee[4].text,
     );
 
-    String url = '${GlobalUrl.baseUrl}user/update/$id';
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.updateEmployee}$id';
     var result = await APIConfig().sendDataToApi(url: url, method: 'POST', body: [tempEmployee]);
 
     await onGetAllData().then((value) =>
@@ -68,19 +67,27 @@ class AdminEmployeeController extends GetxController {
 
   Future<void> onGetAllData() async {
     lsEmployee.clear();
-    String url = '${GlobalUrl.baseUrl}user';
-    var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
-    List<dynamic> jsonList = json.decode(result);
 
-    for (var item in jsonList) {
-      lsEmployee.add(ViewEmployee.fromJson(item));
+    String url = GlobalUrl.baseUrl + GlobalUrl.getAllEmployee;
+    var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
+    if (!result.toLowerCase().contains('failed') &&
+        !result.toLowerCase().contains('gagal') &&
+        !result.toLowerCase().contains('error') &&
+        !result.toLowerCase().contains('false')) {
+      List<dynamic> jsonList = json.decode(result);
+      for (var item in jsonList) {
+        lsEmployee.add(ViewEmployee.fromJson(item));
+      }
+    } else {
+
     }
   }
 
   Future<void> onShowEditMenu({required int id}) async {
-    String url = '${GlobalUrl.baseUrl}user/$id';
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.getEmployeeById}$id';
     var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
     var data = json.decode(result);
+
     editFieldEmployee.add(TextEditingController(text: data['username']));
     editFieldEmployee.add(TextEditingController(text: data['email']));
     editFieldEmployee.add(TextEditingController(text: data['no_telp']));
@@ -92,7 +99,7 @@ class AdminEmployeeController extends GetxController {
 
 
   Future<void> onDeleteData({required int id}) async {
-    String url = '${GlobalUrl.baseUrl}user/delete/$id';
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.createEmployee}$id';
     var result = await APIConfig().sendDataToApi(url: url, method: 'POST', body: []);
     onGetAllData();
   }
@@ -110,7 +117,7 @@ class AdminEmployeeController extends GetxController {
   //senddata
   Future<void> onSendData({required List body}) async {
     String result = 'error';
-    String url = '${GlobalUrl.baseUrl}user/create';
+    String url = GlobalUrl.baseUrl + GlobalUrl.createEmployee;
     result = await APIConfig().sendDataToApi(url: url, body: body, method: 'POST');
     print('result '+result.toString());
     if(result.toString().contains('success')){

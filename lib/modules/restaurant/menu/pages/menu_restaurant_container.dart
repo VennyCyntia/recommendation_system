@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/restaurant/controller/restaurant_menu_controller.dart';
-import 'package:recommendation_system/modules/restaurant/pages/component/add_menu_component.dart';
+import 'package:recommendation_system/modules/restaurant/menu/controller/menu_controller.dart';
+import 'package:recommendation_system/modules/restaurant/menu/pages/component/add_menu_component.dart';
 
 class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
   const MenuRestaurantContainer({super.key});
@@ -28,11 +28,11 @@ class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(controller.lsMenu[index].title!, style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                            Text(controller.lsMenu[index].menu_name!, style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
                             Row(
                               children: [
                                 ElevatedButton(
-                                  onPressed: () => controller.onDeleteData(id: controller.lsMenu[index].id!),
+                                  onPressed: () => controller.onDeleteData(id: controller.lsMenu[index].menu_id!),
                                   style: ElevatedButton.styleFrom(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: ThemeConfig().defaultSpacing),
@@ -42,7 +42,7 @@ class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
                                 ),
                                 SizedBox(width: ThemeConfig().defaultSpacing),
                                 ElevatedButton(
-                                  onPressed: () => controller.onShowEditData(index: index, id: controller.lsMenu[index].id!),
+                                  onPressed: () => controller.onShowEditMenu(index: index, id: controller.lsMenu[index].menu_id!),
                                   style: ElevatedButton.styleFrom(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: ThemeConfig().defaultSpacing),
