@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/order_controller.dart';
 
-class RatingContainer extends StatelessWidget {
+class RatingContainer extends GetView<OrderController> {
   const RatingContainer({super.key});
 
   @override
@@ -23,7 +25,7 @@ class RatingContainer extends StatelessWidget {
               style: ThemeConfig().textHeader3(color: Colors.black),
             ),
             TextButton(
-                onPressed: () {},
+                onPressed: () => controller.onSendRating(),
                 child: Text('Send',
                     style: ThemeConfig().textHeader5(color: Colors.black)))
           ],
@@ -67,7 +69,7 @@ class RatingContainer extends StatelessWidget {
                             style: ThemeConfig()
                                 .textHeader5(color: ThemeConfig.justBlack),
                           ),
-                          const StarComponent(),
+                          StarComponent(index: index),
                         ],
                       ),
                     ],
@@ -82,18 +84,34 @@ class RatingContainer extends StatelessWidget {
   }
 }
 
-class StarComponent extends StatelessWidget {
-  const StarComponent({super.key});
+  class StarComponent extends GetView<OrderController> {
+  int index;
+  StarComponent({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       mainAxisSize: MainAxisSize.min,
-      children: List.generate(5, (index) {
-        return GestureDetector(
-            onTap: (){},
-            child: const Icon(Icons.star_border_outlined));
-      }),
+      children: [
+        RatingBar(
+            initialRating: 0,
+            direction: Axis.horizontal,
+            itemCount: 5,
+            itemSize: 30,
+            ratingWidget: RatingWidget(
+                full: const Icon(Icons.star, color: Colors.orange),
+                half: const Icon(
+                  Icons.star_half,
+                  color: Colors.orange,
+                ),
+                empty: const Icon(
+                  Icons.star_outline,
+                  color: Colors.orange,
+                )),
+            onRatingUpdate: (value) {
+             controller.onGiveRating(index, value.toInt());
+            }),
+      ]
     );
   }
 }

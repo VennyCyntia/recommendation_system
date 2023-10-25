@@ -28,7 +28,7 @@ class RestaurantComponent extends GetView<RestaurantController> {
                     ),
                     child: Column(
                       children: [
-                        ClipRRect(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),child: Image.network(controller.lsRestaurantMenu[index!].pic!)),
+                        // ClipRRect(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),child: Image.network(controller.lsRestaurantMenu[index!].pic!)),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(controller.lsRestaurantMenu[index!].restaurantName!, style: ThemeConfig().textHeader3Bold(color: ThemeConfig.justBlack)),

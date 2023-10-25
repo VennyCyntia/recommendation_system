@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:recommendation_system/app/config/api_config.dart';
+import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/config/session_manager.dart';
 import 'package:recommendation_system/app/models/view_karyawan.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/menu_container.dart';
@@ -7,38 +11,30 @@ import 'package:recommendation_system/modules/karyawan/cart/controller/cart_cont
 class RestaurantController extends GetxController {
   var cartController = Get.find<CartController>();
   var lsRestaurantMenu = List<ViewRestaurant>.empty(growable: true).obs;
-
-  // var id = ''.obs;
-  // var username = ''.obs;
-  // var email = ''.obs;
-  // var no_telp = ''.obs;
+  var lsQty = List<dynamic>.empty(growable: true).obs;
 
   var isLoading = false.obs;
 
   @override
   void onInit() async {
     isLoading.value = true;
-    // await onGetUserInformation();
-    onSetUpMenu(menu: menu);
+    onSetUpMenu();
     super.onInit();
   }
 
-  // Future<void> onGetUserInformation() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   id.value = UserSession().onGetId().toString();
-  //   username.value = await UserSession().onGetUsername();
-  //   email.value = await UserSession().onGetEmail();
-  //   no_telp.value = await UserSession().onGetNoTelepon();
-  //
-  //   print('username '+username.value);
-  //   print('email '+email.value);
-  //   print('no_telp '+no_telp.value);
-  // }
-
-  void onSetUpMenu({required List<Map<String, Object>> menu}){
+  Future<void> onSetUpMenu() async {
     lsRestaurantMenu.clear();
-    for(var item in menu){
-      lsRestaurantMenu.add(ViewRestaurant.fromJson(item));
+    // for(var item in menu){
+    //   lsRestaurantMenu.add(ViewRestaurant.fromJson(item));
+    // }
+    String url = GlobalUrl.baseUrl + GlobalUrl.getAllData;
+    var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
+    var data = jsonDecode(result);
+
+    lsRestaurantMenu.add(ViewRestaurant.fromJson(data));
+
+    for(var item in lsRestaurantMenu){
+      print('item '+item.restaurantName!);
     }
   }
 
@@ -54,15 +50,15 @@ class RestaurantController extends GetxController {
     ItemCartRestaurant? restaurantCart = cartController.lsItemCart
         .firstWhereOrNull(
             (item) => item.restaurantName == currentRestaurant.restaurantName);
-    currentMenu.qty = currentMenu.qty! + 1;
+    // currentMenu.qty = currentMenu.qty! + 1;
 
     if (restaurantCart != null) {
-      ItemCartMenu menuCart = restaurantCart.menu
-      !.firstWhere((item) => item.title == currentMenu.title);
-      if (menuCart != null) {
-        menuCart.orderQty = currentMenu.qty;
-        menuCart.totalprice = menuCart.price! * menuCart.orderQty!;
-      }
+      // ItemCartMenu menuCart = restaurantCart.menu
+      // !.firstWhere((item) => item.title == currentMenu.title);
+      // if (menuCart != null) {
+      //   // menuCart.orderQty = currentMenu.qty;
+      //   menuCart.totalprice = menuCart.price! * menuCart.orderQty!;
+      // }
     }
     onControlTotalPrice();
   }
@@ -76,7 +72,7 @@ class RestaurantController extends GetxController {
         .menu![indexCategory]
         .itemMenu![indexItem];
 
-    currentMenu.qty = currentMenu.qty! - 1;
+    // currentMenu.qty = currentMenu.qty! - 1;
 
     ItemCartRestaurant? restaurantCart = cartController.lsItemCart
         .firstWhereOrNull(
@@ -86,16 +82,16 @@ class RestaurantController extends GetxController {
       if (restaurantCart.menu!.length == 1) {
         cartController.lsItemCart.remove(restaurantCart);
       } else {
-        ItemCartMenu menuCart = restaurantCart.menu
-        !.firstWhere((item) => item.title == currentMenu.title);
-        if (menuCart.orderQty == 0) {
-          restaurantCart.menu?.remove(menuCart);
-        } else {
-          int basicPrice = menuCart.price!;
-          menuCart.orderQty = currentMenu.qty;
-          int totalPrice = basicPrice * menuCart.orderQty!;
-          menuCart.totalprice = totalPrice;
-        }
+        // ItemCartMenu menuCart = restaurantCart.menu
+        // !.firstWhere((item) => item.title == currentMenu.title);
+        // if (menuCart.orderQty == 0) {
+        //   restaurantCart.menu?.remove(menuCart);
+        // } else {
+        //   int basicPrice = menuCart.price!;
+        //   // menuCart.orderQty = currentMenu.qty;
+        //   int totalPrice = basicPrice * menuCart.orderQty!;
+        //   menuCart.totalprice = totalPrice;
+        // }
       }
     }
     onControlTotalPrice();
@@ -150,30 +146,31 @@ class RestaurantController extends GetxController {
         .menu![indexCategory]
         .itemMenu![indexItem];
 
-    currentMenu.qty = currentMenu.qty! + 1;
+    // currentMenu.qty = currentMenu.qty! + 1;
 
     ItemCartRestaurant? restaurantCart = cartController.lsItemCart
         .firstWhereOrNull(
             (item) => item.restaurantName == currentRestaurant.restaurantName);
     if (restaurantCart != null) {
-      restaurantCart.menu!.add(ItemCartMenu(
-          title: currentMenu.title,
-          pic: currentMenu.pic,
-          price: currentMenu.price,
-          orderQty: currentMenu.qty,
-          totalprice: currentMenu.price!));
+      // restaurantCart.menu!.add(ItemCartMenu(
+      //     // title: currentMenu.title,
+      //     // pic: currentMenu.pic,
+      //     // price: currentMenu.price,
+      //     // orderQty: currentMenu.qty,
+      //     // totalprice: currentMenu.price!)
+      // );
     } else {
-      cartController.lsItemCart.add(ItemCartRestaurant(
-        restaurantName: currentRestaurant.restaurantName,
-        menu: [
-          ItemCartMenu(
-              title: currentMenu.title,
-              pic: currentMenu.pic,
-              price: currentMenu.price,
-              orderQty: currentMenu.qty,
-              totalprice: currentMenu.price!)
-        ],
-      ));
+      // cartController.lsItemCart.add(ItemCartRestaurant(
+      //   restaurantName: currentRestaurant.restaurantName,
+      //   menu: [
+      //     ItemCartMenu(
+      //         // title: currentMenu.title,
+      //         // pic: currentMenu.pic,
+      //         // price: currentMenu.price,
+      //         // orderQty: currentMenu.qty,
+      //         // totalprice: currentMenu.price!)
+      //   ],
+      // ));
     }
     cartController.lsCheckBox.add(false);
 

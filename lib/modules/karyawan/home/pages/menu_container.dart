@@ -17,7 +17,7 @@ class MenuContainer extends GetView<RestaurantController> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network(controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].pic!, width: double.maxFinite, fit: BoxFit.fitWidth),
+              // Image.network(controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].pic!, width: double.maxFinite, fit: BoxFit.fitWidth),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: ThemeConfig().defaultSpacing, horizontal: ThemeConfig().biggerSpacing),
                 child: Column(
@@ -26,44 +26,44 @@ class MenuContainer extends GetView<RestaurantController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].title!, style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack)),
-                        Text(controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].price!.toString(), style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack))
+                        // Text(controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].title!, style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack)),
+                        // Text(controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].price!.toString(), style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack))
                       ],
                     ),
                     SizedBox(height: ThemeConfig().extraSpacing),
-                    Text(textAlign: TextAlign.justify, controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].subtitle!),
-                    Obx(() => controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].qty! == 0 ? GestureDetector(
-                      onTap: () => controller.onAddMenu(indexItem: index, indexRestaurant: indexRestaurant, indexCategory: indexCategory),
-                      child: Container(
-                        padding: EdgeInsets.all(ThemeConfig().biggerSpacing),
-                        margin: EdgeInsets.symmetric(vertical: ThemeConfig().biggerSpacing),
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                            color: ThemeConfig.justBlack,
-                            borderRadius: BorderRadius.all(Radius.circular(20.0))
-                        ),
-                        child: Center(child: Text('Add to cart', style: ThemeConfig().textHeader4(color: ThemeConfig.justWhite)))
-                      ),
-                    ) :
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: ThemeConfig().biggerSpacing),
-                      decoration: const BoxDecoration(
-                        color: ThemeConfig.justBlack,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              onPressed: () => controller.onChangeItem(indexItem: index, indexRestaurant: indexRestaurant, type:  'decrease', indexCategory:  indexCategory),
-                              icon: const Icon(Icons.remove, color: ThemeConfig.justWhite)),
-                          Text(controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].qty!.toString(), style: ThemeConfig().textHeader1ExtraBold(color: ThemeConfig.justWhite)),
-                          IconButton(
-                              onPressed: () => controller.onChangeItem(indexItem: index, indexRestaurant: indexRestaurant, type:  'increase', indexCategory:  indexCategory),
-                              icon: const Icon(Icons.add, color: ThemeConfig.justWhite)),
-                        ],
-                      ),
-                    )),
+                    // Text(textAlign: TextAlign.justify, controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].subtitle!),
+                    // Obx(() => controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].qty! == 0 ? GestureDetector(
+                    //   onTap: () => controller.onAddMenu(indexItem: index, indexRestaurant: indexRestaurant, indexCategory: indexCategory),
+                    //   child: Container(
+                    //     padding: EdgeInsets.all(ThemeConfig().biggerSpacing),
+                    //     margin: EdgeInsets.symmetric(vertical: ThemeConfig().biggerSpacing),
+                    //     width: double.infinity,
+                    //     decoration: const BoxDecoration(
+                    //         color: ThemeConfig.justBlack,
+                    //         borderRadius: BorderRadius.all(Radius.circular(20.0))
+                    //     ),
+                    //     child: Center(child: Text('Add to cart', style: ThemeConfig().textHeader4(color: ThemeConfig.justWhite)))
+                    //   ),
+                    // ) :
+                    // Container(
+                    //   margin: EdgeInsets.symmetric(vertical: ThemeConfig().biggerSpacing),
+                    //   decoration: const BoxDecoration(
+                    //     color: ThemeConfig.justBlack,
+                    //     borderRadius: BorderRadius.all(Radius.circular(20.0))
+                    //   ),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       IconButton(
+                    //           onPressed: () => controller.onChangeItem(indexItem: index, indexRestaurant: indexRestaurant, type:  'decrease', indexCategory:  indexCategory),
+                    //           icon: const Icon(Icons.remove, color: ThemeConfig.justWhite)),
+                    //       // Text(controller.lsRestaurantMenu[indexRestaurant].menu![indexCategory].itemMenu![index].qty!.toString(), style: ThemeConfig().textHeader1ExtraBold(color: ThemeConfig.justWhite)),
+                    //       IconButton(
+                    //           onPressed: () => controller.onChangeItem(indexItem: index, indexRestaurant: indexRestaurant, type:  'increase', indexCategory:  indexCategory),
+                    //           icon: const Icon(Icons.add, color: ThemeConfig.justWhite)),
+                    //     ],
+                    //   ),
+                    // )),
                     SizedBox(height: ThemeConfig().extraSpacing),
                     Text('Similar Items', style: ThemeConfig().textHeader3Bold(color: ThemeConfig.justBlack)),
                     SizedBox(height: ThemeConfig().extraSpacing),

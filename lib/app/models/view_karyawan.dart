@@ -1,15 +1,15 @@
 //VIEW
 class ViewRestaurant {
-  int? id;
-  String? pic;
+  int? restaurant_id;
+  String? restaurant_image;
   String? restaurantName;
   List<ViewMenu>? menu;
 
-  ViewRestaurant({this.id, this.pic, this.restaurantName, this.menu});
+  ViewRestaurant({this.restaurant_id, this.restaurant_image, this.restaurantName, this.menu});
 
   ViewRestaurant.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    pic = json['pic'];
+    restaurant_id = json['restaurant_id'];
+    restaurant_image = json['restaurant_image'];
     restaurantName = json['restaurantName'];
     menu = <ViewMenu>[];
     json['menu'].forEach((v) {
@@ -19,15 +19,15 @@ class ViewRestaurant {
 }
 
 class ViewMenu {
-  int? id;
-  String? category;
+  int? menu_id;
+  String? menu_category;
   List<ViewItemMenu>? itemMenu;
 
-  ViewMenu({this.id, this.category, this.itemMenu});
+  ViewMenu({this.menu_id, this.menu_category, this.itemMenu});
 
   ViewMenu.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    category = json['category'];
+    menu_id = json['menu_id'];
+    menu_category = json['menu_category'];
     if (json['itemMenu'] != null) {
       itemMenu = <ViewItemMenu>[];
       json['itemMenu'].forEach((v) {
@@ -38,31 +38,31 @@ class ViewMenu {
 }
 
 class ViewItemMenu {
-  int? id;
-  String? pic;
-  String? title;
-  String? subtitle;
-  int? price;
-  int? qty;
+  int? menu_id;
+  String? menu_image;
+  String? menu_name;
+  String? menu_subtitle;
+  int? menu_price;
+  int? menu_qty;
 
-  ViewItemMenu({this.id, this.pic, this.title, this.subtitle, this.price, this.qty});
+  ViewItemMenu({this.menu_id, this.menu_image, this.menu_name, this.menu_subtitle, this.menu_price, menu_qty});
 
   ViewItemMenu.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    pic = json['pic'];
-    title = json['title'];
-    subtitle = json['subtitle'];
-    price = json['price'];
-    qty = json['qty'];
+    menu_id = json['menu_id'];
+    menu_image = json['menu_image'];
+    menu_name = json['menu_name'];
+    menu_subtitle = json['subtitle'];
+    menu_price = json['menu_price'];
+    menu_qty = json['menu_qty'];
   }
 
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'pic': pic,
-    'title': title,
-    'subtitle': subtitle,
-    'price': price,
-    'qty': qty,
+    'menu_id': menu_id,
+    'menu_image': menu_image,
+    'menu_name': menu_name,
+    'menu_subtitle': menu_subtitle,
+    'menu_price': menu_price,
+    'menu_qty': menu_qty,
   };
 }
 

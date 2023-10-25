@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/api_config.dart';
+import 'package:recommendation_system/app/config/dialog_config.dart';
 import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/config/session_manager.dart';
 import 'package:recommendation_system/app/models/user_information.dart';
@@ -14,6 +15,8 @@ class LoginController extends GetxController {
   var currentIndex = 0.obs;
   var isRestaurant = false.obs;
   var isHidePassword = true.obs;
+
+  var isLoading = false.obs;
 
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
@@ -61,6 +64,7 @@ class LoginController extends GetxController {
         String url = '${GlobalUrl.baseUrl}${GlobalUrl.loginRestaurant}';
         var result = await APIConfig()
             .onSendOrGetSource(url: url, methodType: 'POST', body: body);
+        Get.back();
         onFilterUserLogin(result: result, type: 'restaurant');
       } else {
         String url = '${GlobalUrl.baseUrl}${GlobalUrl.loginUser}';

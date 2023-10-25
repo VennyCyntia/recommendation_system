@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:recommendation_system/app/config/dialog_config.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/restaurant/menu/controller/menu_controller.dart';
 import 'package:recommendation_system/modules/restaurant/menu/pages/component/add_menu_component.dart';
@@ -12,14 +13,14 @@ class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Menu'),
+        title: const Text('List Menu'),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Expanded(
+            Obx(() => controller.isLoading.value == true ? DialogConfig().onShowBasicLoading() : Expanded(
               child: Obx(() => ListView.builder(
                   itemCount: controller.lsMenu.length,
                   itemBuilder: (context, index) {
@@ -58,7 +59,7 @@ class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
                       ],
                     );
                   })),
-            ),
+            )),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Align(

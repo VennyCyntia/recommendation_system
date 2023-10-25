@@ -35,11 +35,6 @@ class EditMenuComponent extends GetView<RestaurantMenuController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
-                            alignment: Alignment.topRight,
-                            child: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.delete))),
                         TextFieldInputComponent(
                             title: 'Title',
                             keyboardType: TextInputType.text,
@@ -90,19 +85,19 @@ class EditMenuComponent extends GetView<RestaurantMenuController> {
                         SizedBox(height: ThemeConfig().biggerSpacing),
                         Row(
                           children: [
-                            // Expanded(
-                            //   child: Container(
-                            //       margin: EdgeInsets.only(
-                            //           right: ThemeConfig().defaultSpacing),
-                            //       decoration: BoxDecoration(
-                            //           color: Colors.grey,
-                            //           borderRadius: BorderRadius.all(
-                            //               Radius.circular(
-                            //                   ThemeConfig().defaultSpacing))),
-                            //       child: SizedBox.fromSize(
-                            //           size: const Size.fromRadius(40),
-                            //           child: Image.file(File(controller.lsPic[0]), fit: BoxFit.fill))),
-                            // ),
+                            Expanded(
+                              child: Container(
+                                  margin: EdgeInsets.only(
+                                      right: ThemeConfig().defaultSpacing),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              ThemeConfig().defaultSpacing))),
+                                  child: SizedBox.fromSize(
+                                      size: const Size.fromRadius(40),
+                                      child: Image.memory(controller.editLsPic[0], fit: BoxFit.fill))),
+                            ),
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () => controller.onGetImage(index: index),

@@ -8,6 +8,7 @@ class ProfileController extends GetxController {
   TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController no_telp = TextEditingController();
+  TextEditingController preference = TextEditingController();
 
   var isLoading = false.obs;
 
@@ -24,6 +25,7 @@ class ProfileController extends GetxController {
     username.text = await UserSession().onGetUsername();
     email.text = await UserSession().onGetEmail();
     no_telp.text = await UserSession().onGetNoTelepon();
+    preference.text = await UserSession().onGetNoTelepon();
   }
 
 }

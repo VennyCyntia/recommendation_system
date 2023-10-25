@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recommendation_system/app/config/dialog_config.dart';
+import 'package:recommendation_system/app/config/session_manager.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/order/pages/components/form_field_component.dart';
 import 'package:recommendation_system/modules/karyawan/profile/controller/profile_controller.dart';
@@ -103,7 +105,7 @@ class ProfileContainer extends GetView<ProfileController> {
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () async => await DialogConfig().onLogoutDialog(title: 'LOGOUT', content: 'Yakin ingin logout?'),
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               horizontal: ThemeConfig().defaultSpacing),

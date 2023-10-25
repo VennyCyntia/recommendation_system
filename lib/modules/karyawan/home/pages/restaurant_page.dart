@@ -23,10 +23,11 @@ class RestaurantPage extends GetView<RestaurantController> {
                     child: Container(
                       constraints: BoxConstraints(
                           minWidth: Get.size.width),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                                  image: NetworkImage(controller.lsRestaurantMenu[indexRestaurant!].pic!),
-                              fit: BoxFit.cover)),
+                      // decoration: BoxDecoration(
+                      //     image: DecorationImage(
+                      //             image: NetworkImage(controller.lsRestaurantMenu[indexRestaurant!].pic!),
+                      //         fit: BoxFit.cover)
+                      // ),
                     ),
                   ),
                   Positioned(
@@ -89,11 +90,11 @@ class RestaurantPage extends GetView<RestaurantController> {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory].category.toString(),
-                                  style: ThemeConfig()
-                                      .textHeader2ExtraBold(color: ThemeConfig.justBlack),
-                                ),
+                                // Text(
+                                //   controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory].category.toString(),
+                                //   style: ThemeConfig()
+                                //       .textHeader2ExtraBold(color: ThemeConfig.justBlack),
+                                // ),
                                 GridView.builder(
                                     padding: const EdgeInsets.symmetric(vertical: 15.0),
                                     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -123,13 +124,13 @@ class RestaurantPage extends GetView<RestaurantController> {
                                             child: Column(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                ClipRRect(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),child: Image.network(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].pic!, )),
+                                                // ClipRRect(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),child: Image.network(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].pic!, )),
                                                 Wrap(
                                                   children: [
-                                                    Text(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].title!),
+                                                    // Text(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].title!),
                                                   ],
                                                 ),
-                                                Text(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].price!.toString())
+                                                // Text(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].price!.toString())
                                               ],
                                             )
                                         ),

@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recommendation_system/app/config/api_config.dart';
+import 'package:recommendation_system/app/config/dialog_config.dart';
 import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/config/session_manager.dart';
+import 'package:recommendation_system/app/models/attachment_file_data_model.dart';
 import 'package:recommendation_system/app/models/view_restaurant.dart';
 import 'package:recommendation_system/modules/restaurant/menu/pages/component/edit_menu_component.dart';
 
@@ -19,6 +21,7 @@ class RestaurantMenuController extends GetxController {
   var selectedDesc = List<List<String>>.empty(growable: true).obs;
   var lsPic = List<dynamic>.empty(growable: true).obs;
 
+  var editLsPic = List<dynamic>.empty(growable: true).obs;
   var editFieldMenu = List<TextEditingController>.empty(growable: true).obs;
   var editSelectedDesc = List<String>.empty(growable: true).obs;
 
@@ -64,8 +67,7 @@ class RestaurantMenuController extends GetxController {
   void onInit() async {
     isLoading.value = true;
     onInitialAddForm();
-    await onGetUserInformation();
-    onGetAllData();
+    await onGetUserInformation().then((value) => onGetAllData());
     isLoading.value = false;
     super.onInit();
   }
@@ -102,6 +104,7 @@ class RestaurantMenuController extends GetxController {
   }
 
   Future<void> onSaveMenu() async {
+    // DialogConfig().onShowBasicLoading();
     if (formKey.currentState!.validate()) {
       List<ViewMenu> tempMenu = [];
       List<String> combinedDesc = [];
@@ -117,13 +120,14 @@ class RestaurantMenuController extends GetxController {
       }
 
       for (int i = 0; i < lsFormMenu.length; i++) {
+        AttachmentFileDataModel result = await APIConfig().uploadAttachment(filepath: File(lsPic[i]));
         tempMenu.add(ViewMenu(
             menu_name: lsFormMenu[i][0].text,
             menu_subtitle: lsFormMenu[i][1].text,
             menu_category: selectedCategory[i],
             menu_description: combinedDesc[i],
             menu_price: int.parse(lsFormMenu[i][2].text),
-            menu_image: lsPic[i],
+            menu_image: result.attachment_id,
             restaurant_id: id.value));
       }
 
@@ -131,6 +135,7 @@ class RestaurantMenuController extends GetxController {
           tempMenu.map((tempMenu) => tempMenu.toJson()).toList();
       await onSendData(body: menuList);
       await onGetAllData();
+      // Get.back();
       onClearData();
     }
   }
@@ -146,7 +151,8 @@ class RestaurantMenuController extends GetxController {
       List<String> valuesList = data['menu_description'].split(', ');
 
       editFieldMenu.clear();
-      lsPic.clear();
+      // lsPic.clear();
+      editLsPic.clear();
       selectedCategory.clear();
       editSelectedDesc.clear();
 
@@ -158,8 +164,11 @@ class RestaurantMenuController extends GetxController {
       for (int i = 0; i < valuesList.length; i++) {
         editSelectedDesc.add(valuesList[i]);
       }
-      lsPic.add(File(data['menu_image']));
-      print('lspic ' + lsPic[0].toString());
+
+      String getAttachmentUrl = GlobalUrl.baseUrl + GlobalUrl.getAttachment + data['menu_image'];
+      var image = await APIConfig().getFile(uploadUrl: getAttachmentUrl);
+
+      editLsPic.add(image);
 
       Get.to(() => EditMenuComponent(index: index, id: id));
     }
@@ -247,4 +256,6 @@ class RestaurantMenuController extends GetxController {
     onInitialAddForm();
     Get.back();
   }
+
+
 }

@@ -1,6 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
+import 'package:recommendation_system/app/config/global_url.dart';
+import 'package:recommendation_system/app/models/attachment_file_data_model.dart';
 
 class APIConfig {
   Future<String> sendDataToApi({required String url, required method, List? body}) async {
@@ -86,6 +91,42 @@ class APIConfig {
         : response.body;
 
     return result;
+  }
+
+  Future<AttachmentFileDataModel> uploadAttachment({required File filepath}) async {
+    AttachmentFileDataModel dataUploadAttachment = AttachmentFileDataModel();
+    String uploadResult = await uploadFile(
+      uploadUrl: GlobalUrl.baseUrl + GlobalUrl.uploadAttachment,
+      file: filepath,
+    );
+    dataUploadAttachment =
+        AttachmentFileDataModel.fromJson(json.decode(uploadResult));
+    return dataUploadAttachment;
+  }
+
+  Future<String> uploadFile({required String uploadUrl, required File file}) async {
+    String result = '';
+    var request = http.MultipartRequest('POST', Uri.parse(uploadUrl));
+    var multipartFile = await http.MultipartFile.fromPath('file', file.path);
+    request.files.add(multipartFile);
+    var response = await request.send();
+    result = await response.stream.bytesToString();
+
+    if (response.statusCode == 200) {
+      print('File uploaded');
+    } else {
+      print('Error uploading file: ${response.reasonPhrase}');
+    }
+
+    return result;
+  }
+
+  Future<Uint8List> getFile({required String uploadUrl}) async {
+    Uint8List imageData;
+    final http.Response response = await http.get(Uri.parse(uploadUrl));
+    imageData = Uint8List.fromList(response.bodyBytes);
+
+    return imageData;
   }
 
 }

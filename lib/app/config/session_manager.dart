@@ -1,4 +1,6 @@
+import 'package:get/get.dart';
 import 'package:recommendation_system/app/models/user_information.dart';
+import 'package:recommendation_system/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSession {
@@ -52,5 +54,9 @@ class UserSession {
     prefs.remove('restaurant_name');
     prefs.remove('email');
     prefs.remove('no_telp');
+    prefs.remove('role');
+    prefs.remove('id');
+
+    Get.offAllNamed(AppRoutes.login);
   }
 }
