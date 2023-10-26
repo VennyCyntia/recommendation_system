@@ -49,13 +49,13 @@ class HomeContainer extends GetView<RestaurantController> {
               const SizedBox(height: 8.0),
               Text('Restaurant', style: ThemeConfig().textHeader3Bold(color: ThemeConfig.justBlack)),
               Expanded(
-                child: ListView.builder(
+                child: Obx(() => ListView.builder(
                   shrinkWrap: true,
-                  itemCount: controller.lsRestaurantMenu.length,
+                  itemCount: controller.lsRestaurant.length,
                   itemBuilder: (context, index) {
-                    return RestaurantComponent(index: index);
+                    return RestaurantComponent(id: controller.lsRestaurant[index].restaurant_id!, index: index);
                   },
-                ),
+                )),
               ),
             ],
           ),

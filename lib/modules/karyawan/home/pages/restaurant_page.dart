@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/app/models/view_karyawan.dart';
 import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/menu_container.dart';
 
 class RestaurantPage extends GetView<RestaurantController> {
-  int? indexRestaurant;
-  RestaurantPage({super.key, this.indexRestaurant});
+  int id;
+  int index;
+
+  RestaurantPage({super.key, required this.id, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +26,13 @@ class RestaurantPage extends GetView<RestaurantController> {
                     child: Container(
                       constraints: BoxConstraints(
                           minWidth: Get.size.width),
-                      // decoration: BoxDecoration(
-                      //     image: DecorationImage(
-                      //             image: NetworkImage(controller.lsRestaurantMenu[indexRestaurant!].pic!),
-                      //         fit: BoxFit.cover)
-                      // ),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                                  image:
+                            // detail.restaurant_image != null ? NetworkImage(detail.restaurant_image!) :
+                                  NetworkImage('https://imgx.sonora.id/crop/0x0:0x0/360x240/photo/2022/10/22/istockphoto-1345298910-170667aj-20221022110522.jpg'),
+                              fit: BoxFit.cover)
+                      ),
                     ),
                   ),
                   Positioned(
@@ -48,7 +53,7 @@ class RestaurantPage extends GetView<RestaurantController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(controller.lsRestaurantMenu[indexRestaurant!].restaurantName!.toUpperCase(),
+                              Text(controller.restaurantDetail.value.restaurant_name!,
                                   style: ThemeConfig().text1ExtraBold(
                                       color: ThemeConfig.justGrey)),
                             ],
@@ -85,16 +90,16 @@ class RestaurantPage extends GetView<RestaurantController> {
                     Expanded(
                       child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: controller.lsRestaurantMenu[indexRestaurant!].menu!.length,
+                          itemCount: controller.restaurantDetail.value.menu!.length,
                           itemBuilder: (context, indexCategory) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Text(
-                                //   controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory].category.toString(),
-                                //   style: ThemeConfig()
-                                //       .textHeader2ExtraBold(color: ThemeConfig.justBlack),
-                                // ),
+                                Text(
+                                  controller.restaurantDetail.value.menu![indexCategory].menu_category.toString(),
+                                  style: ThemeConfig()
+                                      .textHeader2ExtraBold(color: ThemeConfig.justBlack),
+                                ),
                                 GridView.builder(
                                     padding: const EdgeInsets.symmetric(vertical: 15.0),
                                     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -105,10 +110,10 @@ class RestaurantPage extends GetView<RestaurantController> {
                                     ),
                                     physics: const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory].itemMenu!.length,
+                                    itemCount: controller.restaurantDetail.value.menu![indexCategory].item_menu!.length,
                                     itemBuilder: (BuildContext ctx, index) {
                                       return GestureDetector(
-                                        onTap: () => Get.to(() => MenuContainer(indexCategory: indexCategory, indexRestaurant: indexRestaurant!, index: index)),
+                                        onTap: () => Get.to(() => MenuContainer(id: id, indexCategory: indexCategory, index: index)),
                                         child: Container(
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
@@ -124,13 +129,16 @@ class RestaurantPage extends GetView<RestaurantController> {
                                             child: Column(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                // ClipRRect(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),child: Image.network(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].pic!, )),
+                                                ClipRRect(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),child:
+                                                // Image.network(detail.menu![indexCategory!].item_menu![index].menu_image!)
+                                                Image.network('https://imgx.sonora.id/crop/0x0:0x0/360x240/photo/2022/10/22/istockphoto-1345298910-170667aj-20221022110522.jpg')
+                                                ),
                                                 Wrap(
                                                   children: [
-                                                    // Text(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].title!),
+                                                    Text(controller.restaurantDetail.value.menu![indexCategory!].item_menu![index].menu_name!),
                                                   ],
                                                 ),
-                                                // Text(controller.lsRestaurantMenu[indexRestaurant!].menu![indexCategory!].itemMenu![index].price!.toString())
+                                                Text(controller.restaurantDetail.value.menu![indexCategory!].item_menu![index].menu_price!.toString())
                                               ],
                                             )
                                         ),

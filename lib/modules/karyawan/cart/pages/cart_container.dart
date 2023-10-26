@@ -103,14 +103,14 @@ class ListRestaurant extends GetView<CartController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(controller.lsItemCart[index].menu![indexItem].title!),
+                        Text(controller.lsItemCart[index].menu![indexItem].menu_name!),
                         SizedBox(height: ThemeConfig().extra2Spacing),
                         GestureDetector(
                           onTap: () => restaurantController.onToMenuContainer(index, indexItem, controller.lsItemCart[index].restaurantName!),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('${controller.lsItemCart[index].menu![indexItem].orderQty}x',style: ThemeConfig().textHeader4(color: ThemeConfig.baseGrey)),
+                              Text('${controller.lsItemCart[index].menu![indexItem].menu_qty}x',style: ThemeConfig().textHeader4(color: ThemeConfig.baseGrey)),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                 decoration: BoxDecoration(

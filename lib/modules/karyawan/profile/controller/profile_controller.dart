@@ -21,7 +21,6 @@ class ProfileController extends GetxController {
 
   Future<void> onGetUserInformation() async {
     id.value = await UserSession().onGetId();
-    print('id restaurant '+id.toString());
     username.text = await UserSession().onGetUsername();
     email.text = await UserSession().onGetEmail();
     no_telp.text = await UserSession().onGetNoTelepon();

@@ -95,11 +95,11 @@ class ListMenu extends GetView<CartController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(controller.lsCheckOutItem.menu![index!].title!),
+                    Text(controller.lsCheckOutItem.menu![index!].menu_name!),
                     SizedBox(height: ThemeConfig().biggerSpacing),
                     Align(
                       alignment: Alignment.bottomRight,
-                      child: Text(controller.lsCheckOutItem.menu![index!].orderQty.toString(),
+                      child: Text(controller.lsCheckOutItem.menu![index!].menu_qty.toString(),
                           style:
                           ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
                     ),

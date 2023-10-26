@@ -1,16 +1,18 @@
 //VIEW
-class ViewRestaurant {
+class ViewDetailRestaurant {
   int? restaurant_id;
+  String? restaurant_name;
+  String? restaurant_description;
   String? restaurant_image;
-  String? restaurantName;
   List<ViewMenu>? menu;
 
-  ViewRestaurant({this.restaurant_id, this.restaurant_image, this.restaurantName, this.menu});
+  ViewDetailRestaurant({this.restaurant_id, this.restaurant_image, this.restaurant_name, this.restaurant_description, this.menu});
 
-  ViewRestaurant.fromJson(Map<String, dynamic> json) {
+  ViewDetailRestaurant.fromJson(Map<String, dynamic> json) {
     restaurant_id = json['restaurant_id'];
     restaurant_image = json['restaurant_image'];
-    restaurantName = json['restaurantName'];
+    restaurant_name = json['restaurant_name'];
+    restaurant_description = json['restaurant_description'];
     menu = <ViewMenu>[];
     json['menu'].forEach((v) {
       menu!.add(ViewMenu.fromJson(v));
@@ -21,17 +23,17 @@ class ViewRestaurant {
 class ViewMenu {
   int? menu_id;
   String? menu_category;
-  List<ViewItemMenu>? itemMenu;
+  List<ViewItemMenu>? item_menu;
 
-  ViewMenu({this.menu_id, this.menu_category, this.itemMenu});
+  ViewMenu({this.menu_id, this.menu_category, this.item_menu});
 
   ViewMenu.fromJson(Map<String, dynamic> json) {
     menu_id = json['menu_id'];
     menu_category = json['menu_category'];
-    if (json['itemMenu'] != null) {
-      itemMenu = <ViewItemMenu>[];
-      json['itemMenu'].forEach((v) {
-        itemMenu!.add(ViewItemMenu.fromJson(v));
+    if (json['item_menu'] != null) {
+      item_menu = <ViewItemMenu>[];
+      json['item_menu'].forEach((v) {
+        item_menu!.add(ViewItemMenu.fromJson(v));
       });
     }
   }
@@ -45,13 +47,13 @@ class ViewItemMenu {
   int? menu_price;
   int? menu_qty;
 
-  ViewItemMenu({this.menu_id, this.menu_image, this.menu_name, this.menu_subtitle, this.menu_price, menu_qty});
+  ViewItemMenu({this.menu_id, this.menu_image, this.menu_name, this.menu_subtitle, this.menu_price, this.menu_qty});
 
   ViewItemMenu.fromJson(Map<String, dynamic> json) {
     menu_id = json['menu_id'];
     menu_image = json['menu_image'];
     menu_name = json['menu_name'];
-    menu_subtitle = json['subtitle'];
+    menu_subtitle = json['menu_subtitle'];
     menu_price = json['menu_price'];
     menu_qty = json['menu_qty'];
   }
@@ -68,14 +70,16 @@ class ViewItemMenu {
 
 class ItemCartRestaurant{
   int? id;
+  int? restaurantid;
   String? restaurantName;
   List<ItemCartMenu>? menu;
   int? totalPrice;
 
-  ItemCartRestaurant({this.id, this.restaurantName, this.menu, this.totalPrice});
+  ItemCartRestaurant({this.id, this.restaurantid, this.restaurantName, this.menu, this.totalPrice});
 
   ItemCartRestaurant.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    restaurantid = json['restaurantid'];
     restaurantName = json['restaurantName'];
     if (json['menu'] != null) {
       menu = <ItemCartMenu>[];
@@ -88,20 +92,53 @@ class ItemCartRestaurant{
 }
 
 class ItemCartMenu{
-  String? pic;
-  String? title;
-  int? price;
-  int? totalprice;
-  int? orderQty;
+  String? menu_image;
+  String? menu_name;
+  String? menu_subtitle;
+  int? menu_price;
+  int? total_price;
+  int? menu_qty;
 
-  ItemCartMenu({this.pic, this.title, this.price, this.totalprice, this.orderQty});
+  ItemCartMenu({this.menu_image, this.menu_name, this.menu_subtitle, this.menu_price, this.total_price, this.menu_qty});
 
   ItemCartMenu.fromJson(Map<String, dynamic> json) {
-    pic = json['pic'];
-    title = json['title'];
-    price = json['price'];
-    totalprice = json['totalprice'];
-    orderQty = json['orderQty'];
+    menu_image = json['menu_image'];
+    menu_name = json['menu_name'];
+    menu_subtitle = json['menu_subtitle'];
+    menu_price = json['menu_price'];
+    total_price = json['total_price'];
+    menu_qty = json['menu_qty'];
   }
 }
 
+class ViewRestaurant {
+  int? restaurant_id;
+  String? restaurant_name;
+  String? restaurant_description;
+  String? restaurant_image;
+
+  ViewRestaurant({this.restaurant_id, this.restaurant_name, this.restaurant_description, this.restaurant_image});
+
+  ViewRestaurant.fromJson(Map<String, dynamic> json) {
+    restaurant_id = json['restaurant_id'];
+    restaurant_name = json['restaurant_name'];;
+    restaurant_description = json['restaurant_description'];
+    restaurant_image = json['restaurant_image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'restaurant_id': restaurant_id,
+      'restaurant_name': restaurant_name,
+      'restaurant_description': restaurant_description,
+      'restaurant_image': restaurant_image,
+    };
+  }
+
+  ViewRestaurant.fromMap(Map<String, dynamic> map) {
+    restaurant_id = map['restaurant_id'];
+    restaurant_name = map['restaurant_name'];
+    restaurant_description = map['restaurant_description'];
+    restaurant_image = map['restaurant_image'];
+  }
+}

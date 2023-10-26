@@ -2,13 +2,14 @@ class GlobalUrl{
   // static String baseUrl = 'http://10.10.10.125:5000/';
   // static String baseUrl = 'http://192.168.83.184:5000';
   // static String baseUrl = 'http://192.168.1.101:5000';
-  static String baseUrl = 'http://192.168.137.2:5000';
+  // static String baseUrl = 'http://192.168.137.2:5000';
+  static String baseUrl = 'http://192.168.0.165:5000';
 
   //Login
   static String loginUser = "/login/employee";
   static String loginRestaurant = "/login/restaurant";
 
-  static String getAllData = "/restaurant/getalldata";
+  static String getAllRestaurantData = "/restaurant/menu/"; //pakai id
 
   // Employee
   static String createEmployee = "/user/create";

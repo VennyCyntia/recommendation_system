@@ -28,7 +28,7 @@ class CartController extends GetxController {
     int totalPrice = 0;
     if (checkItem.isNotEmpty) {
       for (int i = 0; i < checkItem.length; i++) {
-        int price = restaurant.menu![checkItem[i]].totalprice!;
+        int price = restaurant.menu![checkItem[i]].total_price!;
         totalPrice += price;
         item.add(restaurant.menu![checkItem[i]]);
       }

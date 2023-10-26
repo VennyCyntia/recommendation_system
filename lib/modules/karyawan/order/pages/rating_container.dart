@@ -25,7 +25,7 @@ class RatingContainer extends GetView<OrderController> {
               style: ThemeConfig().textHeader3(color: Colors.black),
             ),
             TextButton(
-                onPressed: () => controller.onSendRating(),
+                onPressed: (){},
                 child: Text('Send',
                     style: ThemeConfig().textHeader5(color: Colors.black)))
           ],
@@ -97,7 +97,9 @@ class RatingContainer extends GetView<OrderController> {
             initialRating: 0,
             direction: Axis.horizontal,
             itemCount: 5,
-            itemSize: 30,
+            itemSize: 25,
+            minRating: 1,
+            maxRating: 5,
             ratingWidget: RatingWidget(
                 full: const Icon(Icons.star, color: Colors.orange),
                 half: const Icon(
