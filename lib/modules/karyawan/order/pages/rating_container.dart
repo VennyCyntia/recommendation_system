@@ -111,7 +111,7 @@ class RatingContainer extends GetView<OrderController> {
                   color: Colors.orange,
                 )),
             onRatingUpdate: (value) {
-             controller.onGiveRating(index, value.toInt());
+             controller.onSetRating(index, value.toInt());
             }),
       ]
     );

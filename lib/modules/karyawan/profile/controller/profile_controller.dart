@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/session_manager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
   var id = 0.obs;
@@ -14,6 +13,7 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() async {
+    print('profile njih');
     isLoading.value = true;
     await onGetUserInformation();
     super.onInit();

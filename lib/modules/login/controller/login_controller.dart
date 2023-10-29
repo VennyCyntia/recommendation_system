@@ -55,6 +55,7 @@ class LoginController extends GetxController {
   }
 
   Future<void> onValidateUser() async {
+    // DialogConfig().onShowBasicLoading();
     if (formLoginKey.currentState!.validate()) {
       Map body = {
         'username': username.text,

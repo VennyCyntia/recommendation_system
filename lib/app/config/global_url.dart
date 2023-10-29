@@ -3,7 +3,8 @@ class GlobalUrl{
   // static String baseUrl = 'http://192.168.83.184:5000';
   // static String baseUrl = 'http://192.168.1.101:5000';
   // static String baseUrl = 'http://192.168.137.2:5000';
-  static String baseUrl = 'http://192.168.0.165:5000';
+  // static String baseUrl = 'http://192.168.0.165:5000';
+  static String baseUrl = 'http://192.168.1.102:5000';
 
   //Login
   static String loginUser = "/login/employee";
@@ -36,4 +37,12 @@ class GlobalUrl{
   // Attachment
   static String uploadAttachment = "/attachment/upload";
   static String getAttachment = "/attachment/"; // pakai id
+
+  // Cart
+  static String createItem = "/cart/create";
+  static String getItem = "/cart/alldata/";
+
+  //Order
+  static String createOrder = "/order/create";
+  static String getOrderById = "/order/getallorder/"; // pakai id
 }

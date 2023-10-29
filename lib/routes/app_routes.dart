@@ -53,7 +53,7 @@ class AppPages {
     GetPage(
         name: AppRoutes.cart,
         page: () => const CartContainer(),
-        // binding: LoginBinding(),
+        bindings: [LoginBinding(), profileEmployee.ProfileBinding(), CartBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
@@ -67,14 +67,14 @@ class AppPages {
     GetPage(
         name: AppRoutes.order,
         page: () => const OrderContainer(),
-        binding: OrderBinding(),
+        bindings: [OrderBinding(), profileEmployee.ProfileBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
     GetPage(
         name: AppRoutes.profile,
         page: () => const ProfileContainer(),
-        binding: OrderBinding(),
+        // binding: OrderBinding(),
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),

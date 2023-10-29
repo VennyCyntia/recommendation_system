@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/order_controller.dart';
 
-class OrderNotPaidContainer extends StatelessWidget {
+class OrderNotPaidContainer extends GetView<OrderController> {
   const OrderNotPaidContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Obx(() => ListView.builder(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
-      itemCount: 4,
+      itemCount: controller.lsOrder.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -32,7 +33,7 @@ class OrderNotPaidContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Lorem Ipsum',
+                      controller.lsOrder[index].restaurant_name!,
                       style: ThemeConfig().textHeader3ExtraBold(
                           color: ThemeConfig.justBlack
                       ),
@@ -42,7 +43,7 @@ class OrderNotPaidContainer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '15',
+                          controller.lsOrder[index].queue_number.toString(),
                           style: ThemeConfig().textHeader2Bold(
                               color: ThemeConfig.justBlack
                           ),
@@ -69,7 +70,7 @@ class OrderNotPaidContainer extends StatelessWidget {
           ),
         );
       },
-    );
+    ));
   }
 }
 
@@ -81,7 +82,35 @@ class ShowPaymentInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Center(child: const Text('Your Payment Detail')),
-      content: const Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+      content: Column(
+        children: [
+          const Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+          // ListView.builder(
+          //   shrinkWrap: true,
+          //   itemCount: 3,
+          //   itemBuilder: (context, index) {
+          //     return Padding(
+          //       padding: EdgeInsets.symmetric(vertical: 4.0),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text('1x'),
+          //           Text('Nasi Goreng'),
+          //           Text('Rp 20.000'),
+          //         ],
+          //       ),
+          //     );
+          //   },
+          // ),
+          // const Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text('Total'),
+          //     Text('Rp 20.000'),
+          //   ],
+          // )
+        ],
+      ),
       actions: <Widget>[
         ElevatedButton(
             onPressed: () {
@@ -96,7 +125,7 @@ class ShowPaymentInformation extends StatelessWidget {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: ThemeConfig().defaultSpacing, vertical: ThemeConfig().defaultSpacing ),
-              child: Text(
+              child: const Text(
                 'OK',
                 style: TextStyle(color: Colors.white),
               ),

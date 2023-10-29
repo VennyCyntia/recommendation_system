@@ -1,16 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/order_controller.dart';
 
-class OrderDoneContainer extends StatelessWidget {
+class OrderDoneContainer extends GetView<OrderController> {
   const OrderDoneContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Obx(() => ListView.builder(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
-      itemCount: 4,
+      itemCount: controller.lsOrder.length,
       itemBuilder: (context, index) {
         return Padding(
             padding: EdgeInsets.only(
@@ -28,13 +29,13 @@ class OrderDoneContainer extends StatelessWidget {
                 ),
               ),
               title: Text(
-                'Lorem Ipsum',
+                controller.lsOrder[index].restaurant_name!,
                 style: ThemeConfig().textHeader3ExtraBold(
                     color: ThemeConfig.justBlack
                 ),
               ),
               subtitle: Text(
-                '15',
+                controller.lsOrder[index].queue_number.toString(),
                 style: ThemeConfig().textHeader2Bold(
                     color: ThemeConfig.justBlack
                 ),
@@ -42,6 +43,6 @@ class OrderDoneContainer extends StatelessWidget {
             )
         );
       },
-    );
+    ));
   }
 }

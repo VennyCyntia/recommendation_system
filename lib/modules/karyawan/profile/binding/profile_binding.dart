@@ -4,6 +4,7 @@ import 'package:recommendation_system/modules/karyawan/profile/controller/profil
 class ProfileBinding extends Bindings {
   @override
   void dependencies(){
+    // Get.lazyPut(() => ProfileController());
     Get.put(ProfileController());
   }
 }

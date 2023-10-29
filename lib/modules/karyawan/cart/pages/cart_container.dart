@@ -28,7 +28,7 @@ class CartContainer extends GetView<CartController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(controller.lsItemCart[index].restaurantName!, style: ThemeConfig().textHeader3(color: ThemeConfig.justBlack)),
+                    Text(controller.lsItemCart[index].restaurant_name!, style: ThemeConfig().textHeader3(color: ThemeConfig.justBlack)),
                     IconButton(onPressed: (){}, icon: const Icon(Icons.close))
                   ],
                 ),
@@ -40,7 +40,7 @@ class CartContainer extends GetView<CartController> {
                     Row(
                       children: [
                         Text('Total:', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
-                        Text(controller.lsItemCart[index].totalPrice.toString(), style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
+                        Text(controller.lsTotalPrice[index].toString(), style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack)),
                       ],
                     ),
                     SizedBox(
@@ -87,9 +87,10 @@ class ListRestaurant extends GetView<CartController> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().minSpacing))),
                       checkColor: ThemeConfig.justWhite,
                       activeColor: ThemeConfig.justBlack,
-                      value: controller.lsCheckBox[indexItem],
+                      value: controller.lsItemCart[index].menu![indexItem].checkbox!,
                       onChanged: (bool? value){
-                        controller.lsCheckBox[indexItem] = value!;
+                        controller.lsItemCart[index].menu![indexItem].checkbox = value;
+                        controller.lsItemCart.refresh();
                       }),
                   ),
                   Container(
@@ -106,7 +107,7 @@ class ListRestaurant extends GetView<CartController> {
                         Text(controller.lsItemCart[index].menu![indexItem].menu_name!),
                         SizedBox(height: ThemeConfig().extra2Spacing),
                         GestureDetector(
-                          onTap: () => restaurantController.onToMenuContainer(index, indexItem, controller.lsItemCart[index].restaurantName!),
+                          onTap: () => restaurantController.onToMenuContainer(index, indexItem, controller.lsItemCart[index].restaurant_name!),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recommendation_system/Routes/app_routes.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 
 class ConfirmationContainer extends StatelessWidget {
@@ -28,7 +30,7 @@ class ConfirmationContainer extends StatelessWidget {
                 Text('Your Order Has Been Confirm'),
                 Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
                 ElevatedButton(
-                    onPressed: (){},
+                    onPressed: () => Get.offAll(AppRoutes.home),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ThemeConfig.justBlack,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))

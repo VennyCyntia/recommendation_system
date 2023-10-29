@@ -45,7 +45,7 @@ class RestaurantComponent extends GetView<RestaurantController> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                               controller
-                                  .lsRestaurant[index!].restaurant_name!,
+                                  .lsRestaurant[index].restaurant_name!,
                               style: ThemeConfig().textHeader3Bold(
                                   color: ThemeConfig.justBlack)),
                         ),

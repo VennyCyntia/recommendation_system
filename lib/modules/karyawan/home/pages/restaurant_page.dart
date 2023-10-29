@@ -111,9 +111,9 @@ class RestaurantPage extends GetView<RestaurantController> {
                                     physics: const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: controller.restaurantDetail.value.menu![indexCategory].item_menu!.length,
-                                    itemBuilder: (BuildContext ctx, index) {
+                                    itemBuilder: (BuildContext ctx, indexitem) {
                                       return GestureDetector(
-                                        onTap: () => Get.to(() => MenuContainer(id: id, indexCategory: indexCategory, index: index)),
+                                        onTap: () => Get.to(() => MenuContainer(id: id, indexCategory: indexCategory, indexitem: indexitem)),
                                         child: Container(
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
@@ -135,10 +135,10 @@ class RestaurantPage extends GetView<RestaurantController> {
                                                 ),
                                                 Wrap(
                                                   children: [
-                                                    Text(controller.restaurantDetail.value.menu![indexCategory!].item_menu![index].menu_name!),
+                                                    Text(controller.restaurantDetail.value.menu![indexCategory].item_menu![indexitem].menu_name!),
                                                   ],
                                                 ),
-                                                Text(controller.restaurantDetail.value.menu![indexCategory!].item_menu![index].menu_price!.toString())
+                                                Text(controller.restaurantDetail.value.menu![indexCategory].item_menu![indexitem].menu_price!.toString())
                                               ],
                                             )
                                         ),

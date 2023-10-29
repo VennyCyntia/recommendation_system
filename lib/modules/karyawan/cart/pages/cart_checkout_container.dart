@@ -28,7 +28,7 @@ class CheckoutContainer extends GetView<CartController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(controller.lsCheckOutItem.restaurantName!,
+              Text(controller.lsCheckOutItem.restaurant_name!,
                   style:
                       ThemeConfig().textHeader3(color: ThemeConfig.justBlack)),
               ListView.builder(
@@ -39,15 +39,13 @@ class CheckoutContainer extends GetView<CartController> {
                   itemBuilder: (context, index) {
                     return ListMenu(index: index);
                   }),
-              // SizedBox(height: ThemeConfig().biggerSpacing),
-              // Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Total',
                       style: ThemeConfig()
                           .textHeader4(color: ThemeConfig.justBlack)),
-                  Text(controller.lsCheckOutItem.totalPrice.toString(),
+                  Text(controller.totalPrice.toString(),
                       style: ThemeConfig()
                           .textHeader4Bold(color: ThemeConfig.justBlack))
                 ],
@@ -55,7 +53,7 @@ class CheckoutContainer extends GetView<CartController> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () => Get.to(() => const ConfirmationContainer()),
+                    onPressed: () => controller.onPlaceOrder(),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ThemeConfig.justBlack, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))),
                     child: Text('Place Order',
@@ -111,6 +109,7 @@ class ListMenu extends GetView<CartController> {
           ),
           SizedBox(height: ThemeConfig().biggerSpacing),
           TextFormField(
+            controller: controller.lsNotes[index!],
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(8.0),
               border: const OutlineInputBorder(
