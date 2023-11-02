@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/karyawan/order/controller/order_controller.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/employee_order_controller.dart';
 
-class RatingContainer extends GetView<OrderController> {
-  const RatingContainer({super.key});
+class RatingContainer extends GetView<EmployeeOrderController> {
+  int index;
+  RatingContainer({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -25,66 +26,77 @@ class RatingContainer extends GetView<OrderController> {
               style: ThemeConfig().textHeader3(color: Colors.black),
             ),
             TextButton(
-                onPressed: (){},
+                onPressed: () => controller.onSaveRating(orderId: controller.lsOrder[index].order_id!),
                 child: Text('Send',
                     style: ThemeConfig().textHeader5(color: Colors.black)))
           ],
         ),
       ),
       backgroundColor: Colors.white,
-      body: ListView.builder(
-        shrinkWrap: true,
-        padding: EdgeInsets.zero,
-        itemCount: 4,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                  constraints: BoxConstraints(
-                      maxHeight: Get.size.height * .1,
-                      maxWidth: Get.size.width * .2),
-                  decoration: const BoxDecoration(
-                    color: ThemeConfig.justGrey,
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Lorem Ipsum',
-                        style: ThemeConfig()
-                            .textHeader3ExtraBold(color: ThemeConfig.justBlack),
+      body: Column(
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            itemCount: controller.lsOrder[index].menu?.length,
+            itemBuilder: (context, indexItem) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                      constraints: BoxConstraints(
+                          maxHeight: Get.size.height * .1,
+                          maxWidth: Get.size.width * .2),
+                      decoration: const BoxDecoration(
+                        color: ThemeConfig.justGrey,
                       ),
-                      SizedBox(height: ThemeConfig().extra2Spacing),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // child: SizedBox.fromSize(
+                      //     size: const Size.fromRadius(40),
+                      //     child: Image.memory(controller.lsOrder[index].menu![indexItem]., fit: BoxFit.fill)),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Kualitas produk',
+                            controller.lsOrder[index].menu![indexItem].menu_name!,
                             style: ThemeConfig()
-                                .textHeader5(color: ThemeConfig.justBlack),
+                                .textHeader3ExtraBold(color: ThemeConfig.justBlack),
                           ),
-                          StarComponent(index: index),
+                          SizedBox(height: ThemeConfig().extra2Spacing),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Kualitas produk',
+                                style: ThemeConfig()
+                                    .textHeader5(color: ThemeConfig.justBlack),
+                              ),
+                              StarComponent(index: indexItem),
+                            ],
+                          ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
-        },
+              );
+            },
+          ),
+          Expanded(child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(alignment: Alignment.bottomCenter, child: Text(textAlign: TextAlign.justify,'Rating yang anda berikan mempengaruhi rekomendasi makanan yang akan diberikan kepada anda', style: ThemeConfig().textHeader5Bold(color: ThemeConfig.justRed))),
+          ))
+        ],
       ),
     );
   }
 }
 
-  class StarComponent extends GetView<OrderController> {
+  class StarComponent extends GetView<EmployeeOrderController> {
   int index;
   StarComponent({super.key, required this.index});
 

@@ -6,10 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserSession {
   Future<void> onSetUserInformation({required UserInformation data}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('id', data.user_id ?? 0);
     prefs.setString('username', data.username ?? '');
     prefs.setString('email', data.email ?? '');
     prefs.setString('no_telp', data.no_telp ?? '');
     prefs.setString('role', data.role ?? '');
+    prefs.setString('preference', data.preference ?? '');
+    prefs.setString('wallet_id', data.wallet_id ?? '');
   }
 
   Future<void> onSetRestaurantInformation({required RestaurantInformation data}) async {
@@ -18,6 +21,7 @@ class UserSession {
     prefs.setString('username', data.restaurant_name ?? '');
     prefs.setString('email', data.email ?? '');
     prefs.setString('no_telp', data.no_telp ?? '');
+    prefs.setString('wallet_id', data.wallet_id ?? '');
   }
 
   Future<int> onGetId() async {
@@ -48,6 +52,20 @@ class UserSession {
     return isLoaded;
   }
 
+  Future<String> onGetPreference() async {
+    String isLoaded = '';
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLoaded = prefs.getString('preference') ?? '';
+    return isLoaded;
+  }
+
+  Future<String> onGetWalletId() async {
+    String isLoaded = '';
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLoaded = prefs.getString('wallet_id') ?? '';
+    return isLoaded;
+  }
+
   Future<void> onRemoveWhenLogout() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('username');
@@ -56,7 +74,17 @@ class UserSession {
     prefs.remove('no_telp');
     prefs.remove('role');
     prefs.remove('id');
+    prefs.remove('wallet_id');
 
     Get.offAllNamed(AppRoutes.login);
+  }
+
+  Future<void> checkUserSession() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    bool isActive = true;
+    if(prefs.containsKey('tokenValue')){
+      // int sessionDuration =
+    }
   }
 }

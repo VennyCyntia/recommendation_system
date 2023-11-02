@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/restaurant/menu/controller/tabs_controller.dart';
+import 'package:recommendation_system/modules/restaurant/menu/controller/restaurant_tabs_controller.dart';
+import 'package:recommendation_system/modules/restaurant/order/controller/restaurant_order_controller.dart';
 import 'package:recommendation_system/modules/restaurant/order/pages/component/order_done_component.dart';
 import 'package:recommendation_system/modules/restaurant/order/pages/component/order_process_component.dart';
 
-class OrderRestaurantContainer extends StatelessWidget {
+class OrderRestaurantContainer extends GetView<RestaurantOrderController> {
   const OrderRestaurantContainer({super.key});
 
   @override
@@ -34,19 +35,20 @@ class OrderRestaurantContainer extends StatelessWidget {
                 ),
                 child: TabBar(
                     unselectedLabelColor: ThemeConfig.lightGrey,
-                    controller: Get.find<TabsController>().controller,
-                    tabs: Get.find<TabsController>().tabsOrder,
+                    controller: Get.find<RestaurantTabsController>().controller,
+                    tabs: Get.find<RestaurantTabsController>().tabsOrder,
                     indicator: const UnderlineTabIndicator(borderSide: BorderSide(color: Colors.black)),
                     indicatorPadding: const EdgeInsets.all(8.0),
                     dividerColor: Colors.black,
                     labelColor: Colors.black,
-                    labelStyle: ThemeConfig().textHeader5Bold(color: Colors.grey)
+                    labelStyle: ThemeConfig().textHeader5Bold(color: Colors.grey),
+                    onTap: (value) => controller.onGetAllData(value: value),
                 ),
               ),
             ),
             Expanded(
               child: TabBarView(
-                controller: Get.find<TabsController>().controller,
+                controller: Get.find<RestaurantTabsController>().controller,
                 children: const [
                   OrderProcessComponent(),
                   OrderDoneComponent(),

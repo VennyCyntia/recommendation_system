@@ -95,7 +95,7 @@ class EditMenuComponent extends GetView<RestaurantMenuController> {
                                           Radius.circular(
                                               ThemeConfig().defaultSpacing))),
                                   child: SizedBox.fromSize(
-                                      size: const Size.fromRadius(40),
+                                      size: Size.fromRadius(40),
                                       child: Image.memory(controller.editLsPic[0], fit: BoxFit.fill))),
                             ),
                             Expanded(

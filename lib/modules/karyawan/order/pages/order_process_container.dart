@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/karyawan/order/controller/order_controller.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/employee_order_controller.dart';
 import 'package:recommendation_system/modules/karyawan/order/pages/rating_container.dart';
 
-class OrderProcessContainer extends GetView<OrderController> {
+class OrderProcessContainer extends GetView<EmployeeOrderController> {
   const OrderProcessContainer({Key? key}) : super(key: key);
 
   @override
@@ -56,10 +56,14 @@ class OrderProcessContainer extends GetView<OrderController> {
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(ThemeConfig().defaultSpacing))),
                             primary: ThemeConfig.justWhite,
-                            backgroundColor: ThemeConfig.justGrey,
+                            backgroundColor: controller.lsOrder[index].status == 'WAITING FOOD' ? ThemeConfig.justGrey : Colors.green,
                           ),
-                          child: Text('Paid',
-                              style: ThemeConfig().textHeader5Bold(color: ThemeConfig.justBlack)),
+                          child: Wrap(
+                            children: [
+                              Text(controller.lsOrder[index].status == 'WAITING FOOD' ? 'WAITING FOOD' : controller.lsOrder[index].status == 'FOOD IS READY' ? 'FOOD IS READY' : 'DONE',
+                                  style: ThemeConfig().textHeader5Bold(color: ThemeConfig.justBlack)),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -75,9 +79,9 @@ class OrderProcessContainer extends GetView<OrderController> {
   }
 }
 
-class ShowDetailOrderInformation extends StatelessWidget {
-  int? index;
-  ShowDetailOrderInformation({Key? key, this.index}) : super(key: key);
+class ShowDetailOrderInformation extends GetView<EmployeeOrderController> {
+  int index;
+  ShowDetailOrderInformation({Key? key, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,26 +95,35 @@ class ShowDetailOrderInformation extends StatelessWidget {
           children: [
             ListView.builder(
               shrinkWrap: true,
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.0),
+              itemCount: controller.lsOrder[index].menu?.length,
+              itemBuilder: (context, indexItem) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: ThemeConfig().minSpacing),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('1x'),
-                      Text('Nasi Goreng'),
-                      Text('Rp 20.000'),
+                      Text(controller.lsOrder[index].menu![indexItem].menu_qty.toString() + 'x'),
+                      SizedBox(width: ThemeConfig().extraSpacing),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(controller.lsOrder[index].menu![indexItem].menu_name!),
+                            Text(controller.lsOrder[index].menu![indexItem].menu_price.toString()),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 );
               },
             ),
-            const Row(
+            SizedBox(height: ThemeConfig().biggerSpacing),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Total'),
-                Text('Rp 20.000'),
+                Text(controller.lsOrder[index].total_price.toString()),
               ],
             )
           ],
@@ -121,7 +134,7 @@ class ShowDetailOrderInformation extends StatelessWidget {
           children: [
             ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const RatingContainer());
+                  controller.lsOrder[index].status == 'WAITING FOOD' ? SizedBox() : Get.to(() => RatingContainer(index: index));
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

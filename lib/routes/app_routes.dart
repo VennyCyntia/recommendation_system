@@ -6,20 +6,23 @@ import 'package:recommendation_system/modules/karyawan/cart/pages/cart_container
 import 'package:recommendation_system/modules/karyawan/home/binding/home_binding.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/home_container.dart';
 import 'package:recommendation_system/modules/karyawan/main_container.dart';
-import 'package:recommendation_system/modules/karyawan/order/binding/order_binding.dart';
+import 'package:recommendation_system/modules/karyawan/order/binding/order_binding.dart' as employeeOrder;
 import 'package:recommendation_system/modules/karyawan/order/pages/order_container.dart';
+import 'package:recommendation_system/modules/karyawan/preference_page.dart';
 import 'package:recommendation_system/modules/karyawan/profile/binding/profile_binding.dart' as profileEmployee;
 import 'package:recommendation_system/modules/karyawan/profile/pages/profile_container.dart';
 import 'package:recommendation_system/modules/login/binding/login_binding.dart';
 import 'package:recommendation_system/modules/login/pages/login_body.dart';
 import 'package:recommendation_system/modules/restaurant/menu/binding/restaurant_binding.dart';
 import 'package:recommendation_system/modules/restaurant/menu/pages/menu_restaurant_container.dart';
+import 'package:recommendation_system/modules/restaurant/order/binding/order_binding.dart' as restaurantOrder;
 import 'package:recommendation_system/modules/restaurant/order/pages/order_restaurant_container.dart';
 import 'package:recommendation_system/modules/restaurant/profile/binding/profile_binding.dart'  as profileRestaurant;
 import 'package:recommendation_system/modules/restaurant/profile/pages/profile_restaurant_container.dart';
 import 'package:recommendation_system/modules/restaurant/restaurant_main_container.dart';
 
 class AppRoutes{
+  static String preference = '/preference';
   static String employeeMain = '/employeeMain';
   static String login = '/login';
   static String home = '/home';
@@ -40,6 +43,13 @@ class AppPages {
         name: AppRoutes.login,
         page: () => const LoginBody(),
         binding: LoginBinding(),
+        transition: Transition.native,
+        transitionDuration: const Duration(milliseconds: 500)
+    ),
+    GetPage(
+        name: AppRoutes.preference,
+        page: () => const PreferencePage(),
+        bindings: [LoginBinding(), CartBinding(), HomeBinding(), RestaurantBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
@@ -67,7 +77,7 @@ class AppPages {
     GetPage(
         name: AppRoutes.order,
         page: () => const OrderContainer(),
-        bindings: [OrderBinding(), profileEmployee.ProfileBinding()],
+        bindings: [employeeOrder.OrderBinding(), profileEmployee.ProfileBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),
@@ -97,7 +107,7 @@ class AppPages {
     GetPage(
         name: AppRoutes.orderRestaurant,
         page: () => const OrderRestaurantContainer(),
-        binding: AdminBinding(),
+        bindings: [AdminBinding(), restaurantOrder.OrderBinding()],
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),

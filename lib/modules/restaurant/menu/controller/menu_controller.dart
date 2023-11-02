@@ -74,7 +74,6 @@ class RestaurantMenuController extends GetxController {
 
   Future<void> onGetUserInformation() async {
     id.value = await UserSession().onGetId();
-    print('id restaurant ' + id.toString());
     username.text = await UserSession().onGetUsername();
     email.text = await UserSession().onGetEmail();
     no_telp.text = await UserSession().onGetNoTelepon();
@@ -135,7 +134,6 @@ class RestaurantMenuController extends GetxController {
           tempMenu.map((tempMenu) => tempMenu.toJson()).toList();
       await onSendData(body: menuList);
       await onGetAllData();
-      // Get.back();
       onClearData();
     }
   }
@@ -151,7 +149,6 @@ class RestaurantMenuController extends GetxController {
       List<String> valuesList = data['menu_description'].split(', ');
 
       editFieldMenu.clear();
-      // lsPic.clear();
       editLsPic.clear();
       selectedCategory.clear();
       editSelectedDesc.clear();
@@ -206,8 +203,8 @@ class RestaurantMenuController extends GetxController {
   Future<void> onDeleteData({required int id}) async {
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.deleteMenu}$id';
     var result =
-        await APIConfig().sendDataToApi(url: url, method: 'POST', body: []);
-    onGetAllData();
+        await APIConfig().sendDataToApi(url: url, method: 'POST');
+    await onGetAllData();
   }
 
   Future<void> onDeleteForm({required int index}) async {

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/Routes/app_routes.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/modules/karyawan/cart/controller/cart_controller.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/employee_order_controller.dart';
 
-class ConfirmationContainer extends StatelessWidget {
+class ConfirmationContainer extends GetView<CartController> {
   const ConfirmationContainer({super.key});
 
   @override
@@ -27,13 +29,13 @@ class ConfirmationContainer extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text('Your Order Has Been Confirm'),
-                Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
+                const Text('Your Order Has Been Confirm'),
+                const Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'),
                 ElevatedButton(
-                    onPressed: () => Get.offAll(AppRoutes.home),
+                    onPressed: () async => controller.onRefreshData(),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ThemeConfig.justBlack,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))
                     ),
                     child: Text('Back To Home', style: ThemeConfig().textHeader6(color: ThemeConfig.justWhite))),
               ],

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
-import 'package:recommendation_system/modules/restaurant/profile/controller/profile_controller.dart';
+import 'package:recommendation_system/modules/restaurant/profile/controller/restaurant_profile_controller.dart';
 
-class ProfileRestaurantContainer extends GetView<ProfileController> {
+class ProfileRestaurantContainer extends GetView<RestaurantProfileController> {
   const ProfileRestaurantContainer({super.key});
 
   @override
@@ -69,6 +69,20 @@ class ProfileRestaurantContainer extends GetView<ProfileController> {
                 borderColors: Colors.black,
                 pLeft: ThemeConfig().defaultSpacing,
                 pTop: ThemeConfig().defaultSpacing,
+                pRight: ThemeConfig().defaultSpacing,
+                pBottom: ThemeConfig().defaultSpacing,
+              ),
+              FormInputTextMandatory(
+                title: 'Balance',
+                txtcontroller: controller.balance,
+                textInputType: TextInputType.text,
+                txtLine: 2,
+                txtEnable: true,
+                txtReadonly: true,
+                mandatory: false,
+                borderColors: Colors.black,
+                pLeft: ThemeConfig().defaultSpacing,
+                pTop: ThemeConfig().extraSpacing,
                 pRight: ThemeConfig().defaultSpacing,
                 pBottom: ThemeConfig().defaultSpacing,
               ),

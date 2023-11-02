@@ -56,25 +56,48 @@ class AdminRestaurantController extends GetxController {
   }
 
   Future<void> onSaveRestaurant() async {
+    String resultWallet = 'error';
     if(formKey.currentState!.validate()){
       List<ViewRestaurant> tempRestaurant = [];
 
-      for(int i=0; i<lsFormRestaurant.length; i++){
-        tempRestaurant.add(ViewRestaurant(
-          username: lsFormRestaurant[i][0].text,
-          restaurant_name: lsFormRestaurant[i][1].text,
-          email: lsFormRestaurant[i][2].text,
-          no_telp: lsFormRestaurant[i][3].text,
-          password: lsFormRestaurant[i][4].text,
-          restaurant_description: lsFormRestaurant[i][5].text,
-          restaurant_image: lsPic[i],
-        ));
-      }
+      for (int i = 0; i < lsFormRestaurant.length; i++) {
+        Map<String, dynamic> tempWallet = {
+          "Email": lsFormRestaurant[i][1].text,
+          "DisplayName": lsFormRestaurant[i][0].text,
+        };
 
-      List<Map<String, dynamic>> restaurantList = tempRestaurant.map((tempRestaurant) => tempRestaurant.toJson()).toList();
-      await onSendData(body: restaurantList);
-      await onGetAllData();
-      onClearData();
+        String urlCreateWallet = GlobalUrl.registerWallet;
+        resultWallet = await APIConfig().onSendOrGetSource(
+            url: urlCreateWallet,
+            body: tempWallet,
+            methodType: 'POST',
+            headerType: 'wallet');
+
+        if (resultWallet.toLowerCase().contains('failed')) {
+          print('gagal ges');
+        } else if(resultWallet.toLowerCase().contains('registered')){
+          print('email sudah terdaftar');
+        } else {
+          var data = jsonDecode(resultWallet);
+          print('walletid '+data['WalletId']);
+
+          ViewRestaurant tempRestaurant = ViewRestaurant(
+            username: lsFormRestaurant[i][0].text,
+            restaurant_name: lsFormRestaurant[i][1].text,
+            email: lsFormRestaurant[i][2].text,
+            no_telp: lsFormRestaurant[i][3].text,
+            password: lsFormRestaurant[i][4].text,
+            restaurant_description: lsFormRestaurant[i][5].text,
+            restaurant_image: lsPic[i],
+              wallet_id: data['WalletId']
+          );
+
+          await onSendData(restaurant: [tempRestaurant]);
+          await onGetAllData();
+          onClearData();
+        }
+
+      }
     }
   }
 
@@ -142,10 +165,10 @@ class AdminRestaurantController extends GetxController {
   }
 
   // senddata
-  Future<void> onSendData({required List body}) async {
+  Future<void> onSendData({required List restaurant}) async {
     String result = 'error';
     String url = GlobalUrl.baseUrl + GlobalUrl.createRestaurant;
-    result = await APIConfig().sendDataToApi(url: url, body: body, method: 'POST');
+    result = await APIConfig().sendDataToApi(url: url, body: restaurant, method: 'POST');
     print('result '+result.toString());
     if(result.toString().contains('success')){
       print('berhasil ges');

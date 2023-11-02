@@ -16,20 +16,6 @@ class HomeContainer extends GetView<RestaurantController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Wrap(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.all(10.0),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)),
-                      hintText: 'Find Your Restaurant',
-                      prefixIcon: Icon(Icons.search_rounded),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
               Text('Recommended For You', style: ThemeConfig().textHeader3Bold(color: ThemeConfig.justBlack)),
               const SizedBox(height: 8.0),
               SizedBox(
@@ -47,13 +33,28 @@ class HomeContainer extends GetView<RestaurantController> {
                 ),
               ),
               const SizedBox(height: 8.0),
+              Wrap(
+                children: [
+                  TextFormField(
+                    controller: controller.findRestaurant,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10.0),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'Find Your Restaurant',
+                      prefixIcon: Icon(Icons.search_rounded),
+                    ),
+                    onChanged: (value) => controller.onFindRestaurant('food',value),
+                  ),
+                ],
+              ),
               Text('Restaurant', style: ThemeConfig().textHeader3Bold(color: ThemeConfig.justBlack)),
               Expanded(
                 child: Obx(() => ListView.builder(
                   shrinkWrap: true,
-                  itemCount: controller.lsRestaurant.length,
+                  itemCount: controller.foundRestaurant.length,
                   itemBuilder: (context, index) {
-                    return RestaurantComponent(id: controller.lsRestaurant[index].restaurant_id!, index: index);
+                    return RestaurantComponent(id: controller.foundRestaurant[index].restaurant_id!, index: index);
                   },
                 )),
               ),

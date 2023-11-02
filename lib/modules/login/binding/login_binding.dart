@@ -4,6 +4,6 @@ import 'package:recommendation_system/modules/login/controller/login_controller.
 class LoginBinding extends Bindings {
   @override
   void dependencies(){
-    Get.lazyPut(() => LoginController(), fenix: true);
+    Get.lazyPut(() => LoginController());
   }
 }

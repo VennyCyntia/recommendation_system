@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/karyawan/order/controller/order_controller.dart';
-import 'package:recommendation_system/modules/karyawan/order/controller/tabs_controller.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/employee_order_controller.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/employee_tabs_controller.dart';
 import 'package:recommendation_system/modules/karyawan/order/pages/order_done_container.dart';
 import 'package:recommendation_system/modules/karyawan/order/pages/order_not_paid_container.dart';
 import 'package:recommendation_system/modules/karyawan/order/pages/order_process_container.dart';
 
 
-class OrderTabsContainer extends GetView<OrderController> {
+class OrderTabsContainer extends GetView<EmployeeOrderController> {
   const OrderTabsContainer({Key? key}) : super(key: key);
 
   @override
@@ -33,8 +33,8 @@ class OrderTabsContainer extends GetView<OrderController> {
                 ),
                 child: TabBar(
                     unselectedLabelColor: ThemeConfig.lightGrey,
-                    controller: Get.find<TabsController>().controller,
-                    tabs: Get.find<TabsController>().tabs,
+                    controller: Get.find<EmployeeTabsController>().controller,
+                    tabs: Get.find<EmployeeTabsController>().tabs,
                     indicator: const UnderlineTabIndicator(borderSide: BorderSide(color: Colors.black)),
                     indicatorPadding: const EdgeInsets.all(8.0),
                     dividerColor: Colors.black,
@@ -47,8 +47,8 @@ class OrderTabsContainer extends GetView<OrderController> {
           ),
           Expanded(
             child: TabBarView(
-              controller: Get.find<TabsController>().controller,
-              physics: NeverScrollableScrollPhysics(),
+              controller: Get.find<EmployeeTabsController>().controller,
+              physics: const NeverScrollableScrollPhysics(),
               children: const [
                 OrderNotPaidContainer(),
                 OrderProcessContainer(),

@@ -8,11 +8,9 @@ import 'package:recommendation_system/modules/karyawan/home/controller/restauran
 class MenuContainer extends GetView<RestaurantController> {
   int indexCategory;
   int indexitem;
-  int id;
 
   MenuContainer(
       {super.key,
-      required this.id,
       required this.indexitem,
       required this.indexCategory});
 
@@ -63,16 +61,14 @@ class MenuContainer extends GetView<RestaurantController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
-                          onTap: () => controller.onChangeItem(
+                          onTap: () => controller.onDecreaseItem(
                               indexItem: indexitem,
-                              id: id,
-                              type: 'decrease',
                               indexCategory: indexCategory),
                           child: Container(
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.grey)),
                             child:
-                                Icon(Icons.remove, color: ThemeConfig.baseGrey),
+                                const Icon(Icons.remove, color: ThemeConfig.baseGrey),
                           ),
                         ),
                         SizedBox(width: ThemeConfig().extraSpacing),
@@ -88,10 +84,8 @@ class MenuContainer extends GetView<RestaurantController> {
                                 color: ThemeConfig.justBlack)),
                         SizedBox(width: ThemeConfig().extraSpacing),
                         GestureDetector(
-                          onTap: () => controller.onChangeItem(
+                          onTap: () => controller.onIncreaseItem(
                               indexItem: indexitem,
-                              id: id,
-                              type: 'increase',
                               indexCategory: indexCategory),
                           child: Container(
                             decoration: BoxDecoration(

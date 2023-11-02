@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/dialog_config.dart';
-import 'package:recommendation_system/app/config/session_manager.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/karyawan/order/pages/components/form_field_component.dart';
-import 'package:recommendation_system/modules/karyawan/profile/controller/profile_controller.dart';
+import 'package:recommendation_system/modules/karyawan/profile/controller/employee_profile_controller.dart';
 import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
 
-class ProfileContainer extends GetView<ProfileController> {
+class ProfileContainer extends GetView<EmployeeProfileController> {
   const ProfileContainer({super.key});
 
   @override
@@ -47,6 +45,23 @@ class ProfileContainer extends GetView<ProfileController> {
                   ),
                 ],
               ),
+              SizedBox(height: ThemeConfig().defaultSpacing),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: ElevatedButton.icon(
+                      onPressed: () => showDialog(context: context, builder: (context) => TopUpContainer()),
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: ThemeConfig().minSpacing),
+                          backgroundColor: ThemeConfig.justBlack,
+                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)))),
+                      icon: Icon(Icons.add, color: ThemeConfig.justWhite),
+                      label: Text('TOP UP', style: ThemeConfig().textHeader5(color: ThemeConfig.justWhite)),
+                  ),
+                ),
+              ),
               FormInputTextMandatory(
                 title: 'Nama',
                 txtcontroller: controller.username,
@@ -77,11 +92,25 @@ class ProfileContainer extends GetView<ProfileController> {
               ),
               FormInputTextMandatory(
                 title: 'Preferensi',
-                txtcontroller: controller.username,
+                txtcontroller: controller.preference,
                 textInputType: TextInputType.text,
                 txtLine: 2,
                 txtEnable: true,
                 txtReadonly: false,
+                mandatory: false,
+                borderColors: Colors.black,
+                pLeft: ThemeConfig().defaultSpacing,
+                pTop: ThemeConfig().extraSpacing,
+                pRight: ThemeConfig().defaultSpacing,
+                pBottom: ThemeConfig().defaultSpacing,
+              ),
+              FormInputTextMandatory(
+                title: 'Balance',
+                txtcontroller: controller.balance,
+                textInputType: TextInputType.text,
+                txtLine: 2,
+                txtEnable: true,
+                txtReadonly: true,
                 mandatory: false,
                 borderColors: Colors.black,
                 pLeft: ThemeConfig().defaultSpacing,
@@ -121,3 +150,54 @@ class ProfileContainer extends GetView<ProfileController> {
     );
   }
 }
+
+class TopUpContainer extends GetView<EmployeeProfileController> {
+  const TopUpContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: ThemeConfig.justWhite,
+      elevation: 0,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+      content: Wrap(
+        children: [
+          FormInputTextMandatory(
+            title: 'Amount',
+            txtcontroller: controller.amount,
+            textInputType: TextInputType.number,
+            txtLine: 2,
+            txtEnable: true,
+            txtReadonly: false,
+            mandatory: false,
+            borderColors: Colors.black,
+            pLeft: ThemeConfig().defaultSpacing,
+            pTop: ThemeConfig().extraSpacing,
+            pRight: ThemeConfig().defaultSpacing,
+            pBottom: ThemeConfig().defaultSpacing,
+          ),
+        ],
+      ),
+      actions: [
+        Wrap(
+          children: [
+            ElevatedButton(
+                onPressed: () => controller.onTopUpWallet(),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().minSpacing)),
+                    ),
+                    padding: EdgeInsets.zero,
+                    backgroundColor: ThemeConfig.justGrey
+                ),
+                child: const Text(
+                  'SEND',
+                  style: TextStyle(color: Colors.black),
+                )),
+          ],
+        )
+      ],
+    );
+  }
+}
+

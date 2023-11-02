@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TabsController extends GetxController with GetSingleTickerProviderStateMixin{
+class EmployeeTabsController extends GetxController with GetSingleTickerProviderStateMixin{
   late TabController controller;
 
   final List<Tab> tabs = <Tab>[

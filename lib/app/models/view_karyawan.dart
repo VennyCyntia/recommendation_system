@@ -5,14 +5,16 @@ class ViewRestaurant {
   String? restaurant_name;
   String? restaurant_description;
   String? restaurant_image;
+  String? wallet_id;
 
-  ViewRestaurant({this.restaurant_id, this.restaurant_name, this.restaurant_description, this.restaurant_image});
+  ViewRestaurant({this.restaurant_id, this.restaurant_name, this.restaurant_description, this.restaurant_image, this.wallet_id});
 
   ViewRestaurant.fromJson(Map<String, dynamic> json) {
     restaurant_id = json['restaurant_id'];
     restaurant_name = json['restaurant_name'];;
     restaurant_description = json['restaurant_description'];
     restaurant_image = json['restaurant_image'];
+    wallet_id = json['wallet_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +23,7 @@ class ViewRestaurant {
       'restaurant_name': restaurant_name,
       'restaurant_description': restaurant_description,
       'restaurant_image': restaurant_image,
+      'wallet_id': wallet_id,
     };
   }
 
@@ -29,6 +32,7 @@ class ViewRestaurant {
     restaurant_name = map['restaurant_name'];
     restaurant_description = map['restaurant_description'];
     restaurant_image = map['restaurant_image'];
+    wallet_id = map['wallet_id'];
   }
 }
 
@@ -104,14 +108,16 @@ class ViewItemMenu {
 class ItemCartRestaurant{
   int? id;
   int? restaurant_id;
+  String? wallet_id;
   String? restaurant_name;
   List<ItemCartMenu>? menu;
 
-  ItemCartRestaurant({this.id, this.restaurant_id, this.restaurant_name, this.menu});
+  ItemCartRestaurant({this.id, this.restaurant_id, this.wallet_id, this.restaurant_name, this.menu});
 
   ItemCartRestaurant.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     restaurant_id = json['restaurant_id'];
+    wallet_id = json['wallet_id'];
     restaurant_name = json['restaurant_name'];
     if (json['menu'] != null) {
       menu = <ItemCartMenu>[];
@@ -161,17 +167,46 @@ class Order{
   String? order_id;
   int? queue_number;
   String? restaurant_name;
+  String? wallet_id;
   int? total_price;
   String? status;
   List<OrderItem>? menu;
 
-  Order({this.user_id, this.order_id, this.queue_number, this.restaurant_name, this.total_price, this.menu, this.status});
+  Order({this.user_id, this.order_id, this.queue_number, this.restaurant_name, this.wallet_id, this.total_price, this.menu, this.status});
 
   Order.fromJson(Map<String, dynamic> json) {
     user_id = json['user_id'];
     order_id = json['order_id'];
     queue_number = json['queue_number'];
     restaurant_name = json['restaurant_name'];
+    wallet_id = json['wallet_id'];
+    total_price = json['total_price'];
+    status = json['status'];
+    if (json['menu'] != null) {
+      menu = <OrderItem>[];
+      json['menu'].forEach((v) {
+        menu!.add(OrderItem.fromJson(v));
+      });
+    }
+  }
+}
+
+class RestaurantOrder{
+  int? restaurant_id;
+  String? order_id;
+  int? queue_number;
+  String? username;
+  int? total_price;
+  String? status;
+  List<OrderItem>? menu;
+
+  RestaurantOrder({this.restaurant_id, this.order_id, this.queue_number, this.username, this.total_price, this.menu, this.status});
+
+  RestaurantOrder.fromJson(Map<String, dynamic> json) {
+    restaurant_id = json['restaurant_id'];
+    order_id = json['order_id'];
+    queue_number = json['queue_number'];
+    username = json['username'];
     total_price = json['total_price'];
     status = json['status'];
     if (json['menu'] != null) {
@@ -205,3 +240,26 @@ class OrderItem{
     'menu_qty': menu_qty,
   };
 }
+
+// class DetailOrder{
+//   int? order_id;
+//   String? menu_name;
+//   int? menu_price;
+//   int? menu_qty;
+//
+//   DetailOrder({this.menu_id, this.menu_name, this.menu_price, this.menu_qty});
+//
+//   DetailOrder.fromJson(Map<String, dynamic> json) {
+//     menu_id = json['menu_id'];
+//     menu_name = json['menu_name'];
+//     menu_price = json['menu_price'];
+//     menu_qty = json['menu_qty'];
+//   }
+//
+//   Map<String, dynamic> toJson() => {
+//     'menu_id': menu_id,
+//     'menu_name': menu_name,
+//     'menu_price': menu_price,
+//     'menu_qty': menu_qty,
+//   };
+// }

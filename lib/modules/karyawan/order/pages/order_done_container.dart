@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/karyawan/order/controller/order_controller.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/employee_order_controller.dart';
 
-class OrderDoneContainer extends GetView<OrderController> {
+class OrderDoneContainer extends GetView<EmployeeOrderController> {
   const OrderDoneContainer({Key? key}) : super(key: key);
 
   @override

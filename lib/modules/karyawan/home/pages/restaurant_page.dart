@@ -33,6 +33,25 @@ class RestaurantPage extends GetView<RestaurantController> {
                                   NetworkImage('https://imgx.sonora.id/crop/0x0:0x0/360x240/photo/2022/10/22/istockphoto-1345298910-170667aj-20221022110522.jpg'),
                               fit: BoxFit.cover)
                       ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: ThemeConfig().biggerSpacing, horizontal: ThemeConfig().extraSpacing ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(ThemeConfig().defaultSpacing),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: ThemeConfig.justWhite,
+                              ),
+                              child: GestureDetector(
+                                onTap: () => Get.back(),
+                                child: const Icon(Icons.arrow_back, size: 28),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   Positioned(
@@ -111,9 +130,9 @@ class RestaurantPage extends GetView<RestaurantController> {
                                     physics: const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: controller.restaurantDetail.value.menu![indexCategory].item_menu!.length,
-                                    itemBuilder: (BuildContext ctx, indexitem) {
+                                    itemBuilder: (BuildContext ctx, indexItem) {
                                       return GestureDetector(
-                                        onTap: () => Get.to(() => MenuContainer(id: id, indexCategory: indexCategory, indexitem: indexitem)),
+                                        onTap: () => Get.to(() => MenuContainer(indexCategory: indexCategory, indexitem: indexItem)),
                                         child: Container(
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
@@ -135,10 +154,10 @@ class RestaurantPage extends GetView<RestaurantController> {
                                                 ),
                                                 Wrap(
                                                   children: [
-                                                    Text(controller.restaurantDetail.value.menu![indexCategory].item_menu![indexitem].menu_name!),
+                                                    Text(controller.restaurantDetail.value.menu![indexCategory].item_menu![indexItem].menu_name!),
                                                   ],
                                                 ),
-                                                Text(controller.restaurantDetail.value.menu![indexCategory].item_menu![indexitem].menu_price!.toString())
+                                                Text(controller.restaurantDetail.value.menu![indexCategory].item_menu![indexItem].menu_price!.toString())
                                               ],
                                             )
                                         ),

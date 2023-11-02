@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
-import 'package:recommendation_system/modules/karyawan/order/controller/order_controller.dart';
+import 'package:recommendation_system/modules/karyawan/order/controller/employee_order_controller.dart';
 
-class OrderNotPaidContainer extends GetView<OrderController> {
+class OrderNotPaidContainer extends GetView<EmployeeOrderController> {
   const OrderNotPaidContainer({Key? key}) : super(key: key);
 
   @override
@@ -49,10 +49,7 @@ class OrderNotPaidContainer extends GetView<OrderController> {
                           ),
                         ),
                         ElevatedButton(
-                          child: Text('Paid',
-                              style: ThemeConfig()
-                                  .textHeader5Bold(color: ThemeConfig.justBlack)),
-                          onPressed: () => showDialog(context: context, builder: (context) => ShowPaymentInformation(index: index)),
+                          onPressed: () => controller.onViewOrder(index: index, order_id: controller.lsOrder[index].order_id!, context: context),
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
@@ -60,6 +57,9 @@ class OrderNotPaidContainer extends GetView<OrderController> {
                             primary: ThemeConfig.justWhite,
                             backgroundColor: ThemeConfig.justGrey,
                           ),
+                          child: Text('Detail',
+                              style: ThemeConfig()
+                                  .textHeader5Bold(color: ThemeConfig.justBlack)),
                         ),
                       ],
                     ),
@@ -74,7 +74,7 @@ class OrderNotPaidContainer extends GetView<OrderController> {
   }
 }
 
-class ShowPaymentInformation extends StatelessWidget {
+class ShowPaymentInformation extends GetView<EmployeeOrderController> {
   int? index;
   ShowPaymentInformation({Key? key, this.index}) : super(key: key);
 
@@ -82,51 +82,55 @@ class ShowPaymentInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Center(child: const Text('Your Payment Detail')),
-      content: Column(
+      content: Wrap(
         children: [
-          const Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-          // ListView.builder(
-          //   shrinkWrap: true,
-          //   itemCount: 3,
-          //   itemBuilder: (context, index) {
-          //     return Padding(
-          //       padding: EdgeInsets.symmetric(vertical: 4.0),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Text('1x'),
-          //           Text('Nasi Goreng'),
-          //           Text('Rp 20.000'),
-          //         ],
-          //       ),
-          //     );
-          //   },
-          // ),
-          // const Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Text('Total'),
-          //     Text('Rp 20.000'),
-          //   ],
-          // )
+          Column(
+            children: [
+              // ListView.builder(
+              //   shrinkWrap: true,
+              //   itemCount: 3,
+              //   itemBuilder: (context, index) {
+              //     return Padding(
+              //       padding: EdgeInsets.symmetric(vertical: 4.0),
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           Text('1x'),
+              //           Text('Nasi Goreng'),
+              //           Text('Rp 20.000'),
+              //         ],
+              //       ),
+              //     );
+              //   },
+              // ),
+              // const Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text('Total'),
+              //     Text('Rp 20.000'),
+              //   ],
+              // )
+              BillPaymentComponent(title: 'Nomor Transaksi', subtitle: controller.detailOrder['order_id']),
+              BillPaymentComponent(title: 'Created date', subtitle: controller.detailOrder['bill_date']),
+              BillPaymentComponent(title: 'Expired date', subtitle: controller.detailOrder['Expired_date']),
+            ],
+          ),
         ],
       ),
       actions: <Widget>[
         ElevatedButton(
-            onPressed: () {
-              Get.back();
-            },
+            onPressed: () => controller.onPayBill(orderId: controller.lsOrder[index!].order_id!),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().minSpacing)),
               ),
               padding: EdgeInsets.zero,
-              backgroundColor: ThemeConfig.justGrey
+              backgroundColor: Colors.green
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: ThemeConfig().defaultSpacing, vertical: ThemeConfig().defaultSpacing ),
               child: const Text(
-                'OK',
+                'PAID',
                 style: TextStyle(color: Colors.white),
               ),
             ))
@@ -134,3 +138,33 @@ class ShowPaymentInformation extends StatelessWidget {
     );
   }
 }
+
+class BillPaymentComponent extends StatelessWidget {
+  String title;
+  String subtitle;
+
+  BillPaymentComponent({super.key, required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Row(
+          children: [
+            SizedBox(
+              width: Get.size.width * .28,
+              child: Wrap(
+                children: [
+                  Text(title),
+                ],
+              ),
+            ),
+          ],
+        ),
+        Text(':'),
+        Flexible(child: Text(subtitle)),
+      ],
+    );
+  }
+}
+

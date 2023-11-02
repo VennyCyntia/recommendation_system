@@ -20,8 +20,8 @@ class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Obx(() => controller.isLoading.value == true ? DialogConfig().onShowBasicLoading() : Expanded(
-              child: Obx(() => ListView.builder(
+            Expanded(
+              child: Obx(() => controller.isLoading.value == true ? DialogConfig().onShowLoadingIndicator() : ListView.builder(
                   itemCount: controller.lsMenu.length,
                   itemBuilder: (context, index) {
                     return Column(
@@ -59,11 +59,11 @@ class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
                       ],
                     );
                   })),
-            )),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Align(
-                alignment: Alignment.topRight,
+                alignment: Alignment.center,
                 child: SpeedDial(
                   icon: Icons.add,
                   children: [

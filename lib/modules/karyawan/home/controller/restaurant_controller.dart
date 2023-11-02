@@ -1,41 +1,50 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:recommendation_system/Routes/app_routes.dart';
 import 'package:recommendation_system/app/config/api_config.dart';
+import 'package:recommendation_system/app/config/dialog_config.dart';
 import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/models/view_karyawan.dart';
-import 'package:recommendation_system/modules/karyawan/home/pages/menu_container.dart';
-import 'package:recommendation_system/modules/karyawan/cart/controller/cart_controller.dart';
 import 'package:recommendation_system/modules/karyawan/home/pages/restaurant_page.dart';
-import 'package:recommendation_system/modules/karyawan/profile/controller/profile_controller.dart';
+import 'package:recommendation_system/modules/karyawan/cart/controller/cart_controller.dart';
+import 'package:recommendation_system/modules/karyawan/profile/controller/employee_profile_controller.dart';
 
 class RestaurantController extends GetxController {
-  var profileController = Get.put(ProfileController());
+  var profileController = Get.put(EmployeeProfileController());
   var cartController = Get.find<CartController>();
 
-  var lsRestaurantMenu = List<ViewDetailRestaurant>.empty(growable: true).obs;
-
   var lsRestaurant = List<ViewRestaurant>.empty(growable: true).obs;
+  var qty = 0;
+
+  var foundRestaurant = List<ViewRestaurant>.empty(growable: true).obs;
+
   var restaurantDetail = ViewDetailRestaurant().obs;
+
+  var userPreference = List<String>.generate(4, (index) => '').obs;
+
+  TextEditingController findRestaurant = TextEditingController();
+  TextEditingController preferenceField = TextEditingController();
 
   var isLoading = false.obs;
 
   @override
   void onInit() async {
     isLoading.value = true;
-    print(profileController.id.value);
     onSetUpMenu();
     super.onInit();
   }
 
   Future<void> onSetUpMenu() async {
-    lsRestaurant.clear();
+    foundRestaurant.clear();
     String url = GlobalUrl.baseUrl + GlobalUrl.getAllRestaurant;
     var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
     var data = jsonDecode(result);
 
     for(var item in data){
       lsRestaurant.add(ViewRestaurant.fromJson(item));
+      foundRestaurant.add(ViewRestaurant.fromJson(item));
     }
   }
 
@@ -47,30 +56,13 @@ class RestaurantController extends GetxController {
       var data = await jsonDecode(result);
       restaurantDetail.value = ViewDetailRestaurant.fromJson(data);
       Get.to(() => RestaurantPage(id: id, index: index));
-    }catch(e){}
-  }
-
-  onChangeItem(
-      {required String type,
-        required int indexItem,
-        required int id,
-        required int indexCategory}) {
-    if (type == 'increase') {
-      onIncreaseItem(
-          indexItem: indexItem,
-          id: id,
-          indexCategory: indexCategory);
-    } else {
-      onDecreaseItem(
-          indexItem: indexItem,
-          id: id,
-          indexCategory: indexCategory);
+    }catch(e){
+      log(e.toString());
     }
   }
 
   onIncreaseItem(
       {required int indexItem,
-        required int id,
         required int indexCategory}) {
 
     ViewItemMenu currentMenu = restaurantDetail.value
@@ -83,7 +75,6 @@ class RestaurantController extends GetxController {
 
   onDecreaseItem(
       {required int indexItem,
-        required int id,
         required int indexCategory}) {
     ViewItemMenu currentMenu = restaurantDetail.value
         .menu![indexCategory]
@@ -112,21 +103,67 @@ class RestaurantController extends GetxController {
       'menu_id' : menuId,
       'quantity' : currentMenu.menu_qty
     };
+    log(json.encode(body));
 
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.createItem}';
     var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', body: body);
     if (result.toLowerCase().contains('failed') ||
         result.toLowerCase().contains('gagal') ||
         result.toLowerCase().contains('error')) {
-    }
 
-    await cartController.onGetAllData().then((value) => Future.delayed(Duration.zero, () => Get.back()));
+    }else{
+      await cartController.onGetAllData().then((value){
+        Future.delayed(const Duration(milliseconds: 2), () => Get.back());
+      });
+    }
   }
 
-  onToMenuContainer(int index, int indexItem, String restaurantName){
-    int indexRestaurant = lsRestaurantMenu.indexWhere((item) => item.restaurant_name == restaurantName);
+  onFindRestaurant(String type, String value){
+    List<ViewRestaurant> result = [];
 
-    // Get.to(() => MenuContainer(index: index, indexCategory: indexItem, indexRestaurant: indexRestaurant));
+    if(type == 'restaurant'){
+      if(value.isEmpty){
+        foundRestaurant.clear();
+        foundRestaurant.addAll(lsRestaurant);
+      }else{
+        result = lsRestaurant.where((restaurant) => restaurant.restaurant_name!.contains(value.toLowerCase())).toList();
+        foundRestaurant.clear();
+        foundRestaurant.addAll(result);
+      }
+    }else{
+
+    }
+
+  }
+
+  Future<void> onSaveUserPreference() async {
+    String combinedDesc = '';
+
+      for (int i = 0; i < userPreference.length; i++) {
+        if (i == 0) {
+          combinedDesc = (userPreference[i]);
+        } else {
+          combinedDesc = '${combinedDesc}, ${userPreference[i]}';
+        }
+      }
+
+      Map body = {
+        'user_id': profileController.id.value,
+        'preference': combinedDesc
+      };
+      log(json.encode(body));
+
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.createPreference}';
+    var result = await APIConfig()
+        .onSendOrGetSource(url: url, methodType: 'POST', body: body);
+    if (result.toLowerCase().contains('failed') ||
+        result.toLowerCase().contains('gagal') ||
+        result.toLowerCase().contains('error')) {
+
+    }else{
+      DialogConfig().onShowLoadingIndicator();
+      Get.toNamed(AppRoutes.employeeMain);
+    }
   }
 
   var menu = [

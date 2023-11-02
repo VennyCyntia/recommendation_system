@@ -41,7 +41,7 @@ class LoginBody extends GetView<LoginController> {
                       ),
                       elevation: 0
                   ),
-                  onPressed: () => controller.onValidateUser(),
+                  onPressed: () async => controller.onValidateUser(),
                   child: Text('Login',
                     style: ThemeConfig().textHeader3(
                       color: ThemeConfig.justWhite,

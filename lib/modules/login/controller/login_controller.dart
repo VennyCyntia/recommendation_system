@@ -85,14 +85,17 @@ class LoginController extends GetxController {
     } else {
       var data = json.decode(result);
       if (type == 'restaurant') {
-        print('item '+data.toString());
         RestaurantInformation restData = RestaurantInformation.fromJson(data);
         await UserSession().onSetRestaurantInformation(data: restData);
         Get.toNamed(AppRoutes.restaurant);
       } else if (data['role'] == 'employee') {
         UserInformation userData = UserInformation.fromJson(data);
         await UserSession().onSetUserInformation(data: userData);
-        Get.toNamed(AppRoutes.employeeMain);
+        if(userData.preference != null){
+          Get.toNamed(AppRoutes.employeeMain);
+        }else{
+          Get.toNamed(AppRoutes.preference);
+        }
       } else {
         UserInformation userData = UserInformation.fromJson(data);
         await UserSession().onSetUserInformation(data: userData);
@@ -101,5 +104,7 @@ class LoginController extends GetxController {
     }
   }
 
-// Future<void> onSetUserInformation() async {}
+
+
+
 }

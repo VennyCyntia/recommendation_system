@@ -8,8 +8,9 @@ class ViewRestaurant {
   String? password;
   String? restaurant_description;
   String? restaurant_image;
+  String? wallet_id;
 
-  ViewRestaurant({this.restaurant_id, this.username, this.restaurant_name, this.email, this.no_telp, this.password, this.restaurant_description, this.restaurant_image});
+  ViewRestaurant({this.restaurant_id, this.username, this.restaurant_name, this.email, this.no_telp, this.password, this.restaurant_description, this.restaurant_image, this.wallet_id});
 
   ViewRestaurant.fromJson(Map<String, dynamic> json) {
     restaurant_id = json['restaurant_id'];
@@ -20,6 +21,7 @@ class ViewRestaurant {
     password = json['password'];
     restaurant_description = json['restaurant_description'];
     restaurant_image = json['restaurant_image'];
+    wallet_id = json['wallet_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,7 +33,7 @@ class ViewRestaurant {
       'no_telp': no_telp,
       'password': password,
       'restaurant_description': restaurant_description,
-      'restaurant_image': restaurant_image,
+      'wallet_id': wallet_id,
     };
   }
 
@@ -43,7 +45,7 @@ class ViewRestaurant {
     no_telp = map['no_telp'];
     password = map['password'];
     restaurant_description = map['restaurant_description'];
-    restaurant_image = map['restaurant_image'];
+    wallet_id = map['wallet_id'];
   }
 }
 
@@ -54,8 +56,9 @@ class ViewEmployee {
   String? no_telp;
   String? password;
   String? role;
+  String? wallet_id;
 
-  ViewEmployee({this.user_id, this.username, this.email, this.no_telp, this.password, this.role});
+  ViewEmployee({this.user_id, this.username, this.email, this.no_telp, this.password, this.role, this.wallet_id});
 
   ViewEmployee.fromJson(Map<String, dynamic> json) {
     user_id = json['user_id'];
@@ -64,6 +67,7 @@ class ViewEmployee {
     no_telp = json['no_telp'];
     password = json['password'];
     role = json['role'];
+    wallet_id = json['wallet_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -74,6 +78,7 @@ class ViewEmployee {
       'no_telp': no_telp,
       'password': password,
       'role': role,
+      'wallet_id': wallet_id,
     };
   }
 
@@ -84,5 +89,6 @@ class ViewEmployee {
     no_telp = map['no_telp'];
     password = map['password'];
     role = map['role'];
+    wallet_id = map['wallet_id'];
   }
 }

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
+import 'package:recommendation_system/modules/restaurant/order/controller/restaurant_order_controller.dart';
 
-class OrderDoneComponent extends StatelessWidget {
+class OrderDoneComponent extends GetView<RestaurantOrderController> {
   const OrderDoneComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Obx(() => ListView.builder(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
-      itemCount: 4,
+      itemCount: controller.lsRestaurantOrder.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.symmetric(vertical: ThemeConfig().biggerSpacing),
@@ -30,14 +31,14 @@ class OrderDoneComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Lorem Ipsum',
+                    controller.lsRestaurantOrder[index].username!,
                     style: ThemeConfig().textHeader3ExtraBold(
                         color: ThemeConfig.justBlack
                     ),
                   ),
                   SizedBox(height: ThemeConfig().biggerSpacing),
                   Text(
-                    '15',
+                    controller.lsRestaurantOrder[index].queue_number.toString(),
                     style: ThemeConfig().textHeader2Bold(
                         color: ThemeConfig.justBlack
                     ),
@@ -48,6 +49,6 @@ class OrderDoneComponent extends StatelessWidget {
           ),
         );
       },
-    );
+    ));
   }
 }

@@ -18,6 +18,8 @@ class GlobalUrl{
   static String getAllEmployee = "/user";
   static String getEmployeeById = "/user/"; // pakai id
   static String deleteEmployee = "/user/delete/"; // pakai id
+  static String createPreference = "/user/createpreference";
+  // static String createPreference = "/user/createpreference"; // pakai id
 
   // Restaurant
   static String createRestaurant = "/restaurant/create";
@@ -41,8 +43,21 @@ class GlobalUrl{
   // Cart
   static String createItem = "/cart/create";
   static String getItem = "/cart/alldata/";
+  static String deleteCartItem = "/cart/delete";
 
   //Order
   static String createOrder = "/order/create";
   static String getOrderById = "/order/getallorder/"; // pakai id
+  static String updateOrder = "/order/update"; // pakai id
+  static String sendRating = "/order/rating";
+  static String getOrderByRestaurant = "/restaurantorder/getallorder/"; // pakai id
+
+  //Wallet
+  static String registerWallet = "http://202.67.10.108/PAY-API/API/RegisterWallet";
+  static String getWallet = "http://202.67.10.108/PAY-API/API/Wallet"; // kirim walletId di header
+  static String topUpWallet = "http://202.67.10.108/PAY-API/API/TopUp"; // kirim walletId di header
+
+  static String createBill = "http://202.67.10.108/PAY-API/API/CreateBill"; // kirim walletId di header
+  static String viewBill = "http://202.67.10.108/PAY-API/API/ViewBill"; // kirim walletId di header
+  static String payBill = "http://202.67.10.108/PAY-API/API/Pay"; // kirim walletId di header
 }

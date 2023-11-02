@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/cart/controller/cart_controller.dart';
 import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
+import 'package:recommendation_system/modules/karyawan/home/pages/menu_container.dart';
 
 class CartContainer extends GetView<CartController> {
   const CartContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -70,8 +70,6 @@ class ListRestaurant extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
-    var restaurantController = Get.find<RestaurantController>();
-
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -107,7 +105,7 @@ class ListRestaurant extends GetView<CartController> {
                         Text(controller.lsItemCart[index].menu![indexItem].menu_name!),
                         SizedBox(height: ThemeConfig().extra2Spacing),
                         GestureDetector(
-                          onTap: () => restaurantController.onToMenuContainer(index, indexItem, controller.lsItemCart[index].restaurant_name!),
+                          onTap: () => Get.to(() => MenuContainer(indexitem: indexItem, indexCategory: index)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

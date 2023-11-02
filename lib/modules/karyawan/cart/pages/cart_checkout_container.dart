@@ -53,7 +53,7 @@ class CheckoutContainer extends GetView<CartController> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () => controller.onPlaceOrder(),
+                    onPressed: () => controller.onCreateBill(),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ThemeConfig.justBlack, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))),
                     child: Text('Place Order',

@@ -8,7 +8,8 @@ import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/models/attachment_file_data_model.dart';
 
 class APIConfig {
-  Future<String> sendDataToApi({required String url, required method, List? body}) async {
+  Future<String> sendDataToApi(
+      {required String url, required method, List? body, String? type}) async {
     String result = 'error';
     var apiUrl = Uri.parse(url);
 
@@ -17,13 +18,13 @@ class APIConfig {
 
     var response = method == 'POST' ? await http.post(
       apiUrl,
-      headers: headers,
+      headers: type == 'wallet' ? onSetBasicHeaderData() : headers,
       body: json.encode(body),
     ) : await http.get(
       apiUrl,
-      headers: headers,
+      headers: type == 'wallet' ? onSetBasicHeaderData() : headers,
     );
-    log('response '+response.body);
+    log('response ' + response.body);
 
     if (response.statusCode == 200) {
       result = response.body;
@@ -36,28 +37,49 @@ class APIConfig {
 
   Map<String, String> onSetBasicHeaderData() {
     Map<String, String> header = {
+      "Authorization": "basic f6nujgledfyzawk21e24",
       "Content-Type": "application/json",
+      "X-AppId": "MYR-001",
+      "X-AppKey": "01e1dd37-3121-43b8-9633-97b4f2eabe93",
     };
+
     return header;
   }
 
-  Map<String, String> onSetTokenHeaderData({required String token}) {
-    Map<String, String> headerToken = {
+  Map<String, String> onSetHeaderWalletId({required String wallet_id}) {
+    Map<String, String> header = {
+      "Authorization": "basic f6nujgledfyzawk21e24",
+      "Content-Type": "application/json",
+      "X-AppId": "MYR-001",
+      "X-AppKey": "01e1dd37-3121-43b8-9633-97b4f2eabe93",
+      "X-WalletId": wallet_id
+    };
+
+    return header;
+  }
+
+  Map<String, String> onSetHeaderData({required String token}) {
+    Map<String, String> headerData = {
       "Content-Type": "application/json",
       "x-access-token": token
     };
-    return headerToken;
+    return headerData;
   }
 
-  Future<String> onSendOrGetSource(
-      {required String url,
-        required String methodType,
-        Map<String, String>? header,
-        Map? body}) async {
+  Future<String> onSendOrGetSource({required String url,
+    required String methodType,
+    String? headerType,
+    Map<String, String>? header,
+    String? wallet_id,
+    Map? body}) async {
     http.Response response = methodType == 'GET'
-        ? await http.get(Uri.parse(url), headers: header)
+        ? await http.get(Uri.parse(url),
+      headers: headerType == 'wallet' ? onSetBasicHeaderData() : headerType ==
+          'setWallet' ? onSetHeaderWalletId(wallet_id: wallet_id!) : header)
         : await http.post(Uri.parse(url),
-        headers: header, body: jsonEncode(body));
+        headers: headerType == 'wallet' ? onSetBasicHeaderData() : headerType ==
+            'setWallet' ? onSetHeaderWalletId(wallet_id: wallet_id!) : header,
+        body: jsonEncode(body));
 
     String rescode = response.statusCode.toString();
     String tempresult = '';
@@ -93,7 +115,8 @@ class APIConfig {
     return result;
   }
 
-  Future<AttachmentFileDataModel> uploadAttachment({required File filepath}) async {
+  Future<AttachmentFileDataModel> uploadAttachment(
+      {required File filepath}) async {
     AttachmentFileDataModel dataUploadAttachment = AttachmentFileDataModel();
     String uploadResult = await uploadFile(
       uploadUrl: GlobalUrl.baseUrl + GlobalUrl.uploadAttachment,
@@ -104,7 +127,8 @@ class APIConfig {
     return dataUploadAttachment;
   }
 
-  Future<String> uploadFile({required String uploadUrl, required File file}) async {
+  Future<String> uploadFile(
+      {required String uploadUrl, required File file}) async {
     String result = '';
     var request = http.MultipartRequest('POST', Uri.parse(uploadUrl));
     var multipartFile = await http.MultipartFile.fromPath('file', file.path);
