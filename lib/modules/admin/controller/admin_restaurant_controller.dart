@@ -66,20 +66,20 @@ class AdminRestaurantController extends GetxController {
           "DisplayName": lsFormRestaurant[i][0].text,
         };
 
-        String urlCreateWallet = GlobalUrl.registerWallet;
-        resultWallet = await APIConfig().onSendOrGetSource(
-            url: urlCreateWallet,
-            body: tempWallet,
-            methodType: 'POST',
-            headerType: 'wallet');
+        // String urlCreateWallet = GlobalUrl.registerWallet;
+        // resultWallet = await APIConfig().onSendOrGetSource(
+        //     url: urlCreateWallet,
+        //     body: tempWallet,
+        //     methodType: 'POST',
+        //     headerType: 'wallet');
 
-        if (resultWallet.toLowerCase().contains('failed')) {
-          print('gagal ges');
-        } else if(resultWallet.toLowerCase().contains('registered')){
-          print('email sudah terdaftar');
-        } else {
-          var data = jsonDecode(resultWallet);
-          print('walletid '+data['WalletId']);
+        // if (resultWallet.toLowerCase().contains('failed')) {
+        //   print('gagal ges');
+        // } else if(resultWallet.toLowerCase().contains('registered')){
+        //   print('email sudah terdaftar');
+        // } else {
+        //   var data = jsonDecode(resultWallet);
+        //   print('walletid '+data['WalletId']);
 
           ViewRestaurant tempRestaurant = ViewRestaurant(
             username: lsFormRestaurant[i][0].text,
@@ -89,13 +89,13 @@ class AdminRestaurantController extends GetxController {
             password: lsFormRestaurant[i][4].text,
             restaurant_description: lsFormRestaurant[i][5].text,
             restaurant_image: lsPic[i],
-              wallet_id: data['WalletId']
+              wallet_id: "data['WalletId']"
           );
 
           await onSendData(restaurant: [tempRestaurant]);
           await onGetAllData();
           onClearData();
-        }
+        // }
 
       }
     }
@@ -107,14 +107,13 @@ class AdminRestaurantController extends GetxController {
     var data = json.decode(result);
 
     editFieldRestaurant.add(TextEditingController(text: data['username']));
-    editFieldRestaurant.add(TextEditingController(text: data['restaurant_username']));
+    editFieldRestaurant.add(TextEditingController(text: data['restaurant_name']));
     editFieldRestaurant.add(TextEditingController(text: data['email']));
     editFieldRestaurant.add(TextEditingController(text: data['no_telp']));
     editFieldRestaurant.add(TextEditingController(text: data['password']));
     editFieldRestaurant.add(TextEditingController(text: data['restaurant_description']));
-    lsPic.add(File(data['restaurant_image']));
 
-    Get.to(() => EditKaryawanComponent(id: id));
+      Get.to(() => EditTenantComponent(id: id));
   }
 
   Future<void> onUpdateData({required int id}) async {
@@ -125,7 +124,6 @@ class AdminRestaurantController extends GetxController {
       no_telp: editFieldRestaurant[3].text,
       password: editFieldRestaurant[4].text,
       restaurant_description: editFieldRestaurant[5].text,
-      restaurant_image: lsPic[0].text,
     );
 
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.updateRestaurant}$id';

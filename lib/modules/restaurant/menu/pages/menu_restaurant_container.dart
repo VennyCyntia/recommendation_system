@@ -15,13 +15,19 @@ class MenuRestaurantContainer extends GetView<RestaurantMenuController> {
       appBar: AppBar(
         title: const Text('List Menu'),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(onPressed: () => controller.onGetAllData(), icon: const Icon(Icons.refresh)),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             Expanded(
-              child: Obx(() => controller.isLoading.value == true ? DialogConfig().onShowLoadingIndicator() : ListView.builder(
+              child: Obx(() => controller.isLoading.value == true ? DialogConfig().onShowBasicLoading() : ListView.builder(
                   itemCount: controller.lsMenu.length,
                   itemBuilder: (context, index) {
                     return Column(

@@ -1,5 +1,7 @@
 //VIEW
 
+import 'dart:typed_data';
+
 class ViewRestaurant {
   int? restaurant_id;
   String? restaurant_name;
@@ -78,7 +80,7 @@ class ViewMenu {
 
 class ViewItemMenu {
   int? menu_id;
-  String? menu_image;
+  Uint8List? menu_image;
   String? menu_name;
   String? menu_subtitle;
   int? menu_price;
@@ -240,26 +242,3 @@ class OrderItem{
     'menu_qty': menu_qty,
   };
 }
-
-// class DetailOrder{
-//   int? order_id;
-//   String? menu_name;
-//   int? menu_price;
-//   int? menu_qty;
-//
-//   DetailOrder({this.menu_id, this.menu_name, this.menu_price, this.menu_qty});
-//
-//   DetailOrder.fromJson(Map<String, dynamic> json) {
-//     menu_id = json['menu_id'];
-//     menu_name = json['menu_name'];
-//     menu_price = json['menu_price'];
-//     menu_qty = json['menu_qty'];
-//   }
-//
-//   Map<String, dynamic> toJson() => {
-//     'menu_id': menu_id,
-//     'menu_name': menu_name,
-//     'menu_price': menu_price,
-//     'menu_qty': menu_qty,
-//   };
-// }

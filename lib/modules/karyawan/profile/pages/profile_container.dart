@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:recommendation_system/app/config/dialog_config.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/profile/controller/employee_profile_controller.dart';
+import 'package:recommendation_system/modules/restaurant/menu/controller/menu_controller.dart';
 import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
 
 class ProfileContainer extends GetView<EmployeeProfileController> {
@@ -10,6 +11,7 @@ class ProfileContainer extends GetView<EmployeeProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    var restaurantMenuController = Get.find<RestaurantMenuController>().obs;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -82,7 +84,7 @@ class ProfileContainer extends GetView<EmployeeProfileController> {
                 textInputType: TextInputType.text,
                 txtLine: 2,
                 txtEnable: true,
-                txtReadonly: false,
+                txtReadonly: true,
                 mandatory: false,
                 borderColors: Colors.black,
                 pLeft: ThemeConfig().defaultSpacing,
@@ -104,6 +106,57 @@ class ProfileContainer extends GetView<EmployeeProfileController> {
                 pRight: ThemeConfig().defaultSpacing,
                 pBottom: ThemeConfig().defaultSpacing,
               ),
+              // GridView.builder(
+              //     shrinkWrap: true,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //         crossAxisCount: 2,
+              //         crossAxisSpacing: ThemeConfig().defaultSpacing,
+              //         mainAxisSpacing: 1.0,
+              //         childAspectRatio: 2.5 / 1),
+              //     itemCount: 4,
+              //     itemBuilder: (context, index) {
+              //       return Column(
+              //         children: [
+              //           Align(
+              //               alignment: Alignment.topLeft,
+              //               child: RichText(
+              //                 text: TextSpan(
+              //                   text: 'Preferensi ',
+              //                   style: ThemeConfig().textHeader4Thin(color: Colors.black),
+              //                   children: <TextSpan>[
+              //                     TextSpan(
+              //                         text: '*',
+              //                         style:
+              //                         ThemeConfig().textHeader5(color: Colors.red)),
+              //                   ],
+              //                 ),
+              //               )),
+              //           Expanded(
+              //             child: DropdownButtonFormField<String>(
+              //                 validator: (String? value) {
+              //                   if (value == '') {
+              //                     return 'Mohon mengisi semua kolom dengan benar';
+              //                   }
+              //                   return null;
+              //                 },
+              //                 padding: EdgeInsets.symmetric(
+              //                     vertical: ThemeConfig().defaultSpacing),
+              //                 decoration: InputDecoration(
+              //                     border: const OutlineInputBorder(
+              //                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              //                     ),
+              //                     contentPadding: EdgeInsets.symmetric(
+              //                         horizontal: ThemeConfig().defaultSpacing)),
+              //                 value: restaurantMenuController.lsDescription[index]![0].value,
+              //                 onChanged: (String? newValue) {
+              //                   // controller.userPreference[index] = newValue!;
+              //                 },
+              //                 items: restaurantMenuController.lsDescription[index]),
+              //           ),
+              //         ],
+              //       );
+              //     }),
               FormInputTextMandatory(
                 title: 'Balance',
                 txtcontroller: controller.balance,
@@ -123,7 +176,7 @@ class ProfileContainer extends GetView<EmployeeProfileController> {
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () => controller.onSaveUserProfile(),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: ThemeConfig.justGrey),
                       child: Text('SAVE', style: ThemeConfig().textHeader4(color: ThemeConfig.justBlack))),

@@ -1,6 +1,6 @@
+import 'dart:io';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,17 +37,20 @@ class RestaurantMenuController extends GetxController {
     0: [
       const DropdownMenuItem(child: Text(""), value: ""),
       const DropdownMenuItem(child: Text("NASI"), value: "NASI"),
-      const DropdownMenuItem(child: Text("MIE"), value: "MIE")
+      const DropdownMenuItem(child: Text("MIE"), value: "MIE"),
     ],
     1: [
       const DropdownMenuItem(child: Text(""), value: ""),
       const DropdownMenuItem(child: Text("PEDAS"), value: "PEDAS"),
-      const DropdownMenuItem(child: Text("MANIS"), value: "MANIS")
+      const DropdownMenuItem(child: Text("MANIS"), value: "MANIS"),
+      const DropdownMenuItem(child: Text("ASIN"), value: "ASIN"),
+      const DropdownMenuItem(child: Text("ASAM"), value: "ASAM"),
     ],
     2: [
       const DropdownMenuItem(child: Text(""), value: ""),
       const DropdownMenuItem(child: Text("AYAM"), value: "AYAM"),
-      const DropdownMenuItem(child: Text("SAPI"), value: "SAPI")
+      const DropdownMenuItem(child: Text("SAPI"), value: "SAPI"),
+      const DropdownMenuItem(child: Text("SEAFOOD"), value: "SEAFOOD")
     ],
     3: [
       const DropdownMenuItem(child: Text(""), value: ""),
@@ -67,7 +70,7 @@ class RestaurantMenuController extends GetxController {
   void onInit() async {
     isLoading.value = true;
     onInitialAddForm();
-    await onGetUserInformation().then((value) => onGetAllData());
+    await onGetUserInformation().then((value) async => await onGetAllData());
     isLoading.value = false;
     super.onInit();
   }
@@ -136,9 +139,11 @@ class RestaurantMenuController extends GetxController {
       await onGetAllData();
       onClearData();
     }
+
   }
 
   Future<void> onShowEditMenu({required int index, required int id}) async {
+    // DialogConfig().onShowLoadingIndicator();
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.getMenuById}$id';
     var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
     if (result.toLowerCase().contains('failed') ||
@@ -163,11 +168,13 @@ class RestaurantMenuController extends GetxController {
       }
 
       String getAttachmentUrl = GlobalUrl.baseUrl + GlobalUrl.getAttachment + data['menu_image'];
+      print(getAttachmentUrl);
       var image = await APIConfig().getFile(uploadUrl: getAttachmentUrl);
 
       editLsPic.add(image);
 
       Get.to(() => EditMenuComponent(index: index, id: id));
+      // Get.isDialogOpen == true && Get.isDialogOpen! ? Get.back() : null;
     }
   }
 
@@ -215,6 +222,7 @@ class RestaurantMenuController extends GetxController {
   }
 
   Future<void> onGetAllData() async {
+    DialogConfig().onShowLoadingIndicator();
     lsMenu.clear();
 
     String url =
@@ -229,6 +237,8 @@ class RestaurantMenuController extends GetxController {
         lsMenu.add(ViewMenu.fromJson(item));
       }
     } else {}
+
+    Get.isDialogOpen == true && Get.isDialogOpen! ? Get.back() : null;
   }
 
   //senddata

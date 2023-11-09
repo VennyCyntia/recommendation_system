@@ -82,58 +82,93 @@ class ShowPaymentInformation extends GetView<EmployeeOrderController> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Center(child: const Text('Your Payment Detail')),
-      content: Wrap(
-        children: [
-          Column(
-            children: [
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   itemCount: 3,
-              //   itemBuilder: (context, index) {
-              //     return Padding(
-              //       padding: EdgeInsets.symmetric(vertical: 4.0),
-              //       child: Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         children: [
-              //           Text('1x'),
-              //           Text('Nasi Goreng'),
-              //           Text('Rp 20.000'),
-              //         ],
-              //       ),
-              //     );
-              //   },
-              // ),
-              // const Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text('Total'),
-              //     Text('Rp 20.000'),
-              //   ],
-              // )
-              BillPaymentComponent(title: 'Nomor Transaksi', subtitle: controller.detailOrder['order_id']),
-              BillPaymentComponent(title: 'Created date', subtitle: controller.detailOrder['bill_date']),
-              BillPaymentComponent(title: 'Expired date', subtitle: controller.detailOrder['Expired_date']),
-            ],
-          ),
-        ],
+      content: SizedBox(
+        width: double.maxFinite,
+        child: Wrap(
+          children: [
+            Column(
+              children: [
+                Text('Transaction Number', style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack)),
+                Text(controller.detailOrder['order_id'], style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack)),
+                BillPaymentComponent(title: 'Created date', subtitle: controller.detailOrder['bill_date']),
+                BillPaymentComponent(title: 'Expired date', subtitle: controller.detailOrder['Expired_date']),
+                SizedBox(height: ThemeConfig().biggerSpacing),
+                Text('Detail Order', style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack)),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.lsOrder[index!].menu?.length,
+                  itemBuilder: (context, indexItem) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: ThemeConfig().biggerSpacing),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(controller.lsOrder[index!].menu![indexItem].menu_qty.toString() + 'x'),
+                          SizedBox(width: ThemeConfig().extraSpacing),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(controller.lsOrder[index!].menu![indexItem].menu_name!),
+                                Text(controller.lsOrder[index!].menu![indexItem].menu_price.toString()),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total', style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack)),
+                    Text(controller.lsOrder[index!].total_price.toString(), style: ThemeConfig().textHeader4Bold(color: ThemeConfig.justBlack)),
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
       ),
       actions: <Widget>[
-        ElevatedButton(
-            onPressed: () => controller.onPayBill(orderId: controller.lsOrder[index!].order_id!),
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().minSpacing)),
-              ),
-              padding: EdgeInsets.zero,
-              backgroundColor: Colors.green
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: ThemeConfig().defaultSpacing, vertical: ThemeConfig().defaultSpacing ),
-              child: const Text(
-                'PAID',
-                style: TextStyle(color: Colors.white),
-              ),
-            ))
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ElevatedButton(
+                onPressed: () => controller.deleteOrder(orderId: controller.lsOrder[index!].order_id!),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().minSpacing)),
+                    ),
+                    padding: EdgeInsets.zero,
+                    backgroundColor: Colors.red
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: ThemeConfig().defaultSpacing, vertical: ThemeConfig().defaultSpacing ),
+                  child: const Text(
+                    'Delete From Order',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
+            ElevatedButton(
+                onPressed: () => controller.onPayBill(orderId: controller.lsOrder[index!].order_id!),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().minSpacing)),
+                  ),
+                  padding: EdgeInsets.zero,
+                  backgroundColor: Colors.green
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: ThemeConfig().defaultSpacing, vertical: ThemeConfig().defaultSpacing ),
+                  child: const Text(
+                    'PAID',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
+          ],
+        )
       ],
     );
   }

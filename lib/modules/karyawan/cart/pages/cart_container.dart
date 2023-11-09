@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:recommendation_system/app/config/dialog_config.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/cart/controller/cart_controller.dart';
 import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
@@ -18,7 +19,7 @@ class CartContainer extends GetView<CartController> {
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
-      body: ListView.builder(
+      body: Obx(() => ListView.builder(
           padding: const EdgeInsets.all(12.0),
           itemCount: controller.lsItemCart.length,
           shrinkWrap: true,
@@ -28,8 +29,7 @@ class CartContainer extends GetView<CartController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(controller.lsItemCart[index].restaurant_name!, style: ThemeConfig().textHeader3(color: ThemeConfig.justBlack)),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.close))
+                    Text(controller.lsItemCart[index].restaurant_name!.toUpperCase(), style: ThemeConfig().textHeader3(color: ThemeConfig.justBlack)),
                   ],
                 ),
                 ListRestaurant(index: index),
@@ -59,7 +59,7 @@ class CartContainer extends GetView<CartController> {
                 const Divider(height: 1)
               ],
             );
-          }),
+          })),
     );
   }
 }
@@ -70,7 +70,8 @@ class ListRestaurant extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    var restaurantController = Get.find<RestaurantController>();
+    return Obx(() => ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: controller.lsItemCart[index].menu!.length,
@@ -81,15 +82,20 @@ class ListRestaurant extends GetView<CartController> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Obx(() => Checkbox(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().minSpacing))),
-                      checkColor: ThemeConfig.justWhite,
-                      activeColor: ThemeConfig.justBlack,
-                      value: controller.lsItemCart[index].menu![indexItem].checkbox!,
-                      onChanged: (bool? value){
-                        controller.lsItemCart[index].menu![indexItem].checkbox = value;
-                        controller.lsItemCart.refresh();
-                      }),
+                  Column(
+                    children: [
+                      Obx(() => Checkbox(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().minSpacing))),
+                          checkColor: ThemeConfig.justWhite,
+                          activeColor: ThemeConfig.justBlack,
+                          value: controller.lsItemCart[index].menu![indexItem].checkbox!,
+                          onChanged: (bool? value){
+                            controller.lsItemCart[index].menu![indexItem].checkbox = value;
+                            controller.lsItemCart.refresh();
+                          }),
+                      ),
+                      IconButton(onPressed: () => controller.onDeleteMenuById(id: controller.lsItemCart[index].menu![indexItem].menu_id!), icon: Icon(Icons.delete))
+                    ],
                   ),
                   Container(
                       margin: EdgeInsets.only(right: ThemeConfig().defaultSpacing),
@@ -104,13 +110,13 @@ class ListRestaurant extends GetView<CartController> {
                       children: [
                         Text(controller.lsItemCart[index].menu![indexItem].menu_name!),
                         SizedBox(height: ThemeConfig().extra2Spacing),
-                        GestureDetector(
-                          onTap: () => Get.to(() => MenuContainer(indexitem: indexItem, indexCategory: index)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('${controller.lsItemCart[index].menu![indexItem].menu_qty}x',style: ThemeConfig().textHeader4(color: ThemeConfig.baseGrey)),
-                              Container(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('${controller.lsItemCart[index].menu![indexItem].menu_qty}x',style: ThemeConfig().textHeader4(color: ThemeConfig.baseGrey)),
+                            GestureDetector(
+                              onTap: () => restaurantController.onToMenuContainer(menu_id: controller.lsItemCart[index].menu![indexItem].menu_id!),
+                              child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(ThemeConfig().defaultSpacing)),
@@ -120,8 +126,8 @@ class ListRestaurant extends GetView<CartController> {
                                     style: ThemeConfig().textHeader5Bold(
                                         color: ThemeConfig.justWhite)),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         )
                       ],
                     ),
@@ -131,6 +137,6 @@ class ListRestaurant extends GetView<CartController> {
 
             ],
           );
-        });
+        }));
   }
 }

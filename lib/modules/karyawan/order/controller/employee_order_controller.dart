@@ -78,17 +78,27 @@ class EmployeeOrderController extends GetxController{
   }
 
   Future<void> onPayBill({required String orderId}) async {
-    Map body = {
-      "TransId": orderId
-    };
+    var order = lsOrder.firstWhere((item) => item.order_id == orderId);
+    if(int.parse(profileController.balance.text) < order.total_price!.toInt()){
+        DialogConfig().onShowDialogInformation(
+            title: 'Failed', 
+            content: 'Saldo anda tidak mencukupi, silahkan top up terlebih dahulu', 
+            color: Colors.red);
+    }else {
+      Map body = {
+        "TransId": orderId
+      };
 
-    String url = GlobalUrl.payBill;
-    var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', headerType: 'setWallet', wallet_id: profileController.walletId.value, body: body);
-    if(!result.toLowerCase().contains('failed')){
-      onUpdateStatus(orderId: orderId, status: "WAITING FOOD");
-    }else{
-      DialogConfig().onShowDialogInformation(title: 'failed', content: 'Bill has expired');
+      String url = GlobalUrl.payBill;
+      var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', headerType: 'setWallet', wallet_id: profileController.walletId.value, body: body);
+      if(!result.toLowerCase().contains('failed')){
+        onUpdateStatus(orderId: orderId, status: "WAITING FOOD");
+      }else{
+        DialogConfig().onShowDialogInformation(title: 'failed', content: 'Bill has expired', color: Colors.red);
+      }
     }
+
+
   }
 
   Future<void> onUpdateStatus({required String orderId, required String status}) async {
@@ -107,6 +117,19 @@ class EmployeeOrderController extends GetxController{
     } else {
       await profileController.onGetBalance();
       Get.offNamedUntil(AppRoutes.employeeMain, (route) => route.settings.name == AppRoutes.employeeMain);
+    }
+  }
+
+  Future<void> deleteOrder({required String orderId}) async {
+    String url = GlobalUrl.baseUrl + GlobalUrl.deleteOrder + orderId;
+    var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', body: {});
+    if (result.toLowerCase().contains('failed') ||
+        result.toLowerCase().contains('gagal') ||
+        result.toLowerCase().contains('error')) {
+
+    } else {
+      // Get.offNamedUntil(AppRoutes.employeeMain, (route) => route.settings.name == AppRoutes.employeeMain);
+      await onGetAllData(value: 0).then((value) => Get.back());
     }
   }
 
@@ -129,9 +152,11 @@ class EmployeeOrderController extends GetxController{
     }else{
       //tambahin snacbar rating gak boleh kosong
     }
+    log(jsonEncode(menu));
 
     String url = GlobalUrl.baseUrl + GlobalUrl.sendRating;
     var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', body: menu);
+    print('result'+result.toString());
     if (result.toLowerCase().contains('failed') ||
         result.toLowerCase().contains('gagal') ||
         result.toLowerCase().contains('error')) {

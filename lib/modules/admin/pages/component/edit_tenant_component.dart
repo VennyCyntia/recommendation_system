@@ -6,8 +6,7 @@ import 'package:recommendation_system/modules/restaurant/menu/pages/component/te
 
 class EditTenantComponent extends GetView<AdminRestaurantController> {
   int id;
-  int index;
-  EditTenantComponent({super.key, required this.id, required this.index});
+  EditTenantComponent({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +34,31 @@ class EditTenantComponent extends GetView<AdminRestaurantController> {
                     children: [
                       TextFieldInputComponent(
                           txtController: controller.editFieldRestaurant[0],
-                          title: 'Nama',
+                          title: 'Username',
                           keyboardType: TextInputType.text),
                       SizedBox(height: ThemeConfig().defaultSpacing),
                       TextFieldInputComponent(
                           txtController: controller.editFieldRestaurant[1],
+                          title: 'Nama Restoran',
+                          keyboardType: TextInputType.text),
+                      SizedBox(height: ThemeConfig().defaultSpacing),
+                      TextFieldInputComponent(
+                          txtController: controller.editFieldRestaurant[2],
+                          title: 'Email',
+                          keyboardType: TextInputType.text),
+                      SizedBox(height: ThemeConfig().defaultSpacing),
+                      TextFieldInputComponent(
+                          txtController: controller.editFieldRestaurant[3],
+                          title: 'No Telepon',
+                          keyboardType: TextInputType.number),
+                      SizedBox(height: ThemeConfig().defaultSpacing),
+                      TextFieldInputComponent(
+                          txtController: controller.editFieldRestaurant[4],
+                          title: 'password',
+                          keyboardType: TextInputType.text),
+                      SizedBox(height: ThemeConfig().defaultSpacing),
+                      TextFieldInputComponent(
+                          txtController: controller.editFieldRestaurant[5],
                           title: 'Deskripsi',
                           keyboardType: TextInputType.text),
                       SizedBox(width: ThemeConfig().biggerSpacing),

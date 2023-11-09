@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class EmployeeProfileController extends GetxController {
   TextEditingController no_telp = TextEditingController();
   TextEditingController preference = TextEditingController();
   TextEditingController balance = TextEditingController();
+  var userPreference = List<dynamic>.empty(growable: true).obs;
 
   //top up balance
   TextEditingController amount = TextEditingController();
@@ -35,6 +37,29 @@ class EmployeeProfileController extends GetxController {
     preference.text = await UserSession().onGetPreference();
     walletId.value = await UserSession().onGetWalletId();
   }
+
+  Future<void> onSaveUserProfile() async {
+    Map body = {
+      'user_id': id.value,
+      'preference': preference.text,
+      'email': email.text,
+      'username': username.text,
+    };
+    log(json.encode(body));
+
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.updateUserProfile}';
+    var result = await APIConfig()
+        .onSendOrGetSource(url: url, methodType: 'POST', body: body);
+    print('result '+result.toString());
+    if (result.toLowerCase().contains('failed') ||
+        result.toLowerCase().contains('gagal') ||
+        result.toLowerCase().contains('error')) {
+
+    }else{
+      await onGetAllData();
+    }
+  }
+
 
   Future<void> onTopUpWallet() async {
     String result = 'error';
@@ -69,6 +94,21 @@ class EmployeeProfileController extends GetxController {
     
     var data= jsonDecode(result);
     balance.text = data['Balance'].toString();
+  }
+
+  Future<void> onGetAllData() async {
+    String url = GlobalUrl.baseUrl + GlobalUrl.getEmployeeById;
+    var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
+    if (!result.toLowerCase().contains('failed') &&
+        !result.toLowerCase().contains('gagal') &&
+        !result.toLowerCase().contains('error') &&
+        !result.toLowerCase().contains('false')) {
+     var data = json.decode(result);
+     // username.text = data['username'];
+     // email.text = data['email'];
+     // preference.text = data['preference'];
+
+    } else {}
   }
 
 }

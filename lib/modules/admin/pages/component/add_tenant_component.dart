@@ -100,50 +100,50 @@ class AddTenantComponent extends GetView<AdminRestaurantController> {
                                     txtController:
                                         controller.lsFormRestaurant[index][5]),
                                 SizedBox(height: ThemeConfig().biggerSpacing),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                          margin: EdgeInsets.only(
-                                              right:
-                                                  ThemeConfig().defaultSpacing),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(ThemeConfig()
-                                                      .defaultSpacing))),
-                                          child: Obx(() => SizedBox.fromSize(
-                                              size: const Size.fromRadius(40),
-                                              child: controller.lsPic[index] != ''
-                                                  ? Image.file(File(controller.lsPic[index]),
-                                                      fit: BoxFit.fill)
-                                                  : const Center(
-                                                      child:
-                                                          Text('No photo'))))),
-                                    ),
-                                    Expanded(
-                                      child: ElevatedButton(
-                                        onPressed: () =>
-                                            controller.onGetImage(index: index),
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.blue,
-                                            minimumSize:
-                                                const Size.fromHeight(48),
-                                            elevation: 0,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        ThemeConfig()
-                                                            .defaultSpacing))),
-                                        child: Text('from gallery',
-                                            style: ThemeConfig()
-                                                .textHeader5Bold(
-                                                    color:
-                                                        ThemeConfig.justWhite)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   children: [
+                                //     Expanded(
+                                //       child: Container(
+                                //           margin: EdgeInsets.only(
+                                //               right:
+                                //                   ThemeConfig().defaultSpacing),
+                                //           decoration: BoxDecoration(
+                                //               color: Colors.grey,
+                                //               borderRadius: BorderRadius.all(
+                                //                   Radius.circular(ThemeConfig()
+                                //                       .defaultSpacing))),
+                                //           child: Obx(() => SizedBox.fromSize(
+                                //               size: const Size.fromRadius(40),
+                                //               child: controller.lsPic[index] != ''
+                                //                   ? Image.file(File(controller.lsPic[index]),
+                                //                       fit: BoxFit.fill)
+                                //                   : const Center(
+                                //                       child:
+                                //                           Text('No photo'))))),
+                                //     ),
+                                //     Expanded(
+                                //       child: ElevatedButton(
+                                //         onPressed: () =>
+                                //             controller.onGetImage(index: index),
+                                //         style: ElevatedButton.styleFrom(
+                                //             primary: Colors.blue,
+                                //             minimumSize:
+                                //                 const Size.fromHeight(48),
+                                //             elevation: 0,
+                                //             shape: RoundedRectangleBorder(
+                                //                 borderRadius:
+                                //                     BorderRadius.circular(
+                                //                         ThemeConfig()
+                                //                             .defaultSpacing))),
+                                //         child: Text('from gallery',
+                                //             style: ThemeConfig()
+                                //                 .textHeader5Bold(
+                                //                     color:
+                                //                         ThemeConfig.justWhite)),
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                           );

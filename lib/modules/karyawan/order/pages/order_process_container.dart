@@ -90,42 +90,44 @@ class ShowDetailOrderInformation extends GetView<EmployeeOrderController> {
       title: const Center(child: Text('Detail Order' )),
       content: SizedBox(
         width: double.maxFinite,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: Wrap(
           children: [
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: controller.lsOrder[index].menu?.length,
-              itemBuilder: (context, indexItem) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(vertical: ThemeConfig().minSpacing),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(controller.lsOrder[index].menu![indexItem].menu_qty.toString() + 'x'),
-                      SizedBox(width: ThemeConfig().extraSpacing),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(controller.lsOrder[index].menu![indexItem].menu_name!),
-                            Text(controller.lsOrder[index].menu![indexItem].menu_price.toString()),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            SizedBox(height: ThemeConfig().biggerSpacing),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Total'),
-                Text(controller.lsOrder[index].total_price.toString()),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.lsOrder[index].menu?.length,
+                  itemBuilder: (context, indexItem) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: ThemeConfig().minSpacing),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(controller.lsOrder[index].menu![indexItem].menu_qty.toString() + 'x'),
+                          SizedBox(width: ThemeConfig().extraSpacing),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(controller.lsOrder[index].menu![indexItem].menu_name!),
+                              Text(controller.lsOrder[index].menu![indexItem].menu_price.toString()),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: ThemeConfig().biggerSpacing),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total'),
+                    Text(controller.lsOrder[index].total_price.toString()),
+                  ],
+                )
               ],
-            )
+            ),
           ],
         ),
       ),

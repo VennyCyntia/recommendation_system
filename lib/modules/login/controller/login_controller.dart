@@ -81,13 +81,17 @@ class LoginController extends GetxController {
     if (result.toLowerCase().contains('failed') ||
         result.toLowerCase().contains('gagal') ||
         result.toLowerCase().contains('error')) {
-      print('gagal woi');
+      DialogConfig().onShowDialogInformation(
+          title: "Failed",
+          content: "Username atau password salah",
+          color: Colors.red
+      );
     } else {
       var data = json.decode(result);
       if (type == 'restaurant') {
         RestaurantInformation restData = RestaurantInformation.fromJson(data);
         await UserSession().onSetRestaurantInformation(data: restData);
-        Get.toNamed(AppRoutes.restaurant);
+        Get.offAllNamed(AppRoutes.restaurant);
       } else if (data['role'] == 'employee') {
         UserInformation userData = UserInformation.fromJson(data);
         await UserSession().onSetUserInformation(data: userData);

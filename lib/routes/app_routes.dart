@@ -84,7 +84,7 @@ class AppPages {
     GetPage(
         name: AppRoutes.profile,
         page: () => const ProfileContainer(),
-        // binding: OrderBinding(),
+        binding: RestaurantBinding(),
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)
     ),

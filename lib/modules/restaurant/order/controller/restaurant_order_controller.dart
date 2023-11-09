@@ -34,17 +34,13 @@ class RestaurantOrderController extends GetxController {
     }
 
     if(value == 0){
-      tempOrder = allOrder.where((item) => item.status != 'DONE').toList();
+      tempOrder = allOrder.where((item) => item.status != 'DONE' && item.status != "PENDING").toList();
     }else {
       tempOrder = allOrder.where((item) => item.status == 'DONE').toList();
     }
 
     if(tempOrder.isNotEmpty){
       lsRestaurantOrder.addAll(tempOrder);
-    }
-
-    for(var item in lsRestaurantOrder){
-      print('item '+item.username!);
     }
 
   }

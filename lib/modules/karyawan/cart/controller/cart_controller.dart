@@ -34,6 +34,7 @@ class CartController extends GetxController {
   }
 
   Future<void> onGetAllData() async {
+    DialogConfig().onShowLoadingIndicator();
     lsItemCart.clear();
 
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.getItem}${profileController.id.value}';
@@ -45,6 +46,7 @@ class CartController extends GetxController {
     }
 
     onControlTotalPrice();
+    Get.isDialogOpen == true && Get.isDialogOpen! ? Get.back() : null;
   }
 
   void onControlTotalPrice() {
@@ -166,6 +168,19 @@ class CartController extends GetxController {
 
     }
   }
+
+  Future<void> onDeleteMenuById({required int id}) async {
+    Map body = {
+      "menu_id": id
+    };
+    log(jsonEncode(body));
+
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.deleteCartItemById}'+profileController.id.value.toString();
+    print('url '+url.toString());
+    await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', body: body);
+    await onGetAllData();
+  }
+
 
   onRefreshData() async {
     Get.until((route) => Get.currentRoute == AppRoutes.employeeMain);

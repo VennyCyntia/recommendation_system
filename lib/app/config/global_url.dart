@@ -3,8 +3,9 @@ class GlobalUrl{
   // static String baseUrl = 'http://192.168.83.184:5000';
   // static String baseUrl = 'http://192.168.1.101:5000';
   // static String baseUrl = 'http://192.168.137.2:5000';
-  // static String baseUrl = 'http://192.168.0.165:5000';
-  static String baseUrl = 'http://192.168.1.102:5000';
+  // static String baseUrl = 'http://192.168.121.184:5000';
+  static String baseUrl = 'http://192.168.1.103:5000';
+  // static String baseUrl = 'http://192.168.0.166:5000';
 
   //Login
   static String loginUser = "/login/employee";
@@ -19,7 +20,8 @@ class GlobalUrl{
   static String getEmployeeById = "/user/"; // pakai id
   static String deleteEmployee = "/user/delete/"; // pakai id
   static String createPreference = "/user/createpreference";
-  // static String createPreference = "/user/createpreference"; // pakai id
+  static String updatePreference = "/user/updatepreference";
+  static String updateUserProfile = "/user/updateuserprofile";
 
   // Restaurant
   static String createRestaurant = "/restaurant/create";
@@ -35,6 +37,8 @@ class GlobalUrl{
   static String getMenuById = "/menu/"; // pakai id
   static String getMenuByRestaurant = "/menu/restaurant/"; // pakai id
   static String deleteMenu = "/menu/delete/"; // pakai id
+  static String getRecommendation = "/menu/recommendation/"; // pakai user_id
+  static String getSimilarItems = "/menu/similarItem/"; // pakai user_id
 
   // Attachment
   static String uploadAttachment = "/attachment/upload";
@@ -44,6 +48,7 @@ class GlobalUrl{
   static String createItem = "/cart/create";
   static String getItem = "/cart/alldata/";
   static String deleteCartItem = "/cart/delete";
+  static String deleteCartItemById = "/cart/delete/"; // pakai id
 
   //Order
   static String createOrder = "/order/create";
@@ -51,6 +56,7 @@ class GlobalUrl{
   static String updateOrder = "/order/update"; // pakai id
   static String sendRating = "/order/rating";
   static String getOrderByRestaurant = "/restaurantorder/getallorder/"; // pakai id
+  static String deleteOrder = "/order/delete/"; // pakai id
 
   //Wallet
   static String registerWallet = "http://202.67.10.108/PAY-API/API/RegisterWallet";

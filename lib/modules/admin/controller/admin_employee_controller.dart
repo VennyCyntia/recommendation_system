@@ -19,7 +19,8 @@ class AdminEmployeeController extends GetxController {
   void onInit() async {
     isLoading.value = true;
     await onInitialAddForm();
-    await onGetAllData();
+    await
+    onGetAllData();
     isLoading.value = false;
     super.onInit();
   }
@@ -38,20 +39,20 @@ class AdminEmployeeController extends GetxController {
           "DisplayName": lsFormEmployee[i][0].text,
         };
 
-        String urlCreateWallet = GlobalUrl.registerWallet;
-        resultWallet = await APIConfig().onSendOrGetSource(
-            url: urlCreateWallet,
-            body: tempWallet,
-            methodType: 'POST',
-            headerType: 'wallet');
+        // String urlCreateWallet = GlobalUrl.registerWallet;
+        // resultWallet = await APIConfig().onSendOrGetSource(
+        //     url: urlCreateWallet,
+        //     body: tempWallet,
+        //     methodType: 'POST',
+        //     headerType: 'wallet');
 
-        if (resultWallet.toLowerCase().contains('failed')) {
-          print('gagal ges');
-        } else if(resultWallet.toLowerCase().contains('registered')){
-          print('email sudah terdaftar');
-        } else {
-          var data = jsonDecode(resultWallet);
-          print('walletid '+data['WalletId']);
+        // if (resultWallet.toLowerCase().contains('failed')) {
+        //   print('gagal ges');
+        // } else if(resultWallet.toLowerCase().contains('registered')){
+        //   print('email sudah terdaftar');
+        // } else {
+        //   var data = jsonDecode(resultWallet);
+        //   print('walletid '+data['WalletId']);
 
           ViewEmployee tempEmployee = ViewEmployee(
             username: lsFormEmployee[i][0].text,
@@ -59,13 +60,13 @@ class AdminEmployeeController extends GetxController {
             no_telp: lsFormEmployee[i][2].text,
             password: lsFormEmployee[i][3].text,
             role: lsFormEmployee[i][4].text,
-            wallet_id: data['WalletId'],
+            wallet_id: "data['WalletId']",
           );
 
           await onSendData(employee: [tempEmployee]);
           await onGetAllData();
           onClearData();
-        }
+        // }
 
       }
     }
@@ -119,7 +120,7 @@ class AdminEmployeeController extends GetxController {
   }
 
   Future<void> onDeleteData({required int id}) async {
-    String url = '${GlobalUrl.baseUrl}${GlobalUrl.createEmployee}$id';
+    String url = '${GlobalUrl.baseUrl}${GlobalUrl.deleteEmployee}$id';
     var result =
         await APIConfig().sendDataToApi(url: url, method: 'POST', body: []);
     onGetAllData();

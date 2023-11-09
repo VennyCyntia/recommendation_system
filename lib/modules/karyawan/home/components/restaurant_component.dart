@@ -30,17 +30,23 @@ class RestaurantComponent extends GetView<RestaurantController> {
                             Radius.circular(ThemeConfig().biggerSpacing))),
                     child: Column(
                       children: [
-                        ClipRRect(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(ThemeConfig().defaultSpacing)),
-                            child:
-                            // controller.lsRestaurant[index!]
-                            //             .restaurant_image !=
-                            //         null
-                            //     ? Image.network(controller
-                            //         .lsRestaurant[index!].restaurant_image!)
-                            //     :
-                            Image.network('https://imgx.sonora.id/crop/0x0:0x0/360x240/photo/2022/10/22/istockphoto-1345298910-170667aj-20221022110522.jpg')),
+                        // Container(
+                        //   height: 100,
+                        //   decoration: BoxDecoration(
+                        //     color: ThemeConfig.justGrey
+                        //   ),
+                        // ),
+                        // ClipRRect(
+                        //     borderRadius: BorderRadius.all(
+                        //         Radius.circular(ThemeConfig().defaultSpacing)),
+                        //     child:
+                        //     // controller.lsRestaurant[index!]
+                        //     //             .restaurant_image !=
+                        //     //         null
+                        //     //     ? Image.network(controller
+                        //     //         .lsRestaurant[index!].restaurant_image!)
+                        //     //     :
+                        //     Image.network('https://imgx.sonora.id/crop/0x0:0x0/360x240/photo/2022/10/22/istockphoto-1345298910-170667aj-20221022110522.jpg')),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(

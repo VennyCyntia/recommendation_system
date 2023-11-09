@@ -7,7 +7,7 @@ import 'package:recommendation_system/app/config/theme_config.dart';
 
 class DialogConfig {
   onShowBasicLoading() {
-    return Get.dialog(WillPopScope(
+    return WillPopScope(
         child: Center(
           child: SizedBox(
             width: Get.size.width * 0.5,
@@ -15,7 +15,7 @@ class DialogConfig {
             child: Lottie.asset(AssetsConfig.loadingCircle, repeat: true),
           ),
         ),
-        onWillPop: () async => false));
+        onWillPop: () async => true);
   }
 
   onShowLoadingIndicator() {
@@ -54,7 +54,7 @@ class DialogConfig {
     );
   }
 
-  onShowDialogInformation({required String title, required String content}) {
+  onShowDialogInformation({required String title, required String content, required Color color}) {
     Get.defaultDialog(
       barrierDismissible: false,
       title: title.toUpperCase(),
@@ -62,7 +62,7 @@ class DialogConfig {
       middleText: content,
       textConfirm: 'OK',
       middleTextStyle: ThemeConfig().textHeader4(color: ThemeConfig.justWhite),
-      backgroundColor: ThemeConfig.darkRed,
+      backgroundColor: color,
       buttonColor: ThemeConfig.justBlack,
       confirmTextColor: ThemeConfig.justWhite,
       onConfirm: () => Get.back(),

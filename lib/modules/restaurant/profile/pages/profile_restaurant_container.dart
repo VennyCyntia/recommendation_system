@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recommendation_system/app/config/session_manager.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/restaurant/menu/pages/component/text_field_input_component.dart';
 import 'package:recommendation_system/modules/restaurant/profile/controller/restaurant_profile_controller.dart';
@@ -64,7 +65,7 @@ class ProfileRestaurantContainer extends GetView<RestaurantProfileController> {
                 textInputType: TextInputType.text,
                 txtLine: 2,
                 txtEnable: true,
-                txtReadonly: false,
+                txtReadonly: true,
                 mandatory: false,
                 borderColors: Colors.black,
                 pLeft: ThemeConfig().defaultSpacing,
@@ -100,16 +101,16 @@ class ProfileRestaurantContainer extends GetView<RestaurantProfileController> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => UserSession().onRemoveWhenLogout(),
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               horizontal: ThemeConfig().defaultSpacing),
                           backgroundColor: ThemeConfig.justGrey,
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5.0)))),
                       child: Text('Logout',
