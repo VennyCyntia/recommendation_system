@@ -10,15 +10,14 @@ class EditTenantComponent extends GetView<AdminRestaurantController> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => controller.onClearData(),
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text('Edit Tenant'),
-          ),
-          body: Padding(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Edit Tenant'),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
             padding: EdgeInsets.all(ThemeConfig().defaultSpacing),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

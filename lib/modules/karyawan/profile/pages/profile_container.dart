@@ -11,7 +11,6 @@ class ProfileContainer extends GetView<EmployeeProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    var restaurantMenuController = Get.find<RestaurantMenuController>().obs;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

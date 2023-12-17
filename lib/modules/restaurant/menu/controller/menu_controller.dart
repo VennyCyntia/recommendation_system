@@ -25,6 +25,9 @@ class RestaurantMenuController extends GetxController {
   var editFieldMenu = List<TextEditingController>.empty(growable: true).obs;
   var editSelectedDesc = List<String>.empty(growable: true).obs;
 
+  var lsAddDescription = List<TextEditingController>.generate(4, (index) => TextEditingController()).obs;
+  // Map<String, List<DropdownMenuItem<String>>> lsDesc = {};
+
   List<DropdownMenuItem<String>> listCategory = [
     const DropdownMenuItem(child: Text(""), value: ""),
     const DropdownMenuItem(child: Text("Menu utama"), value: "Menu utama"),
@@ -33,31 +36,45 @@ class RestaurantMenuController extends GetxController {
     const DropdownMenuItem(child: Text("Minuman"), value: "Minuman"),
   ];
 
-  var lsDescription = {
-    0: [
-      const DropdownMenuItem(child: Text(""), value: ""),
-      const DropdownMenuItem(child: Text("NASI"), value: "NASI"),
-      const DropdownMenuItem(child: Text("MIE"), value: "MIE"),
-    ],
-    1: [
-      const DropdownMenuItem(child: Text(""), value: ""),
-      const DropdownMenuItem(child: Text("PEDAS"), value: "PEDAS"),
-      const DropdownMenuItem(child: Text("MANIS"), value: "MANIS"),
-      const DropdownMenuItem(child: Text("ASIN"), value: "ASIN"),
-      const DropdownMenuItem(child: Text("ASAM"), value: "ASAM"),
-    ],
-    2: [
-      const DropdownMenuItem(child: Text(""), value: ""),
-      const DropdownMenuItem(child: Text("AYAM"), value: "AYAM"),
-      const DropdownMenuItem(child: Text("SAPI"), value: "SAPI"),
-      const DropdownMenuItem(child: Text("SEAFOOD"), value: "SEAFOOD")
-    ],
-    3: [
-      const DropdownMenuItem(child: Text(""), value: ""),
-      const DropdownMenuItem(child: Text("KUAH"), value: "KUAH"),
-      const DropdownMenuItem(child: Text("KERING"), value: "KERING")
-    ],
-  }.obs;
+  Map<int, List<DropdownMenuItem<String>>> lsDesc = {
+      0: [
+        const DropdownMenuItem(child: Text(""), value: ""),
+      ],
+      1: [
+        const DropdownMenuItem(child: Text(""), value: ""),
+      ],
+      2: [
+        const DropdownMenuItem(child: Text(""), value: ""),
+      ],
+      3: [
+        const DropdownMenuItem(child: Text(""), value: "")
+      ],
+  };
+  //   0: [
+  //     const DropdownMenuItem(child: Text(""), value: ""),
+  //     const DropdownMenuItem(child: Text("NASI"), value: "NASI"),
+  //     const DropdownMenuItem(child: Text("MIE"), value: "MIE"),
+  //   ],
+  //   1: [
+  //     const DropdownMenuItem(child: Text(""), value: ""),
+  //     const DropdownMenuItem(child: Text("PEDAS"), value: "PEDAS"),
+  //     const DropdownMenuItem(child: Text("MANIS"), value: "MANIS"),
+  //     const DropdownMenuItem(child: Text("ASIN"), value: "ASIN"),
+  //     const DropdownMenuItem(child: Text("ASAM"), value: "ASAM"),
+  //     const DropdownMenuItem(child: Text("PAHIT"), value: "PAHIT"),
+  //   ],
+  //   2: [
+  //     const DropdownMenuItem(child: Text(""), value: ""),
+  //     const DropdownMenuItem(child: Text("AYAM"), value: "AYAM"),
+  //     const DropdownMenuItem(child: Text("SAPI"), value: "SAPI"),
+  //     const DropdownMenuItem(child: Text("SEAFOOD"), value: "SEAFOOD")
+  //   ],
+  //   3: [
+  //     const DropdownMenuItem(child: Text(""), value: ""),
+  //     const DropdownMenuItem(child: Text("KUAH"), value: "KUAH"),
+  //     const DropdownMenuItem(child: Text("KERING"), value: "KERING")
+  //   ],
+  // }.obs;
 
   var id = 0.obs;
   TextEditingController username = TextEditingController();
@@ -71,6 +88,7 @@ class RestaurantMenuController extends GetxController {
     isLoading.value = true;
     onInitialAddForm();
     await onGetUserInformation().then((value) async => await onGetAllData());
+    await onGetDescription();
     isLoading.value = false;
     super.onInit();
   }
@@ -188,6 +206,7 @@ class RestaurantMenuController extends GetxController {
         combinedDesc = '$combinedDesc, ${editSelectedDesc[i]}';
       }
     }
+    print('combined '+combinedDesc.toString());
 
     Map tempMenu = {
       'menu_name': editFieldMenu[0].text,
@@ -252,6 +271,42 @@ class RestaurantMenuController extends GetxController {
       print('berhasil ges');
     } else {
       print('gagal, coba lagi yuk');
+    }
+  }
+  
+  Future<void> onAddDescription({required int index, required String desc, required String type, required TextEditingController txtcontroller}) async {
+    Map body = {
+      'description_type': index,
+      'description_name': desc,
+    };
+    String url = GlobalUrl.baseUrl + GlobalUrl.addDescription;
+    var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', body: body);
+    txtcontroller.clear();
+    DialogConfig().showSnackBarInformation(
+        title: 'Success', message: 'Deskripsi telah ditambahkan', color: Colors.green
+    );
+}
+
+  Future<void> onGetDescription() async {
+    String url = GlobalUrl.baseUrl + GlobalUrl.getDescription;
+    var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'GET');
+    if(!result.toLowerCase().contains('failed') &&
+        !result.toLowerCase().contains('gagal') &&
+        !result.toLowerCase().contains('error') &&
+        !result.toLowerCase().contains('false')){
+      var data = jsonDecode(result);
+      for(int i=0; i<data.length; i++){
+        log('key '+data[i]['description_type'].toString());
+        int key = data[i]['description_type'];
+
+        if (!lsDesc.containsKey(key)) {
+          log('masuk');
+          lsDesc[key] = [];
+        }
+
+        lsDesc[key]!.add(DropdownMenuItem(child: Text(data[i]['description_name']), value: data[i]['description_name']));
+      }
+      print(lsDesc);
     }
   }
 

@@ -176,7 +176,7 @@ class RestaurantPage extends GetView<RestaurantController> {
                                                   child:
                                                   Image.network('https://imgx.sonora.id/crop/0x0:0x0/360x240/photo/2022/10/22/istockphoto-1345298910-170667aj-20221022110522.jpg')
                                                   // Image.memory(
-                                                  //   controller.foundMenu[indexItem].menu_image!,
+                                                  //   controller.foundMenu[indexCategory].item_menu![indexItem].menu_image!,
                                                   //     // controller
                                                   //     //     .restaurantDetail
                                                   //     //     .value

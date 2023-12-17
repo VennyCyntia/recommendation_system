@@ -221,24 +221,27 @@ class RestaurantController extends GetxController {
     var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'GET');
     var data = jsonDecode(result);
 
-    for(var item in data){
-      // String getAttachmentUrl = GlobalUrl.baseUrl + GlobalUrl.getAttachment + item['menu_image'];
-      // print(getAttachmentUrl);
-      // var image = await APIConfig().getFile(uploadUrl: getAttachmentUrl);
-      lsSimilarMenu.add(ViewItemMenu(
-        menu_id : item['menu_id'],
-        // menu_image : image,
-        menu_name : item['menu_name'],
-        menu_subtitle : item['menu_subtitle'],
-        menu_price : item['menu_price'],
-        menu_qty : item['menu_qty'],
-      ));
-      // lsSimilarItemPic.add(image);
+    if(data != null){
+      for(var item in data){
+        // String getAttachmentUrl = GlobalUrl.baseUrl + GlobalUrl.getAttachment + item['menu_image'];
+        // print(getAttachmentUrl);
+        // var image = await APIConfig().getFile(uploadUrl: getAttachmentUrl);
+        lsSimilarMenu.add(ViewItemMenu(
+          menu_id : item['menu_id'],
+          // menu_image : image,
+          menu_name : item['menu_name'],
+          menu_subtitle : item['menu_subtitle'],
+          menu_price : item['menu_price'],
+          menu_qty : item['menu_qty'],
+        ));
+        // lsSimilarItemPic.add(image);
+      }
+
+      for(var item in lsSimilarMenu){
+        print('item '+item.menu_name!);
+      }
     }
 
-    for(var item in lsSimilarMenu){
-      print('item '+item.menu_name!);
-    }
   }
 
   // onIncreaseItem(

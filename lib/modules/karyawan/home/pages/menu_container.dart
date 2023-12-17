@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:recommendation_system/app/config/dialog_config.dart';
 import 'package:recommendation_system/app/config/theme_config.dart';
 import 'package:recommendation_system/modules/karyawan/home/components/menu_component.dart';
 import 'package:recommendation_system/modules/karyawan/home/controller/restaurant_controller.dart';
@@ -37,12 +36,13 @@ class MenuContainer extends GetView<RestaurantController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(controller.menuDetail['menu_name'],
+                                Text(controller.menuDetail['menu_name'] != null ? controller.menuDetail['menu_name'] : '',
                                     style: ThemeConfig().textHeader4Bold(
                                         color: ThemeConfig.justBlack)),
                                 Text(
                                     controller.menuDetail['menu_price']
-                                        .toString(),
+                                        .toString() != null ? controller.menuDetail['menu_price']
+                                        .toString() : '',
                                     style: ThemeConfig().textHeader4Bold(
                                         color: ThemeConfig.justBlack))
                               ],

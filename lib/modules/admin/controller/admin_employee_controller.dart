@@ -39,20 +39,20 @@ class AdminEmployeeController extends GetxController {
           "DisplayName": lsFormEmployee[i][0].text,
         };
 
-        // String urlCreateWallet = GlobalUrl.registerWallet;
-        // resultWallet = await APIConfig().onSendOrGetSource(
-        //     url: urlCreateWallet,
-        //     body: tempWallet,
-        //     methodType: 'POST',
-        //     headerType: 'wallet');
+        String urlCreateWallet = GlobalUrl.registerWallet;
+        resultWallet = await APIConfig().onSendOrGetSource(
+            url: urlCreateWallet,
+            body: tempWallet,
+            methodType: 'POST',
+            headerType: 'wallet');
 
-        // if (resultWallet.toLowerCase().contains('failed')) {
-        //   print('gagal ges');
-        // } else if(resultWallet.toLowerCase().contains('registered')){
-        //   print('email sudah terdaftar');
-        // } else {
-        //   var data = jsonDecode(resultWallet);
-        //   print('walletid '+data['WalletId']);
+        if (resultWallet.toLowerCase().contains('failed')) {
+          print('gagal ges');
+        } else if(resultWallet.toLowerCase().contains('registered')){
+          print('email sudah terdaftar');
+        } else {
+          var data = jsonDecode(resultWallet);
+          print('walletid '+data['WalletId']);
 
           ViewEmployee tempEmployee = ViewEmployee(
             username: lsFormEmployee[i][0].text,
@@ -66,24 +66,24 @@ class AdminEmployeeController extends GetxController {
           await onSendData(employee: [tempEmployee]);
           await onGetAllData();
           onClearData();
-        // }
+        }
 
       }
     }
   }
 
   Future<void> onUpdateData({required int id}) async {
-    ViewEmployee tempEmployee = ViewEmployee(
-      username: editFieldEmployee[0].text,
-      email: editFieldEmployee[1].text,
-      no_telp: editFieldEmployee[2].text,
-      password: editFieldEmployee[3].text,
-      role: editFieldEmployee[4].text,
-    );
+    Map body = {
+      'username': editFieldEmployee[0].text,
+      'email': editFieldEmployee[1].text,
+      'no_telp': editFieldEmployee[2].text,
+      'password': editFieldEmployee[3].text,
+      'role': editFieldEmployee[4].text,
+    };
 
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.updateEmployee}$id';
     var result = await APIConfig()
-        .sendDataToApi(url: url, method: 'POST', body: [tempEmployee]);
+        .onSendOrGetSource(url: url, methodType: 'POST', body: body);
 
     await onGetAllData().then((value) =>
         Future.delayed(const Duration(milliseconds: 100), () => Get.back()));
@@ -106,6 +106,7 @@ class AdminEmployeeController extends GetxController {
   }
 
   Future<void> onShowEditMenu({required int id}) async {
+    editFieldEmployee.clear();
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.getEmployeeById}$id';
     var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
     var data = json.decode(result);

@@ -182,7 +182,7 @@ class FieldDropDown extends GetView<RestaurantMenuController> {
                   alignment: Alignment.topLeft,
                   child: RichText(
                     text: TextSpan(
-                      text: 'Deskripsi ' + indexLength.toString(),
+                      text: 'Deskripsi ' + (indexLength + 1).toString(),
                       style: ThemeConfig().textHeader4Thin(color: Colors.black),
                       children: <TextSpan>[
                         TextSpan(
@@ -210,7 +210,7 @@ class FieldDropDown extends GetView<RestaurantMenuController> {
                             horizontal: ThemeConfig().defaultSpacing)),
                     value: type == 'edit'
                         ? controller.editSelectedDesc[indexLength]
-                        : controller.lsDescription[index]![0].value,
+                        : controller.lsDesc[index]![0].value,
                     onChanged: (String? newValue) {
                       type == 'edit'
                           ? controller.editSelectedDesc[indexLength] =
@@ -218,7 +218,7 @@ class FieldDropDown extends GetView<RestaurantMenuController> {
                           : controller.selectedDesc[index!][indexLength] =
                       newValue!;
                     },
-                    items: controller.lsDescription[indexLength]),
+                    items: controller.lsDesc[indexLength]),
               ),
             ],
           );

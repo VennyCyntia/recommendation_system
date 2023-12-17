@@ -63,11 +63,11 @@ class PreferencePage extends GetView<RestaurantController> {
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: ThemeConfig().defaultSpacing)),
-                        value: restaurantMenuController.lsDescription[index]![0].value,
+                        value: restaurantMenuController.lsDesc[index]![0].value,
                         onChanged: (String? newValue) {
                           controller.userPreference[index] = newValue!;
                         },
-                        items: restaurantMenuController.lsDescription[index]),
+                        items: restaurantMenuController.lsDesc[index]),
                   ),
                 ],
               );

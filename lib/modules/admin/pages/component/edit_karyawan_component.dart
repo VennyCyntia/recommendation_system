@@ -10,15 +10,14 @@ class EditKaryawanComponent extends GetView<AdminEmployeeController> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => controller.onClearData(),
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('Edit karyawan'),
-            centerTitle: true,
-          ),
-          body: Padding(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Edit karyawan'),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
             padding: EdgeInsets.all(ThemeConfig().defaultSpacing),
             child: Column(
               children: [

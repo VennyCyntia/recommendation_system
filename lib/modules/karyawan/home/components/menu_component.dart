@@ -11,7 +11,8 @@ class MenuComponent extends GetView<RestaurantController> {
   MenuComponent({super.key, this.index, this.type});
 
   @override
-  Widget build(BuildContext context) { return Padding(
+  Widget build(BuildContext context) {
+    return Padding(
         padding: const EdgeInsets.only(right: 8.0),
         child: GestureDetector(
           onTap: () => controller.onToMenuContainer(menu_id: type == 'similar' ? controller.lsSimilarMenu[index!].menu_id :controller

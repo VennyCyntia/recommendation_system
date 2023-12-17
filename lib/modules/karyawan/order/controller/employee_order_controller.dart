@@ -8,11 +8,13 @@ import 'package:recommendation_system/app/config/dialog_config.dart';
 import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/models/view_karyawan.dart';
 import 'package:recommendation_system/modules/karyawan/order/pages/order_not_paid_container.dart';
+import 'package:recommendation_system/modules/karyawan/order/pages/rating_container.dart';
 import 'package:recommendation_system/modules/karyawan/profile/controller/employee_profile_controller.dart';
 
 class EmployeeOrderController extends GetxController{
   var profileController = Get.put(EmployeeProfileController());
   var lsRating = List<dynamic>.empty(growable: true).obs;
+  var lsComment = List<TextEditingController>.empty(growable: true).obs;
   
   var lsOrder = List<Order>.empty(growable: true).obs;
 
@@ -53,6 +55,8 @@ class EmployeeOrderController extends GetxController{
     if(tempOrder.isNotEmpty){
       lsOrder.addAll(tempOrder);
     }
+
+
 
   }
 
@@ -97,8 +101,6 @@ class EmployeeOrderController extends GetxController{
         DialogConfig().onShowDialogInformation(title: 'failed', content: 'Bill has expired', color: Colors.red);
       }
     }
-
-
   }
 
   Future<void> onUpdateStatus({required String orderId, required String status}) async {
@@ -128,13 +130,13 @@ class EmployeeOrderController extends GetxController{
         result.toLowerCase().contains('error')) {
 
     } else {
-      // Get.offNamedUntil(AppRoutes.employeeMain, (route) => route.settings.name == AppRoutes.employeeMain);
       await onGetAllData(value: 0).then((value) => Get.back());
     }
   }
 
   Future<void> onSaveRating({required String orderId}) async {
     Order? currentOrder = lsOrder.firstWhereOrNull((item) => item.order_id == orderId);
+
     List<Map<String, dynamic>> tempRatingMenu = [];
     Map<dynamic, dynamic> menu = {};
 
@@ -144,7 +146,8 @@ class EmployeeOrderController extends GetxController{
           tempRatingMenu.add({
             'user_id': profileController.id.value,
             'menu_id': currentOrder.menu![i].menu_id,
-            'rating': lsRating[i]
+            'rating': lsRating[i],
+            'comment': lsComment[i].text
           });
         }
         menu['rating'] = tempRatingMenu;
@@ -156,12 +159,12 @@ class EmployeeOrderController extends GetxController{
 
     String url = GlobalUrl.baseUrl + GlobalUrl.sendRating;
     var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', body: menu);
-    print('result'+result.toString());
     if (result.toLowerCase().contains('failed') ||
         result.toLowerCase().contains('gagal') ||
         result.toLowerCase().contains('error')) {
 
     } else {
+      lsComment.clear();
       await onUpdateStatus(orderId: orderId, status: 'DONE');
     }
   }
@@ -172,7 +175,16 @@ class EmployeeOrderController extends GetxController{
     } else {
       lsRating.add(value);
     }
+  }
 
-    print('value '+lsRating.toString());
+  Future<void> onCheckListOrder({required int index}) async {
+    isLoading.value = true;
+
+    for(int i=0; i<lsOrder[index].menu!.length; i++){
+      lsComment.add(TextEditingController());
+    }
+
+    isLoading.value = false;
+    Get.to(() => RatingContainer(index: index));
   }
 }

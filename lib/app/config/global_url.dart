@@ -3,9 +3,9 @@ class GlobalUrl{
   // static String baseUrl = 'http://192.168.83.184:5000';
   // static String baseUrl = 'http://192.168.1.101:5000';
   // static String baseUrl = 'http://192.168.137.2:5000';
-  // static String baseUrl = 'http://192.168.121.184:5000';
-  static String baseUrl = 'http://192.168.1.103:5000';
-  // static String baseUrl = 'http://192.168.0.166:5000';
+  // static String baseUrl = 'http://192.168.34.184:5000';
+  static String baseUrl = 'http://10.10.28.161:5000';
+  // static String baseUrl = 'http://192.168.1.103:5000';
 
   //Login
   static String loginUser = "/login/employee";
@@ -66,4 +66,8 @@ class GlobalUrl{
   static String createBill = "http://202.67.10.108/PAY-API/API/CreateBill"; // kirim walletId di header
   static String viewBill = "http://202.67.10.108/PAY-API/API/ViewBill"; // kirim walletId di header
   static String payBill = "http://202.67.10.108/PAY-API/API/Pay"; // kirim walletId di header
+
+  //Description
+  static String addDescription = "/menu/add_description";
+  static String getDescription = "/menu/get_description";
 }

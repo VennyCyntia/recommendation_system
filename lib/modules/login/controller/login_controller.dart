@@ -103,7 +103,7 @@ class LoginController extends GetxController {
       } else {
         UserInformation userData = UserInformation.fromJson(data);
         await UserSession().onSetUserInformation(data: userData);
-        Get.toNamed(AppRoutes.admin);
+        Get.offAllNamed(AppRoutes.admin);
       }
     }
   }

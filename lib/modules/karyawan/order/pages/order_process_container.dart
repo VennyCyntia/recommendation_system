@@ -136,7 +136,7 @@ class ShowDetailOrderInformation extends GetView<EmployeeOrderController> {
           children: [
             ElevatedButton(
                 onPressed: () {
-                  controller.lsOrder[index].status == 'WAITING FOOD' ? SizedBox() : Get.to(() => RatingContainer(index: index));
+                  controller.lsOrder[index].status == 'WAITING FOOD' ? SizedBox() : controller.onCheckListOrder(index: index);
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:recommendation_system/app/config/api_config.dart';
 import 'package:recommendation_system/app/config/global_url.dart';
 import 'package:recommendation_system/app/config/session_manager.dart';
@@ -25,6 +24,7 @@ class EmployeeProfileController extends GetxController {
   @override
   void onInit() async {
     isLoading.value = true;
+    print('masuk');
     await onGetUserInformation().then((value) => onGetBalance());
     super.onInit();
   }
@@ -104,9 +104,9 @@ class EmployeeProfileController extends GetxController {
         !result.toLowerCase().contains('error') &&
         !result.toLowerCase().contains('false')) {
      var data = json.decode(result);
-     // username.text = data['username'];
-     // email.text = data['email'];
-     // preference.text = data['preference'];
+     username.text = data['username'];
+     email.text = data['email'];
+     preference.text = data['preference'];
 
     } else {}
   }

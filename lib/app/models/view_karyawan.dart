@@ -225,6 +225,7 @@ class OrderItem{
   String? menu_name;
   int? menu_price;
   int? menu_qty;
+  String? comment;
 
   OrderItem({this.menu_id, this.menu_name, this.menu_price, this.menu_qty});
 

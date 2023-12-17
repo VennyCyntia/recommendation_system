@@ -66,20 +66,20 @@ class AdminRestaurantController extends GetxController {
           "DisplayName": lsFormRestaurant[i][0].text,
         };
 
-        // String urlCreateWallet = GlobalUrl.registerWallet;
-        // resultWallet = await APIConfig().onSendOrGetSource(
-        //     url: urlCreateWallet,
-        //     body: tempWallet,
-        //     methodType: 'POST',
-        //     headerType: 'wallet');
+        String urlCreateWallet = GlobalUrl.registerWallet;
+        resultWallet = await APIConfig().onSendOrGetSource(
+            url: urlCreateWallet,
+            body: tempWallet,
+            methodType: 'POST',
+            headerType: 'wallet');
 
-        // if (resultWallet.toLowerCase().contains('failed')) {
-        //   print('gagal ges');
-        // } else if(resultWallet.toLowerCase().contains('registered')){
-        //   print('email sudah terdaftar');
-        // } else {
-        //   var data = jsonDecode(resultWallet);
-        //   print('walletid '+data['WalletId']);
+        if (resultWallet.toLowerCase().contains('failed')) {
+          print('gagal ges');
+        } else if(resultWallet.toLowerCase().contains('registered')){
+          print('email sudah terdaftar');
+        } else {
+          var data = jsonDecode(resultWallet);
+          print('walletid '+data['WalletId']);
 
           ViewRestaurant tempRestaurant = ViewRestaurant(
             username: lsFormRestaurant[i][0].text,
@@ -95,13 +95,14 @@ class AdminRestaurantController extends GetxController {
           await onSendData(restaurant: [tempRestaurant]);
           await onGetAllData();
           onClearData();
-        // }
+        }
 
       }
     }
   }
 
   Future<void> onShowEditRestaurant({required int id}) async {
+    editFieldRestaurant.clear();
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.getRestaurantById}$id';
     var result = await APIConfig().sendDataToApi(url: url, method: 'GET');
     var data = json.decode(result);
@@ -117,17 +118,17 @@ class AdminRestaurantController extends GetxController {
   }
 
   Future<void> onUpdateData({required int id}) async {
-    ViewRestaurant tempRestaurant = ViewRestaurant(
-      username: editFieldRestaurant[0].text,
-      restaurant_name: editFieldRestaurant[1].text,
-      email: editFieldRestaurant[2].text,
-      no_telp: editFieldRestaurant[3].text,
-      password: editFieldRestaurant[4].text,
-      restaurant_description: editFieldRestaurant[5].text,
-    );
+    Map body = {
+      'username': editFieldRestaurant[0].text,
+      'restaurant_name': editFieldRestaurant[1].text,
+      'email': editFieldRestaurant[2].text,
+      'no_telp': editFieldRestaurant[3].text,
+      'password': editFieldRestaurant[4].text,
+      'restaurant_description': editFieldRestaurant[5].text,
+    };
 
     String url = '${GlobalUrl.baseUrl}${GlobalUrl.updateRestaurant}$id';
-    var result = await APIConfig().sendDataToApi(url: url, method: 'POST', body: [tempRestaurant]);
+    var result = await APIConfig().onSendOrGetSource(url: url, methodType: 'POST', body: body);
 
     await onGetAllData().then((value) =>
         Future.delayed(const Duration(milliseconds: 100), () => Get.back()));
